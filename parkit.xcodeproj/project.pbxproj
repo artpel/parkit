@@ -15,6 +15,7 @@
 		7655E15022661AFF0088DFAA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7655E14E22661AFF0088DFAA /* Main.storyboard */; };
 		7655E15222661B010088DFAA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7655E15122661B010088DFAA /* Assets.xcassets */; };
 		7655E15522661B010088DFAA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7655E15322661B010088DFAA /* LaunchScreen.storyboard */; };
+		76B7CAB4226A0B04001B568D /* BikePA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B7CAB3226A0B04001B568D /* BikePA.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		7655E15122661B010088DFAA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7655E15422661B010088DFAA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7655E15622661B010088DFAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		76B7CAB3226A0B04001B568D /* BikePA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BikePA.swift; path = "/Users/arthurpeligry/Downloads/Zone tampon/parkit/parkit/BikePA.swift"; sourceTree = "<absolute>"; };
 		8B5400DA02B1CB5F1548ACB3 /* Pods-parkit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-parkit.release.xcconfig"; path = "Pods/Target Support Files/Pods-parkit/Pods-parkit.release.xcconfig"; sourceTree = "<group>"; };
 		9A90CF55D8A3077B6B10B298 /* Pods_parkit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_parkit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5A79A1E8221D9176B7F24FD /* Pods-parkit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-parkit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-parkit/Pods-parkit.debug.xcconfig"; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 				7655E14822661AFF0088DFAA /* AppDelegate.swift */,
 				7655E14A22661AFF0088DFAA /* FirstViewController.swift */,
 				7655E14C22661AFF0088DFAA /* SecondViewController.swift */,
+				76B7CAB3226A0B04001B568D /* BikePA.swift */,
 				7655E14E22661AFF0088DFAA /* Main.storyboard */,
 				7655E15122661B010088DFAA /* Assets.xcassets */,
 				7655E15322661B010088DFAA /* LaunchScreen.storyboard */,
@@ -174,6 +177,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-parkit/Pods-parkit-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/AnnotationETA/AnnotationETA.framework",
 				"${BUILT_PRODUCTS_DIR}/CFAlertViewController/CFAlertViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
 				"${BUILT_PRODUCTS_DIR}/Cluster/Cluster.framework",
@@ -189,7 +193,6 @@
 				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework.dSYM",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/Pastel/Pastel.framework",
-				"${BUILT_PRODUCTS_DIR}/Spring/Spring.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
@@ -199,6 +202,7 @@
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AnnotationETA.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CFAlertViewController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cluster.framework",
@@ -214,7 +218,6 @@
 				"${DWARF_DSYM_FOLDER_PATH}/Mapbox.framework.dSYM",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pastel.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Spring.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
@@ -256,6 +259,7 @@
 				7655E14D22661AFF0088DFAA /* SecondViewController.swift in Sources */,
 				7655E14922661AFF0088DFAA /* AppDelegate.swift in Sources */,
 				7655E14B22661AFF0088DFAA /* FirstViewController.swift in Sources */,
+				76B7CAB4226A0B04001B568D /* BikePA.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

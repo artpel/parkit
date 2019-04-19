@@ -12,7 +12,7 @@ import Alamofire
 import SwiftyJSON
 import CoreLocation
 
-class FirstViewController: UIViewController, MKMapViewDelegate {
+class FirstViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
 
     
     @IBOutlet weak var carte: MKMapView!
@@ -37,7 +37,7 @@ class FirstViewController: UIViewController, MKMapViewDelegate {
     
     func getSpots() {
         
-        let url = "https://opendata.paris.fr/api/records/1.0/search/?dataset=stationnement-voie-publique-emplacements&rows=1000&facet=regpri&facet=regpar&facet=typsta&facet=arrond&refine.regpri=2+ROUES"
+        let url = "https://opendata.paris.fr/api/records/1.0/search/?dataset=stationnement-voie-publique-emplacements&rows=500&facet=regpri&facet=regpar&facet=typsta&facet=arrond&refine.regpri=2+ROUES"
         
         Alamofire.request(url).responseJSON { (responseData) -> Void in
             if let response = responseData.result.value {
@@ -52,31 +52,33 @@ class FirstViewController: UIViewController, MKMapViewDelegate {
     
     func placeSpots(spots: JSON) {
         
-        for (key, subJson) in spots["records"] {
+        for (_, subJson) in spots["records"] {
+            
+            var pinAnnotationView:MKPinAnnotationView!
             
             let coordinates = subJson["geometry"]["coordinates"]
-            print(coordinates[1].double!)
+//            print(coordinates[1].double!)
             let hello = MKPointAnnotation()
             hello.coordinate = CLLocationCoordinate2D(latitude: coordinates[1].double!, longitude: coordinates[0].double!)
-            carte.addAnnotation(hello)
+            hello.title = "tile"
+            hello.subtitle = "subtitle"
+            
+            pinAnnotationView = MKPinAnnotationView(annotation: hello, reuseIdentifier: "pin")
+            pinAnnotationView.image = UIImage(named: "first")
+            pinAnnotationView.pinTintColor = UIColor.blue
+            
+            carte.addAnnotation(pinAnnotationView.annotation!)
             
         }
     }
-//    
-//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-//        guard annotation is MKPointAnnotation else { return nil }
-//        
-//        let identifier = "Annotation"
-//        var annotationView = carte.dequeueReusableAnnotationView(withIdentifier: identifier)
-//        
-//        if annotationView == nil {
-//            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-//            annotationView!.canShowCallout = true
-//        } else {
-//            annotationView!.annotation = annotation
-//        }
-//        
-//        return annotationView
-//    }
-//    
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        let annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "pin")
+        
+        annotationView.pinTintColor = UIColor.green
+        
+        return annotationView
+    }
+
 }

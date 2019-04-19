@@ -24,11 +24,12 @@ target 'parkit' do
   pod 'KeyboardHideManager'
   pod 'FontAwesome.swift'
   pod 'Hero'
-  pod 'Spring', :git => 'https://github.com/MengTo/Spring.git'
+#  pod 'Spring', :git => 'https://github.com/MengTo/Spring.git'
   pod 'CFAlertViewController'
   pod 'Pastel'
   pod 'OneSignal', '>= 2.6.2', '< 3.0'
   pod 'Mapbox-iOS-SDK', '~> 4.9'
   pod 'Cluster'
+  pod 'AnnotationETA'
 
 end
