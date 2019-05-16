@@ -9,26 +9,24 @@
 /* Begin PBXBuildFile section */
 		03ECA07126DDA87CACB42291 /* Pods_parkit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A90CF55D8A3077B6B10B298 /* Pods_parkit.framework */; };
 		7612DEA322661D8700B5EC43 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7612DEA222661D8700B5EC43 /* GoogleService-Info.plist */; };
+		7616473D228D4AC900C1C5D3 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7616473C228D4AC900C1C5D3 /* MapVC.swift */; };
+		76164741228D4AD800C1C5D3 /* BikePA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76164740228D4AD800C1C5D3 /* BikePA.swift */; };
 		7655E14922661AFF0088DFAA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7655E14822661AFF0088DFAA /* AppDelegate.swift */; };
-		7655E14B22661AFF0088DFAA /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7655E14A22661AFF0088DFAA /* FirstViewController.swift */; };
-		7655E14D22661AFF0088DFAA /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7655E14C22661AFF0088DFAA /* SecondViewController.swift */; };
 		7655E15022661AFF0088DFAA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7655E14E22661AFF0088DFAA /* Main.storyboard */; };
 		7655E15222661B010088DFAA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7655E15122661B010088DFAA /* Assets.xcassets */; };
 		7655E15522661B010088DFAA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7655E15322661B010088DFAA /* LaunchScreen.storyboard */; };
-		76B7CAB4226A0B04001B568D /* BikePA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B7CAB3226A0B04001B568D /* BikePA.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		7612DEA222661D8700B5EC43 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		7616473C228D4AC900C1C5D3 /* MapVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
+		76164740228D4AD800C1C5D3 /* BikePA.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BikePA.swift; sourceTree = "<group>"; };
 		7655E14522661AFF0088DFAA /* parkit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = parkit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7655E14822661AFF0088DFAA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		7655E14A22661AFF0088DFAA /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
-		7655E14C22661AFF0088DFAA /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		7655E14F22661AFF0088DFAA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7655E15122661B010088DFAA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7655E15422661B010088DFAA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7655E15622661B010088DFAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		76B7CAB3226A0B04001B568D /* BikePA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BikePA.swift; path = "/Users/arthurpeligry/Downloads/Zone tampon/parkit/parkit/BikePA.swift"; sourceTree = "<absolute>"; };
 		8B5400DA02B1CB5F1548ACB3 /* Pods-parkit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-parkit.release.xcconfig"; path = "Pods/Target Support Files/Pods-parkit/Pods-parkit.release.xcconfig"; sourceTree = "<group>"; };
 		9A90CF55D8A3077B6B10B298 /* Pods_parkit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_parkit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5A79A1E8221D9176B7F24FD /* Pods-parkit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-parkit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-parkit/Pods-parkit.debug.xcconfig"; sourceTree = "<group>"; };
@@ -54,6 +52,29 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		7616473B228D4AC900C1C5D3 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				7616473C228D4AC900C1C5D3 /* MapVC.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		7616473E228D4AD800C1C5D3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		7616473F228D4AD800C1C5D3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				76164740228D4AD800C1C5D3 /* BikePA.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		7655E13C22661AFF0088DFAA = {
 			isa = PBXGroup;
 			children = (
@@ -76,11 +97,11 @@
 			isa = PBXGroup;
 			children = (
 				7655E14822661AFF0088DFAA /* AppDelegate.swift */,
-				7655E14A22661AFF0088DFAA /* FirstViewController.swift */,
-				7655E14C22661AFF0088DFAA /* SecondViewController.swift */,
-				76B7CAB3226A0B04001B568D /* BikePA.swift */,
-				7655E14E22661AFF0088DFAA /* Main.storyboard */,
+				7616473B228D4AC900C1C5D3 /* Controllers */,
+				7616473E228D4AD800C1C5D3 /* Models */,
+				7616473F228D4AD800C1C5D3 /* Views */,
 				7655E15122661B010088DFAA /* Assets.xcassets */,
+				7655E14E22661AFF0088DFAA /* Main.storyboard */,
 				7655E15322661B010088DFAA /* LaunchScreen.storyboard */,
 				7655E15622661B010088DFAA /* Info.plist */,
 				7612DEA222661D8700B5EC43 /* GoogleService-Info.plist */,
@@ -177,10 +198,8 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-parkit/Pods-parkit-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/AnnotationETA/AnnotationETA.framework",
 				"${BUILT_PRODUCTS_DIR}/CFAlertViewController/CFAlertViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
-				"${BUILT_PRODUCTS_DIR}/Cluster/Cluster.framework",
 				"${BUILT_PRODUCTS_DIR}/FontAwesome.swift/FontAwesome_swift.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
@@ -189,8 +208,6 @@
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/KeyboardHideManager/KeyboardHideManager.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
-				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework",
-				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework.dSYM",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/Pastel/Pastel.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
@@ -202,10 +219,8 @@
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AnnotationETA.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CFAlertViewController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cluster.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FontAwesome_swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
@@ -214,8 +229,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeyboardHideManager.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapbox.framework",
-				"${DWARF_DSYM_FOLDER_PATH}/Mapbox.framework.dSYM",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pastel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
@@ -256,10 +269,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7655E14D22661AFF0088DFAA /* SecondViewController.swift in Sources */,
+				76164741228D4AD800C1C5D3 /* BikePA.swift in Sources */,
+				7616473D228D4AC900C1C5D3 /* MapVC.swift in Sources */,
 				7655E14922661AFF0088DFAA /* AppDelegate.swift in Sources */,
-				7655E14B22661AFF0088DFAA /* FirstViewController.swift in Sources */,
-				76B7CAB4226A0B04001B568D /* BikePA.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
