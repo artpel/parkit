@@ -15,11 +15,15 @@ class BikeAnnotation: NSObject, MKAnnotation {
     var title: String?
     var type: String
     var coordinate: CLLocationCoordinate2D
+    var size: Double
+    var address: String
     
-    init(title: String, type: String, coordinate: CLLocationCoordinate2D) {
+    init(title: String, type: String, coordinate: CLLocationCoordinate2D, size: Double, address: String) {
         self.title = title
         self.type = type
         self.coordinate = coordinate
+        self.size = size
+        self.address = address
         
         super.init()
     }
@@ -36,5 +40,12 @@ class BikeAnnotation: NSObject, MKAnnotation {
             return .red
         }
     }
+    
+    var imageName: String? {
+        if type == "Vélos" { return "bike" }
+        if type == "Motos" { return "moto" }
+        return "mix"
+    }
+
 
 }

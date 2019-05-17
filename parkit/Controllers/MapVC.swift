@@ -11,15 +11,23 @@ import MapKit
 import Alamofire
 import SwiftyJSON
 import CoreLocation
-import Kingfisher
+import NVActivityIndicatorView
+import ChameleonFramework
 
 class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
  
     @IBOutlet weak var carte: MKMapView!
     @IBOutlet weak var tooltipItinerary: UIView!
+    @IBOutlet weak var tooltipTitle: UILabel!
+    @IBOutlet weak var tooltipAddress: UILabel!
     @IBOutlet weak var tooltipTravelTime: UILabel!
-    @IBOutlet weak var tooltipSuperview: UIView!
-    @IBOutlet weak var imageTooltipSuperview: UIImageView!
+    @IBOutlet weak var tooltipTransportView: UIView!
+    @IBOutlet weak var tooltipTransportIcon: UIImageView!
+    @IBOutlet weak var tooltipSize: UILabel!
+    @IBOutlet weak var tooltipItineraryView: UIView!
+    @IBOutlet weak var tooltipSizeView: UIView!
+    @IBOutlet weak var loadingView: UIView!
+    @IBOutlet weak var loadingIndicator: NVActivityIndicatorView!
     
     @IBAction func modeSwitcged(_ sender: UISegmentedControl) {
         
@@ -38,9 +46,16 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         
     }
     
-    var selectedAnnotation = MKAnnotationView()
+    @IBAction func openInMapsButton(_ sender: Any) {
+        
+        openInMaps(annotation: selectedAnnotation!, mode: mode)
+        
+    }
+    
     
     var mode = "bike"
+    let locationManager = CLLocationManager()
+    var selectedAnnotation: BikeAnnotation?
     
     var spotVelos = [JSON]()
     var spotMotos = [JSON]()
@@ -49,29 +64,35 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setCenter()
-        getSpots()
-        
         setRoundView(vue: tooltipItinerary)
-        setRoundView(vue: tooltipSuperview)
+        tooltipItinerary.dropShadow()
+        setRoundView(vue: loadingView)
+        setRoundView(vue: tooltipSizeView)
+        setRoundView(vue: tooltipTransportView)
+        setRoundView(vue: tooltipItineraryView)
         
-        let gesture = UITapGestureRecognizer(target: self, action:  #selector(self.showTooltipSuperview))
-        self.tooltipItinerary.addGestureRecognizer(gesture)
-        
-        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(self.closeSuperTooltip))
-        swipeDown.direction = .down
-        self.imageTooltipSuperview.addGestureRecognizer(swipeDown)
-        
+        getUserLocation()
         
     }
     
-    @objc func showTooltipSuperview(sender : UITapGestureRecognizer) {
-        tooltipSuperview.isHidden = false
-        getPhoto(coord: CLLocationCoordinate2D(latitude:(selectedAnnotation.annotation?.coordinate.latitude)!, longitude: (selectedAnnotation.annotation?.coordinate.longitude)!))
-    }
-    
-    @objc func closeSuperTooltip() {
-        tooltipSuperview.isHidden = true
+    func getUserLocation() {
+        
+        locationManager.delegate = self
+        
+        if CLLocationManager.locationServicesEnabled() {
+            
+            switch CLLocationManager.authorizationStatus() {
+            case .notDetermined, .restricted, .denied:
+                locationManager.desiredAccuracy = kCLLocationAccuracyBest
+                locationManager.requestWhenInUseAuthorization()
+            case .authorizedAlways, .authorizedWhenInUse:
+                locationManager.startUpdatingLocation()
+                
+            }
+        } else {
+            print("Location services are not enabled")
+        }
+        
     }
     
     func setRoundView(vue: UIView) {
@@ -82,18 +103,27 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
 
     func setCenter() {
         
-        let initialLocation = CLLocation(latitude: 48.851942, longitude: 2.389628)
+        let initialLocation = locationManager.location!
         let regionRadius: CLLocationDistance = 1000
         let coordinateRegion = MKCoordinateRegion(center: initialLocation.coordinate, latitudinalMeters: regionRadius * 2.0, longitudinalMeters: regionRadius * 2.0)
         carte.setRegion(coordinateRegion, animated: true)
         
         carte.showsUserLocation = true
         carte.register(BikeMarkerView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+    
     }
     
-    func getSpots() {
+    func getSpots(coord: CLLocationCoordinate2D, distance: Int) {
         
-        let url = "https://opendata.paris.fr/api/records/1.0/search/?dataset=stationnement-voie-publique-emplacements&rows=1000&facet=regpri&facet=regpar&facet=typsta&facet=arrond&refine.regpri=2+ROUES"
+        spotVelos.removeAll()
+        spotMixte.removeAll()
+        spotMotos.removeAll()
+        
+        let coordinates = "\(coord.latitude),\(coord.longitude),\(distance)"
+        
+        let url = "https://opendata.paris.fr/api/records/1.0/search/?dataset=stationnement-voie-publique-emplacements&rows=500&facet=regpri&facet=regpar&facet=typsta&facet=arrond&refine.regpri=2+ROUES&geofilter.distance\(coordinates)"
+        
+        self.toogleActivityIndicator(status: "on")
         
         Alamofire.request(url).responseJSON { (responseData) -> Void in
             if let response = responseData.result.value {
@@ -102,6 +132,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
                 print("Error retrieving token")
             }
             
+            self.toogleActivityIndicator(status: "off")
         }
         
     }
@@ -122,6 +153,20 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         
     }
     
+    func toogleActivityIndicator(status: String) {
+        
+        switch status {
+        case "on":
+            loadingView.isHidden = false
+            loadingIndicator.startAnimating()
+        case "off":
+            loadingView.isHidden = true
+            loadingIndicator.stopAnimating()
+        default:
+            break
+        }
+    }
+    
     func placeSpots() {
         
         let allAnnotations = self.carte.annotations
@@ -140,28 +185,64 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         
         for subJson in coll {
             
-            let nom = subJson["fields"]["nomvoie"].string!
+            let fields = subJson["fields"]
+            
+            let nom = fields["nomvoie"].string!
             let coordinates = subJson["geometry"]["coordinates"]
-            let type = subJson["fields"]["regpar"].string!
-            let annotation = BikeAnnotation(title: nom, type: type, coordinate: CLLocationCoordinate2D(latitude: coordinates[1].double!, longitude: coordinates[0].double!))
+            let type = fields["regpar"].string!
+            let size = fields["longueur_calculee"].double!.roundToDecimal(0)
+            let typeVoie = fields["typevoie"].string!
+            let numVoie = fields["numvoie"]
+            var address = ""
+            if String(describing: numVoie) != "null" {
+                address = "\(String(describing: numVoie)) \(typeVoie) \(nom)"
+            } else {
+                address = "\(typeVoie) \(nom)"
+            }
+            
+            
+            let annotation = BikeAnnotation(title: nom, type: type, coordinate: CLLocationCoordinate2D(latitude: coordinates[1].double!, longitude: coordinates[0].double!), size: size, address: address)
             
             carte.addAnnotation(annotation)
             
         }
     }
     
+    func openInMaps(annotation: BikeAnnotation, mode: String) {
+        
+        let coordinate = CLLocationCoordinate2DMake(annotation.coordinate.latitude, annotation.coordinate.longitude)
+        let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: coordinate, addressDictionary:nil))
+        mapItem.name = annotation.title
+        
+        if mode == "bike" {
+            mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeWalking])
+        } else {
+            mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving])
+        }
+        
+    }
+    
     func calculateInterary(destination: CLLocationCoordinate2D) {
         
-        self.deleteRoute()
+        var modeString = ""
         
-        let sourceLocation = CLLocationCoordinate2D(latitude:48.851942, longitude: 2.389628)
+        let sourceLocation = locationManager.location!.coordinate
         let sourcePlaceMark = MKPlacemark(coordinate: sourceLocation)
         let destinationPlaceMark = MKPlacemark(coordinate: destination)
         
         let directionRequest = MKDirections.Request()
         directionRequest.source = MKMapItem(placemark: sourcePlaceMark)
         directionRequest.destination = MKMapItem(placemark: destinationPlaceMark)
-        directionRequest.transportType = .automobile
+        
+        if mode == "bike" {
+            directionRequest.transportType = .walking
+            modeString = "vélo"
+        }
+        else {
+            directionRequest.transportType = .automobile
+            modeString = "deux roues motorisé"
+        }
+        
         
         let directions = MKDirections(request: directionRequest)
         directions.calculate { (response, error) in
@@ -176,7 +257,8 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             let route = directionResonse.routes[0]
             
             let travelTime = (route.expectedTravelTime / 60).roundToDecimal(1)
-            self.showTooltip(travelTime: travelTime)
+            self.tooltipTravelTime.text = "Situé à \(travelTime) minute(s) en \(modeString)"
+            
             
             //add rout to our mapview
             self.carte.addOverlay(route.polyline, level: .aboveRoads)
@@ -191,27 +273,83 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         let overlays = self.carte.overlays
         carte.removeOverlays(overlays)
         self.tooltipItinerary.isHidden = true
-        self.tooltipSuperview.isHidden = true
     }
     
-    func showTooltip(travelTime: Double) {
+    func showTooltip(annotation: BikeAnnotation) {
         
+        let coordinates = annotation.coordinate
+        
+        self.deleteRoute()
         self.tooltipItinerary.isHidden = false
-        self.tooltipTravelTime.text = "Situé à \(travelTime) mn"
-        
-        
+        self.tooltipItineraryView.isHidden = false
+        self.calculateInterary(destination: coordinates)
+        self.tooltipAddress.text = annotation.address
+        self.calculateSizeOfPark(size: annotation.size)
+        self.setIconForTooltip(type: annotation.type, color: annotation.markerTintColor)
+        self.setTooltipTitle(type: annotation.type)
+    
     }
-
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+    
+    func setTooltipTitle(type: String) {
         
-        if let annotation = view.annotation?.coordinate {
-            calculateInterary(destination: annotation)
+        switch type {
+        case "Vélos":
+            return self.tooltipTitle.text = "Parking à vélo"
+        case "Motos":
+            return self.tooltipTitle.text = "Parking deux-roues"
+        default:
+            return self.tooltipTitle.text = "Parking mixte"
         }
         
-        selectedAnnotation = view
+    }
+    
+    func setIconForTooltip(type: String, color: UIColor) {
+        
+        var image = "mix"
+        
+        if type == "Vélos" { image = "bike" }
+        if type == "Motos" { image = "moto" }
+        
+        self.tooltipTransportView.isHidden = false
+        self.tooltipTransportIcon.image = UIImage(named: image)
+        self.tooltipTransportView.backgroundColor = color
+    }
+    
+    func calculateSizeOfPark(size: Double) {
+        
+        if size <= 10 {
+            self.tooltipSizeView.backgroundColor = UIColor(hexString: "#ED7070")
+            self.tooltipSize.text = "Petit"
+        } else if size > 10 && size < 100 {
+            self.tooltipSizeView.backgroundColor = UIColor(hexString: "#ED9070")
+            self.tooltipSize.text = "Moyen"
+        } else {
+            self.tooltipSizeView.backgroundColor = UIColor(hexString: "#A6D58A")
+            self.tooltipSize.text = "Grande"
+        }
+        
+        self.tooltipSizeView.isHidden = false
         
     }
     
+//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        let touch = touches.first
+//        guard let location = touch?.location(in: self.view) else { return }
+//
+//        if !tooltipItinerary.frame.contains(location) {
+//            tooltipItinerary.isHidden = true
+//        }
+//
+//    }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        
+        if let annot = view.annotation as? BikeAnnotation {
+            selectedAnnotation = annot
+            self.showTooltip(annotation: annot)
+        }
+        
+    }
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let renderer = MKPolylineRenderer(overlay: overlay)
@@ -220,32 +358,24 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         return renderer
     }
     
-    func getPhoto(coord: CLLocationCoordinate2D) {
-        
-        let location = "\(coord.latitude),\(coord.longitude)"
-        
-        let url = URL(string: "https://maps.googleapis.com/maps/api/streetview?size=720x480&location=\(location)&fov=&heading=&pitch=-10&key=AIzaSyAYwYTtSyZwFCpdlHXuddfwstTnA3MVz6s")
-        
-        imageTooltipSuperview.kf.indicatorType = .activity
-        imageTooltipSuperview.kf.setImage(with: url)
-
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        getSpots(coord: carte.topCenterCoordinate(), distance: Int(carte.currentRadius()))
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let touch = touches.first
-        guard let location = touch?.location(in: self.view) else { return }
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
-        if !tooltipItinerary.frame.contains(location) {
-            tooltipItinerary.isHidden = true
-        }
+         manager.stopUpdatingLocation()
         
-        if !tooltipSuperview.frame.contains(location) {
-            tooltipSuperview.isHidden = true
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if (status == CLAuthorizationStatus.denied) {
+            // The user denied authorization
+        } else if (status == CLAuthorizationStatus.authorizedWhenInUse) {
+            setCenter()
         }
     }
-
     
-   
 }
 
 extension Double {
@@ -253,4 +383,34 @@ extension Double {
         let multiplier = pow(10, Double(fractionDigits))
         return Darwin.round(self * multiplier) / multiplier
     }
+}
+
+extension UIView {
+    
+    func dropShadow() {
+        self.layer.masksToBounds = false
+        self.layer.shadowColor = UIColor.black.cgColor
+        self.layer.shadowOpacity = 0.2
+        self.layer.shadowOffset = CGSize(width: 1, height: 1)
+        self.layer.shadowRadius = 5
+        self.layer.shadowPath = UIBezierPath(rect: self.bounds).cgPath
+        self.layer.shouldRasterize = true
+        self.layer.rasterizationScale = UIScreen.main.scale
+        
+    }
+}
+
+extension MKMapView {
+    
+    func topCenterCoordinate() -> CLLocationCoordinate2D {
+        return self.convert(CGPoint(x: self.frame.size.width / 2.0, y: 0), toCoordinateFrom: self)
+    }
+    
+    func currentRadius() -> Double {
+        let centerLocation = CLLocation(latitude: self.centerCoordinate.latitude, longitude: self.centerCoordinate.longitude)
+        let topCenterCoordinate = self.topCenterCoordinate()
+        let topCenterLocation = CLLocation(latitude: topCenterCoordinate.latitude, longitude: topCenterCoordinate.longitude)
+        return centerLocation.distance(from: topCenterLocation)
+    }
+    
 }

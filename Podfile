@@ -7,25 +7,25 @@ target 'parkit' do
 
   # Pods for parkit
 
-  pod 'Firebase/Core'
-  pod 'Firebase/Database'
-  pod 'Firebase/Auth'
-  pod 'Firebase/Storage'
+#  pod 'Firebase/Core'
+#  pod 'Firebase/Database'
+#  pod 'Firebase/Auth'
+#  pod 'Firebase/Storage'
 
   # Divers
 
-  pod 'Kingfisher'
+#  pod 'Kingfisher'
   pod 'Alamofire'
   pod 'SwiftyJSON'
-  pod 'Haptica'
+#  pod 'Haptica'
   pod 'NVActivityIndicatorView'
   pod 'ChameleonFramework'
-  pod 'IQKeyboardManagerSwift'
-  pod 'KeyboardHideManager'
-  pod 'FontAwesome.swift'
-  pod 'Hero'
-  pod 'CFAlertViewController'
-  pod 'Pastel'
-  pod 'OneSignal', '>= 2.6.2', '< 3.0'
+#  pod 'IQKeyboardManagerSwift'
+#  pod 'KeyboardHideManager'
+#  pod 'FontAwesome.swift'
+#  pod 'Hero'
+#  pod 'CFAlertViewController'
+#  pod 'Pastel'
+#  pod 'OneSignal', '>= 2.6.2', '< 3.0'
 
 end
