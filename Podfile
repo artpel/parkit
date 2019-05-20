@@ -20,6 +20,7 @@ target 'parkit' do
 #  pod 'Haptica'
   pod 'NVActivityIndicatorView'
   pod 'ChameleonFramework'
+  pod 'Cluster'
 #  pod 'IQKeyboardManagerSwift'
 #  pod 'KeyboardHideManager'
 #  pod 'FontAwesome.swift'

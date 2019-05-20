@@ -13,6 +13,7 @@ import SwiftyJSON
 import CoreLocation
 import NVActivityIndicatorView
 import ChameleonFramework
+import Cluster
 
 class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
  
@@ -29,7 +30,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     @IBOutlet weak var loadingView: UIView!
     @IBOutlet weak var loadingIndicator: NVActivityIndicatorView!
     
-    @IBAction func modeSwitcged(_ sender: UISegmentedControl) {
+    @IBAction func modeSwitched(_ sender: UISegmentedControl) {
         
         self.deleteRoute()
         
@@ -52,7 +53,6 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         
     }
     
-    
     var mode = "bike"
     let locationManager = CLLocationManager()
     var selectedAnnotation: BikeAnnotation?
@@ -60,6 +60,8 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     var spotVelos = [JSON]()
     var spotMotos = [JSON]()
     var spotMixte = [JSON]()
+    
+    let clusterManager = ClusterManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,7 +89,6 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
                 locationManager.requestWhenInUseAuthorization()
             case .authorizedAlways, .authorizedWhenInUse:
                 locationManager.startUpdatingLocation()
-                
             }
         } else {
             print("Location services are not enabled")
@@ -104,7 +105,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     func setCenter() {
         
         let initialLocation = locationManager.location!
-        let regionRadius: CLLocationDistance = 1000
+        let regionRadius: CLLocationDistance = 500
         let coordinateRegion = MKCoordinateRegion(center: initialLocation.coordinate, latitudinalMeters: regionRadius * 2.0, longitudinalMeters: regionRadius * 2.0)
         carte.setRegion(coordinateRegion, animated: true)
         
@@ -121,12 +122,17 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         
         let coordinates = "\(coord.latitude),\(coord.longitude),\(distance)"
         
-        let url = "https://opendata.paris.fr/api/records/1.0/search/?dataset=stationnement-voie-publique-emplacements&rows=500&facet=regpri&facet=regpar&facet=typsta&facet=arrond&refine.regpri=2+ROUES&geofilter.distance\(coordinates)"
+        let url = "https://opendata.paris.fr/api/records/1.0/search/?dataset=stationnement-voie-publique-emplacements&rows=1000&facet=regpri&facet=regpar&facet=typsta&facet=arrond&refine.regpri=2+ROUES&geofilter.distance=\(coordinates)"
         
         self.toogleActivityIndicator(status: "on")
         
         Alamofire.request(url).responseJSON { (responseData) -> Void in
             if let response = responseData.result.value {
+                
+                let res = JSON(response)
+//                let rsu = res["records"][0]
+                
+//                print(res["nbhits"].double!)
                 self.sortSpots(spots: JSON(response))
             } else {
                 print("Error retrieving token")
@@ -187,22 +193,22 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             
             let fields = subJson["fields"]
             
-            let nom = fields["nomvoie"].string!
+//            let nom = fields["nomvoie"].string
             let coordinates = subJson["geometry"]["coordinates"]
             let type = fields["regpar"].string!
             let size = fields["longueur_calculee"].double!.roundToDecimal(0)
-            let typeVoie = fields["typevoie"].string!
+            let typeVoie = fields["typevoie"].string
             let numVoie = fields["numvoie"]
-            var address = ""
-            if String(describing: numVoie) != "null" {
-                address = "\(String(describing: numVoie)) \(typeVoie) \(nom)"
-            } else {
-                address = "\(typeVoie) \(nom)"
-            }
+//            var address = ""
+//            if String(describing: numVoie) != "null" {
+//                address = "\(String(describing: numVoie)) \(typeVoie) \(nom)"
+//            } else {
+//                address = "\(typeVoie) \(nom)"
+//            }
             
             
-            let annotation = BikeAnnotation(title: nom, type: type, coordinate: CLLocationCoordinate2D(latitude: coordinates[1].double!, longitude: coordinates[0].double!), size: size, address: address)
-            
+            let annotation = BikeAnnotation(title: "test", type: type, coordinate: CLLocationCoordinate2D(latitude: coordinates[1].double!, longitude: coordinates[0].double!), size: size)
+            clusterManager.add(annotation)
             carte.addAnnotation(annotation)
             
         }
@@ -351,6 +357,8 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         
     }
     
+    
+    
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let renderer = MKPolylineRenderer(overlay: overlay)
         renderer.strokeColor = UIColor(hexString: "#FFC107")
@@ -359,7 +367,10 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     }
     
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        getSpots(coord: carte.topCenterCoordinate(), distance: Int(carte.currentRadius()))
+        getSpots(coord: carte.centerCoordinate, distance: Int(carte.currentRadius()))
+//        clusterManager.reload(mapView: mapView) { finished in
+//            print(finished)
+//        }
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -413,4 +424,15 @@ extension MKMapView {
         return centerLocation.distance(from: topCenterLocation)
     }
     
+}
+
+class CountClusterAnnotationView: ClusterAnnotationView {
+    override func configure() {
+        super.configure()
+        
+        self.layer.cornerRadius = self.frame.width / 2
+        self.layer.masksToBounds = true
+        self.layer.borderColor = UIColor.white.cgColor
+        self.layer.borderWidth = 1.5
+    }
 }

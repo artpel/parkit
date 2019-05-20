@@ -16,9 +16,6 @@ class BikeMarkerView: MKMarkerAnnotationView {
         willSet {
     
             guard let bikeAnnotation = newValue as? BikeAnnotation else { return }
-//            canShowCallout = true
-//            calloutOffset = CGPoint(x: -5, y: 5)
-//            rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
             
             markerTintColor = bikeAnnotation.markerTintColor
             

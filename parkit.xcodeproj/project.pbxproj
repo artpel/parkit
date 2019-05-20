@@ -19,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		760A4EC22292D5040045A6BE /* parkit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = parkit.entitlements; sourceTree = "<group>"; };
 		7612DEA222661D8700B5EC43 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7616473C228D4AC900C1C5D3 /* MapVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
 		7655E14522661AFF0088DFAA /* parkit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = parkit.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -99,6 +100,7 @@
 		7655E14722661AFF0088DFAA /* parkit */ = {
 			isa = PBXGroup;
 			children = (
+				760A4EC22292D5040045A6BE /* parkit.entitlements */,
 				7655E14822661AFF0088DFAA /* AppDelegate.swift */,
 				7616473B228D4AC900C1C5D3 /* Controllers */,
 				7616473E228D4AD800C1C5D3 /* Models */,
@@ -155,6 +157,11 @@
 				TargetAttributes = {
 					7655E14422661AFF0088DFAA = {
 						CreatedOnToolsVersion = 10.2;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -202,6 +209,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-parkit/Pods-parkit-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
+				"${BUILT_PRODUCTS_DIR}/Cluster/Cluster.framework",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
@@ -211,6 +219,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cluster.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
@@ -398,6 +407,7 @@
 			baseConfigurationReference = D5A79A1E8221D9176B7F24FD /* Pods-parkit.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = parkit/parkit.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LKH8T246BV;
 				INFOPLIST_FILE = parkit/Info.plist;
@@ -418,6 +428,7 @@
 			baseConfigurationReference = 8B5400DA02B1CB5F1548ACB3 /* Pods-parkit.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = parkit/parkit.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LKH8T246BV;
 				INFOPLIST_FILE = parkit/Info.plist;
