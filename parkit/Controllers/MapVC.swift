@@ -110,8 +110,23 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         carte.setRegion(coordinateRegion, animated: true)
         
         carte.showsUserLocation = true
-        carte.register(BikeMarkerView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+        carte.register(BikeMarkerView.self, forAnnotationViewWithReuseIdentifier: "bike")
+        carte.register(CountClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: "cluster")
     
+    }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        // Don't want to show a custom image if the annotation is the user's location.
+        guard !(annotation is MKUserLocation) else {
+            return nil
+        }
+        
+        if let annotation = annotation as? ClusterAnnotation {
+            return CountClusterAnnotationView(annotation: annotation, reuseIdentifier: "cluster")
+        } else {
+            return BikeMarkerView(annotation: annotation, reuseIdentifier: "bike")
+        }
     }
     
     func getSpots(coord: CLLocationCoordinate2D, distance: Int) {
@@ -128,11 +143,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         
         Alamofire.request(url).responseJSON { (responseData) -> Void in
             if let response = responseData.result.value {
-                
-                let res = JSON(response)
-//                let rsu = res["records"][0]
-                
-//                print(res["nbhits"].double!)
+            
                 self.sortSpots(spots: JSON(response))
             } else {
                 print("Error retrieving token")
@@ -177,6 +188,8 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         
         let allAnnotations = self.carte.annotations
         carte.removeAnnotations(allAnnotations)
+        clusterManager.removeAll()
+        clusterManager.reload(mapView: carte)
         
         if mode == "bike" {
             loopSpots(coll: self.spotVelos)
@@ -206,10 +219,10 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
 //                address = "\(typeVoie) \(nom)"
 //            }
             
-            
             let annotation = BikeAnnotation(title: "test", type: type, coordinate: CLLocationCoordinate2D(latitude: coordinates[1].double!, longitude: coordinates[0].double!), size: size)
             clusterManager.add(annotation)
-            carte.addAnnotation(annotation)
+            clusterManager.reload(mapView: carte)
+//            carte.addAnnotation(annotation)
             
         }
     }
@@ -249,7 +262,6 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             modeString = "deux roues motorisé"
         }
         
-        
         let directions = MKDirections(request: directionRequest)
         directions.calculate { (response, error) in
             guard let directionResonse = response else {
@@ -261,17 +273,18 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             
             //get route and assign to our route variable
             let route = directionResonse.routes[0]
-            
             let travelTime = (route.expectedTravelTime / 60).roundToDecimal(1)
             self.tooltipTravelTime.text = "Situé à \(travelTime) minute(s) en \(modeString)"
             
             
-            //add rout to our mapview
             self.carte.addOverlay(route.polyline, level: .aboveRoads)
             
             //setting rect of our mapview to fit the two locations
-//            let rect = route.polyline.boundingMapRect
-//            self.carte.setRegion(MKCoordinateRegion(rect), animated: true)
+            let rect = route.polyline.boundingMapRect
+            
+            let recta = rect.offsetBy(dx: 200, dy: 200)
+
+            self.carte.setRegion(MKCoordinateRegion(recta), animated: true)
         }
     }
     
@@ -326,7 +339,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         if size <= 10 {
             self.tooltipSizeView.backgroundColor = UIColor(hexString: "#ED7070")
             self.tooltipSize.text = "Petit"
-        } else if size > 10 && size < 100 {
+        } else if size > 10 && size < 50 {
             self.tooltipSizeView.backgroundColor = UIColor(hexString: "#ED9070")
             self.tooltipSize.text = "Moyen"
         } else {
@@ -338,15 +351,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         
     }
     
-//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        let touch = touches.first
-//        guard let location = touch?.location(in: self.view) else { return }
-//
-//        if !tooltipItinerary.frame.contains(location) {
-//            tooltipItinerary.isHidden = true
-//        }
-//
-//    }
+    // Map View
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         
@@ -357,8 +362,6 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         
     }
     
-    
-    
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let renderer = MKPolylineRenderer(overlay: overlay)
         renderer.strokeColor = UIColor(hexString: "#FFC107")
@@ -368,15 +371,12 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         getSpots(coord: carte.centerCoordinate, distance: Int(carte.currentRadius()))
-//        clusterManager.reload(mapView: mapView) { finished in
-//            print(finished)
-//        }
     }
     
+    // Location manager
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
          manager.stopUpdatingLocation()
-        
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
@@ -427,12 +427,40 @@ extension MKMapView {
 }
 
 class CountClusterAnnotationView: ClusterAnnotationView {
+    
     override func configure() {
         super.configure()
         
+        guard let annotation = annotation as? ClusterAnnotation else { return }
+        let count = annotation.annotations.count
+        let diameter = radius(for: count) * 2
+        
+        self.frame.size = CGSize(width: diameter, height: diameter)
         self.layer.cornerRadius = self.frame.width / 2
         self.layer.masksToBounds = true
+        let bgColor = color(for: count)
+        self.layer.backgroundColor = bgColor
         self.layer.borderColor = UIColor.white.cgColor
         self.layer.borderWidth = 1.5
+    }
+    
+    func color(for count: Int) -> CGColor {
+        if count < 5 {
+            return UIColor.red.cgColor
+        } else if count < 10 {
+            return UIColor.yellow.cgColor
+        } else {
+            return UIColor.green.cgColor
+        }
+    }
+    
+    func radius(for count: Int) -> CGFloat {
+        if count < 5 {
+            return 12
+        } else if count < 10 {
+            return 16
+        } else {
+            return 20
+        }
     }
 }
