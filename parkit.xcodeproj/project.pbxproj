@@ -10,6 +10,7 @@
 		03ECA07126DDA87CACB42291 /* Pods_parkit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A90CF55D8A3077B6B10B298 /* Pods_parkit.framework */; };
 		7612DEA322661D8700B5EC43 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7612DEA222661D8700B5EC43 /* GoogleService-Info.plist */; };
 		7616473D228D4AC900C1C5D3 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7616473C228D4AC900C1C5D3 /* MapVC.swift */; };
+		764199692295B23900801A9A /* BikeClusterAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764199682295B23900801A9A /* BikeClusterAnnotationView.swift */; };
 		7655E14922661AFF0088DFAA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7655E14822661AFF0088DFAA /* AppDelegate.swift */; };
 		7655E15022661AFF0088DFAA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7655E14E22661AFF0088DFAA /* Main.storyboard */; };
 		7655E15222661B010088DFAA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7655E15122661B010088DFAA /* Assets.xcassets */; };
@@ -22,6 +23,7 @@
 		760A4EC22292D5040045A6BE /* parkit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = parkit.entitlements; sourceTree = "<group>"; };
 		7612DEA222661D8700B5EC43 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7616473C228D4AC900C1C5D3 /* MapVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
+		764199682295B23900801A9A /* BikeClusterAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BikeClusterAnnotationView.swift; sourceTree = "<group>"; };
 		7655E14522661AFF0088DFAA /* parkit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = parkit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7655E14822661AFF0088DFAA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7655E14F22661AFF0088DFAA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -74,6 +76,7 @@
 			isa = PBXGroup;
 			children = (
 				76836D1A228D632F00906752 /* BikeAnnotation.swift */,
+				764199682295B23900801A9A /* BikeClusterAnnotationView.swift */,
 				767373E7228D9B0000A6AEC0 /* BikeMarkerView.swift */,
 			);
 			path = Views;
@@ -258,6 +261,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				767373E8228D9B0000A6AEC0 /* BikeMarkerView.swift in Sources */,
+				764199692295B23900801A9A /* BikeClusterAnnotationView.swift in Sources */,
 				76836D1B228D632F00906752 /* BikeAnnotation.swift in Sources */,
 				7616473D228D4AC900C1C5D3 /* MapVC.swift in Sources */,
 				7655E14922661AFF0088DFAA /* AppDelegate.swift in Sources */,

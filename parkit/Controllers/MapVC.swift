@@ -111,7 +111,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         
         carte.showsUserLocation = true
         carte.register(BikeMarkerView.self, forAnnotationViewWithReuseIdentifier: "bike")
-        carte.register(CountClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: "cluster")
+        carte.register(BikeClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: "cluster")
     
     }
     
@@ -123,7 +123,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         }
         
         if let annotation = annotation as? ClusterAnnotation {
-            return CountClusterAnnotationView(annotation: annotation, reuseIdentifier: "cluster")
+            return BikeClusterAnnotationView(annotation: annotation, reuseIdentifier: "cluster")
         } else {
             return BikeMarkerView(annotation: annotation, reuseIdentifier: "bike")
         }
@@ -426,41 +426,4 @@ extension MKMapView {
     
 }
 
-class CountClusterAnnotationView: ClusterAnnotationView {
-    
-    override func configure() {
-        super.configure()
-        
-        guard let annotation = annotation as? ClusterAnnotation else { return }
-        let count = annotation.annotations.count
-        let diameter = radius(for: count) * 2
-        
-        self.frame.size = CGSize(width: diameter, height: diameter)
-        self.layer.cornerRadius = self.frame.width / 2
-        self.layer.masksToBounds = true
-        let bgColor = color(for: count)
-        self.layer.backgroundColor = bgColor
-        self.layer.borderColor = UIColor.white.cgColor
-        self.layer.borderWidth = 1.5
-    }
-    
-    func color(for count: Int) -> CGColor {
-        if count < 5 {
-            return UIColor.red.cgColor
-        } else if count < 10 {
-            return UIColor.yellow.cgColor
-        } else {
-            return UIColor.green.cgColor
-        }
-    }
-    
-    func radius(for count: Int) -> CGFloat {
-        if count < 5 {
-            return 12
-        } else if count < 10 {
-            return 16
-        } else {
-            return 20
-        }
-    }
-}
+
