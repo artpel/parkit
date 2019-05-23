@@ -9,6 +9,7 @@
 import Foundation
 import MapKit
 import Cluster
+import ChameleonFramework
 
 class BikeClusterAnnotationView: ClusterAnnotationView {
     
@@ -30,11 +31,11 @@ class BikeClusterAnnotationView: ClusterAnnotationView {
     
     func color(for count: Int) -> CGColor {
         if count < 5 {
-            return UIColor.red.cgColor
+            return UIColor(hexString: "#78e08f")!.cgColor
         } else if count < 10 {
-            return UIColor.yellow.cgColor
+            return UIColor(hexString: "#fad390")!.cgColor
         } else {
-            return UIColor.green.cgColor
+            return UIColor(hexString: "#E68364")!.cgColor
         }
     }
     

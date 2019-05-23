@@ -14,6 +14,8 @@ import CoreLocation
 import NVActivityIndicatorView
 import ChameleonFramework
 import Cluster
+import SnapKit
+import FontAwesome_swift
 
 class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
  
@@ -29,6 +31,11 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     @IBOutlet weak var tooltipSizeView: UIView!
     @IBOutlet weak var loadingView: UIView!
     @IBOutlet weak var loadingIndicator: NVActivityIndicatorView!
+    @IBOutlet weak var locationButtonView: UIView!
+    @IBOutlet weak var locationButton: UIButton!
+    @IBAction func locationButtonPressed(_ sender: Any) {
+        setCenter()
+    }
     
     @IBAction func modeSwitched(_ sender: UISegmentedControl) {
         
@@ -44,6 +51,8 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         default:
             break
         }
+        
+        setViewsAtBottom(vues: [self.locationButtonView])
         
     }
     
@@ -66,15 +75,36 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setRoundView(vue: tooltipItinerary)
+        setRoundView(vue: tooltipItinerary, radius: 8)
         tooltipItinerary.dropShadow()
-        setRoundView(vue: loadingView)
-        setRoundView(vue: tooltipSizeView)
-        setRoundView(vue: tooltipTransportView)
-        setRoundView(vue: tooltipItineraryView)
+        setRoundView(vue: loadingView, radius: 8)
+        setRoundView(vue: tooltipSizeView, radius: 4)
+        setRoundView(vue: tooltipTransportView, radius: 8)
+        setRoundView(vue: tooltipItineraryView, radius: 4)
+        locationButtonView.layer.cornerRadius = 8
+        locationButtonView.layer.masksToBounds = true
+        locationButton.titleLabel?.font = UIFont.fontAwesome(ofSize: 15, style: FontAwesomeStyle.solid)
+        locationButton.setTitle(String.fontAwesomeIcon(name: .locationArrow), for: .normal)
         
         getUserLocation()
         
+        
+        
+        locationButtonView.snp.makeConstraints { (make) -> Void in
+            let superview = self.view
+            make.bottom.equalTo(superview!).offset(-8)
+        }
+
+        
+    }
+    
+    func setViewsAtBottom(vues: [UIView]) {
+        for vue in vues {
+            vue.snp.remakeConstraints { (make) -> Void in
+                let superview = self.view
+                make.bottom.equalTo(superview!).offset(-8)
+            }
+        }
     }
     
     func getUserLocation() {
@@ -96,9 +126,9 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         
     }
     
-    func setRoundView(vue: UIView) {
+    func setRoundView(vue: UIView, radius: Int) {
         vue.isHidden = true
-        vue.layer.cornerRadius = 8
+        vue.layer.cornerRadius = CGFloat(integerLiteral: radius)
         vue.layer.masksToBounds = true
     }
 
@@ -112,7 +142,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         carte.showsUserLocation = true
         carte.register(BikeMarkerView.self, forAnnotationViewWithReuseIdentifier: "bike")
         carte.register(BikeClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: "cluster")
-    
+        
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -206,23 +236,36 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             
             let fields = subJson["fields"]
             
-//            let nom = fields["nomvoie"].string
+            let name: String!
+            let address: String!
+            let typeStreet: String!
+
+            
+            if let typeVoie = fields["typevoie"].string {
+                typeStreet = typeVoie
+            } else {
+                typeStreet = "inconnu"
+            }
+            
             let coordinates = subJson["geometry"]["coordinates"]
             let type = fields["regpar"].string!
             let size = fields["longueur_calculee"].double!.roundToDecimal(0)
-            let typeVoie = fields["typevoie"].string
-            let numVoie = fields["numvoie"]
-//            var address = ""
-//            if String(describing: numVoie) != "null" {
-//                address = "\(String(describing: numVoie)) \(typeVoie) \(nom)"
-//            } else {
-//                address = "\(typeVoie) \(nom)"
-//            }
             
-            let annotation = BikeAnnotation(title: "test", type: type, coordinate: CLLocationCoordinate2D(latitude: coordinates[1].double!, longitude: coordinates[0].double!), size: size)
+            if let nom = fields["nomvoie"].string {
+                name = nom
+            } else {
+                name = "inconnu"
+            }
+            
+            if let numVoie = fields["numvoie"].int {
+                address = "\(numVoie) \(typeStreet!) \(name!)"
+            } else {
+                address = "\(typeStreet!) \(name!)"
+            }
+            
+            let annotation = BikeAnnotation(title: name, type: type, coordinate: CLLocationCoordinate2D(latitude: coordinates[1].double!, longitude: coordinates[0].double!), size: size, address: address)
             clusterManager.add(annotation)
             clusterManager.reload(mapView: carte)
-//            carte.addAnnotation(annotation)
             
         }
     }
@@ -281,9 +324,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             
             //setting rect of our mapview to fit the two locations
             let rect = route.polyline.boundingMapRect
-            
-            let recta = rect.offsetBy(dx: 200, dy: 200)
-
+            let recta = rect.insetBy(dx: -500, dy: -500)
             self.carte.setRegion(MKCoordinateRegion(recta), animated: true)
         }
     }
@@ -292,9 +333,15 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         let overlays = self.carte.overlays
         carte.removeOverlays(overlays)
         self.tooltipItinerary.isHidden = true
+        
     }
     
     func showTooltip(annotation: BikeAnnotation) {
+
+        locationButtonView.snp.remakeConstraints { (make) -> Void in
+            let superview = self.view
+            make.bottom.equalTo(superview!).offset(-140)
+        }
         
         let coordinates = annotation.coordinate
         

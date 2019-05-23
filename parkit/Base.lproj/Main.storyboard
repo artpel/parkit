@@ -150,7 +150,7 @@
                                 </connections>
                             </segmentedControl>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bP1-eY-Ndf">
-                                <rect key="frame" x="16" y="25" width="29" height="29"/>
+                                <rect key="frame" x="10" y="25" width="29" height="29"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dXI-yC-Oha" customClass="NVActivityIndicatorView" customModule="NVActivityIndicatorView">
                                         <rect key="frame" x="4.5" y="4.5" width="20" height="20"/>
@@ -175,14 +175,53 @@
                                     <constraint firstItem="dXI-yC-Oha" firstAttribute="centerX" secondItem="bP1-eY-Ndf" secondAttribute="centerX" id="g2I-or-Jjm"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EgH-uw-bDg">
+                                <rect key="frame" x="330" y="490" width="35" height="35"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tkx-kZ-LAi">
+                                        <rect key="frame" x="0.0" y="0.0" width="35" height="35"/>
+                                        <state key="normal" title="l">
+                                            <color key="titleColor" red="1" green="0.75686274509999996" blue="0.027450980390000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="locationButtonPressed:" destination="9pv-A4-QxB" eventType="touchUpInside" id="HrZ-24-bbC"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="tkx-kZ-LAi" secondAttribute="bottom" id="DkJ-Ro-4WH"/>
+                                    <constraint firstItem="tkx-kZ-LAi" firstAttribute="leading" secondItem="EgH-uw-bDg" secondAttribute="leading" id="ORE-zQ-uZM"/>
+                                    <constraint firstAttribute="width" constant="35" id="fDj-en-3xI"/>
+                                    <constraint firstAttribute="height" constant="35" id="gmH-ND-OgG"/>
+                                    <constraint firstItem="tkx-kZ-LAi" firstAttribute="top" secondItem="EgH-uw-bDg" secondAttribute="top" id="pNP-al-sRZ"/>
+                                    <constraint firstAttribute="trailing" secondItem="tkx-kZ-LAi" secondAttribute="trailing" id="s5g-2u-uVG"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xgj-7d-BAk">
+                                <rect key="frame" x="10" y="490" width="166" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gjJ-gj-1ai">
+                                <rect key="frame" x="336" y="25" width="29" height="29"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="29" id="RAS-Pj-Fjx"/>
+                                    <constraint firstAttribute="width" constant="29" id="cJm-Nk-nn8"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="bP1-eY-Ndf" firstAttribute="top" secondItem="PQr-Ze-W5v" secondAttribute="top" constant="5" id="1l4-RD-6TE"/>
-                            <constraint firstItem="bP1-eY-Ndf" firstAttribute="leading" secondItem="PQr-Ze-W5v" secondAttribute="leading" constant="16" id="5MW-Zn-uqg"/>
+                            <constraint firstItem="bP1-eY-Ndf" firstAttribute="leading" secondItem="PQr-Ze-W5v" secondAttribute="leading" constant="10" id="5MW-Zn-uqg"/>
+                            <constraint firstItem="gjJ-gj-1ai" firstAttribute="top" secondItem="PQr-Ze-W5v" secondAttribute="top" constant="5" id="5W6-QD-FdY"/>
                             <constraint firstItem="LlW-zR-Z8x" firstAttribute="leading" secondItem="PQr-Ze-W5v" secondAttribute="leading" constant="10" id="GEd-pp-gwr"/>
                             <constraint firstItem="PQr-Ze-W5v" firstAttribute="trailing" secondItem="LlW-zR-Z8x" secondAttribute="trailing" constant="10" id="Oow-xT-gp1"/>
+                            <constraint firstItem="PQr-Ze-W5v" firstAttribute="trailing" secondItem="EgH-uw-bDg" secondAttribute="trailing" constant="10" id="Pnt-Xd-Pbq"/>
                             <constraint firstItem="H5S-4c-yym" firstAttribute="top" secondItem="PQr-Ze-W5v" secondAttribute="top" constant="5" id="Q9N-TK-w4F"/>
+                            <constraint firstItem="PQr-Ze-W5v" firstAttribute="trailing" secondItem="gjJ-gj-1ai" secondAttribute="trailing" constant="10" id="Upc-Gg-QyX"/>
                             <constraint firstItem="H5S-4c-yym" firstAttribute="centerX" secondItem="tsR-hK-woN" secondAttribute="centerX" id="VWB-JQ-9L1"/>
                             <constraint firstItem="0Rb-wT-LEY" firstAttribute="trailing" secondItem="PQr-Ze-W5v" secondAttribute="trailing" id="Zsv-uB-MQs"/>
                             <constraint firstItem="0Rb-wT-LEY" firstAttribute="top" secondItem="tsR-hK-woN" secondAttribute="top" id="dLa-G5-Od1"/>
@@ -191,11 +230,19 @@
                             <constraint firstItem="PQr-Ze-W5v" firstAttribute="bottom" secondItem="LlW-zR-Z8x" secondAttribute="bottom" constant="10" id="wzP-kE-Tfs"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="PQr-Ze-W5v"/>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="xgj-7d-BAk"/>
+                                <exclude reference="gjJ-gj-1ai"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="carte" destination="0Rb-wT-LEY" id="cBu-ga-vfz"/>
                         <outlet property="loadingIndicator" destination="dXI-yC-Oha" id="97B-hn-mF0"/>
                         <outlet property="loadingView" destination="bP1-eY-Ndf" id="Q7T-fa-sHA"/>
+                        <outlet property="locationButton" destination="tkx-kZ-LAi" id="T6a-P5-BlP"/>
+                        <outlet property="locationButtonView" destination="EgH-uw-bDg" id="Hfj-ND-g1v"/>
                         <outlet property="tooltipAddress" destination="QwV-O2-OrJ" id="HzF-pI-Tzy"/>
                         <outlet property="tooltipItinerary" destination="LlW-zR-Z8x" id="QYc-Rw-853"/>
                         <outlet property="tooltipItineraryView" destination="fhJ-Sg-qRJ" id="mh4-vk-E3f"/>

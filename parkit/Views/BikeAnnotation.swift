@@ -18,12 +18,12 @@ class BikeAnnotation: NSObject, MKAnnotation {
     var size: Double
     var address: String
     
-    init(title: String, type: String, coordinate: CLLocationCoordinate2D, size: Double) {
+    init(title: String, type: String, coordinate: CLLocationCoordinate2D, size: Double, address: String) {
         self.title = title
         self.type = type
         self.coordinate = coordinate
         self.size = size
-        self.address = "test"
+        self.address = address
         
         super.init()
     }
@@ -31,11 +31,11 @@ class BikeAnnotation: NSObject, MKAnnotation {
     var markerTintColor: UIColor  {
         switch type {
         case "Vélos":
-            return UIColor(hexString:"#78e08f")
+            return UIColor(hexString:"#00cec9")
         case "Motos":
-            return UIColor(hexString:"#e55039")
+            return UIColor(hexString:"#6c5ce7")
         case "Mixte":
-            return UIColor(hexString:"#6a89cc")
+            return UIColor(hexString:"#0984e3")
         default:
             return .red
         }
