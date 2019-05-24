@@ -167,7 +167,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         
         let coordinates = "\(coord.latitude),\(coord.longitude),\(distance)"
         
-        let url = "https://opendata.paris.fr/api/records/1.0/search/?dataset=stationnement-voie-publique-emplacements&rows=1000&facet=regpri&facet=regpar&facet=typsta&facet=arrond&refine.regpri=2+ROUES&geofilter.distance=\(coordinates)"
+        let url = "https://parkit-server.herokuapp.com/getParks"
         
         self.toogleActivityIndicator(status: "on")
         
@@ -186,9 +186,9 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     func sortSpots(spots: JSON) {
         
-        for (_, subJson) in spots["records"] {
+        for (_, subJson) in spots {
             
-            let field = subJson["fields"]["regpar"].string!
+            let field = subJson["type"].string!
             
             if field == "Vélos" { self.spotVelos.append(subJson) }
             else if field == "Motos" { self.spotMotos.append(subJson) }
@@ -234,36 +234,15 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         
         for subJson in coll {
             
-            let fields = subJson["fields"]
+            let type = subJson["type"].string!
+            let address = subJson["address"].string!
+            let size = subJson["size"].double!
+            let lat = Double(subJson["coordinates"]["lat"].string!)!
+            let long = Double(subJson["coordinates"]["lon"].string!)!
             
-            let name: String!
-            let address: String!
-            let typeStreet: String!
-
+           
             
-            if let typeVoie = fields["typevoie"].string {
-                typeStreet = typeVoie
-            } else {
-                typeStreet = "inconnu"
-            }
-            
-            let coordinates = subJson["geometry"]["coordinates"]
-            let type = fields["regpar"].string!
-            let size = fields["longueur_calculee"].double!.roundToDecimal(0)
-            
-            if let nom = fields["nomvoie"].string {
-                name = nom
-            } else {
-                name = "inconnu"
-            }
-            
-            if let numVoie = fields["numvoie"].int {
-                address = "\(numVoie) \(typeStreet!) \(name!)"
-            } else {
-                address = "\(typeStreet!) \(name!)"
-            }
-            
-            let annotation = BikeAnnotation(title: name, type: type, coordinate: CLLocationCoordinate2D(latitude: coordinates[1].double!, longitude: coordinates[0].double!), size: size, address: address)
+            let annotation = BikeAnnotation(title: "test", type: type, coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), size: size, address: address)
             clusterManager.add(annotation)
             clusterManager.reload(mapView: carte)
             
@@ -302,7 +281,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         }
         else {
             directionRequest.transportType = .automobile
-            modeString = "deux roues motorisé"
+            modeString = "moto/scooter"
         }
         
         let directions = MKDirections(request: directionRequest)
@@ -318,14 +297,13 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             let route = directionResonse.routes[0]
             let travelTime = (route.expectedTravelTime / 60).roundToDecimal(1)
             self.tooltipTravelTime.text = "Situé à \(travelTime) minute(s) en \(modeString)"
-            
-            
             self.carte.addOverlay(route.polyline, level: .aboveRoads)
             
             //setting rect of our mapview to fit the two locations
-            let rect = route.polyline.boundingMapRect
-            let recta = rect.insetBy(dx: -500, dy: -500)
-            self.carte.setRegion(MKCoordinateRegion(recta), animated: true)
+//            let rect = route.polyline.boundingMapRect
+//            let recta = rect.insetBy(dx: -1200, dy: -1200)
+//            let rectb = recta.offsetBy(dx: 0, dy: 400)
+//            self.carte.setRegion(MKCoordinateRegion(rectb), animated: true)
         }
     }
     
