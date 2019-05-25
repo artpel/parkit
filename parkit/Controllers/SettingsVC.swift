@@ -8,25 +8,29 @@
 
 import UIKit
 import CoreData
+import Motion
 
 class SettingsVC: UIViewController {
 
     @IBOutlet weak var versionLabel: UILabel!
     
+    @IBAction func closeSettings(_ sender: Any) {
+        
+    }
+    @IBOutlet weak var closeSettings: UIButton!
     @IBAction func resetData(_ sender: Any) {
         resetAllRecords(in: "Park")
     }
     
-    override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
         
+       
         UserDefaults.standard.set("bike", forKey: "mode")
     }
     
     func resetAllRecords(in entity : String) {
-        
-        
-        
+
         let context = ( UIApplication.shared.delegate as! AppDelegate ).persistentContainer.viewContext
         let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)

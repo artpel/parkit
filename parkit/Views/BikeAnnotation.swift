@@ -17,31 +17,46 @@ class BikeAnnotation: NSObject, MKAnnotation {
     var coordinate: CLLocationCoordinate2D
     var size: Double
     var address: String
+    var indexPark: String
+    var park:Bool = false
     
-    init(type: String, coordinate: CLLocationCoordinate2D, size: Double, address: String) {
+    init(type: String, coordinate: CLLocationCoordinate2D, size: Double, address: String, indexPark: String, park: Bool) {
 //        self.title = title
         self.type = type
         self.coordinate = coordinate
         self.size = size
         self.address = address
-        
+        self.indexPark = indexPark
+        self.park = park
         super.init()
     }
     
+
     var markerTintColor: UIColor  {
-        switch type {
-        case "Vélos":
-            return UIColor(hexString:"#00cec9")
-        case "Motos":
-            return UIColor(hexString:"#6c5ce7")
-        case "Mixte":
-            return UIColor(hexString:"#0984e3")
-        default:
-            return .red
+        
+        var colorous: UIColor
+        
+        if type == "Vélos" {
+             colorous = UIColor(hexString:"#00cec9")
+        } else if type == "Motos" {
+            colorous = UIColor(hexString:"#6c5ce7")
+        } else if type == "Mixte" {
+            colorous = UIColor(hexString:"#0984e3")
+        } else if type == "Target" {
+            colorous = UIColor(hexString:"#F5C042")
+        } else {
+            colorous = UIColor(hexString: "#FFFFFF")
         }
+        
+        if (park == true) {
+            colorous = UIColor(hexString: "#EB3637")
+        }
+
+        return colorous
     }
     
     var imageName: String? {
+        if type == "Target" { return "pin" }
         if type == "Vélos" { return "bike" }
         if type == "Motos" { return "moto" }
         return "mix"

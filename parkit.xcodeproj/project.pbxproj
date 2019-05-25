@@ -10,6 +10,7 @@
 		03ECA07126DDA87CACB42291 /* Pods_parkit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A90CF55D8A3077B6B10B298 /* Pods_parkit.framework */; };
 		7612DEA322661D8700B5EC43 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7612DEA222661D8700B5EC43 /* GoogleService-Info.plist */; };
 		7616473D228D4AC900C1C5D3 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7616473C228D4AC900C1C5D3 /* MapVC.swift */; };
+		76175FE82299DC8600605C4B /* ResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76175FE72299DC8600605C4B /* ResultCell.swift */; };
 		761E61FD2298A2A50091510D /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761E61FC2298A2A50091510D /* SettingsVC.swift */; };
 		764199692295B23900801A9A /* BikeClusterAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764199682295B23900801A9A /* BikeClusterAnnotationView.swift */; };
 		7655E14922661AFF0088DFAA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7655E14822661AFF0088DFAA /* AppDelegate.swift */; };
@@ -25,6 +26,7 @@
 		760A4EC22292D5040045A6BE /* parkit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = parkit.entitlements; sourceTree = "<group>"; };
 		7612DEA222661D8700B5EC43 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7616473C228D4AC900C1C5D3 /* MapVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
+		76175FE72299DC8600605C4B /* ResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultCell.swift; sourceTree = "<group>"; };
 		761E61FC2298A2A50091510D /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		764199682295B23900801A9A /* BikeClusterAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BikeClusterAnnotationView.swift; sourceTree = "<group>"; };
 		7655E14522661AFF0088DFAA /* parkit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = parkit.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -81,6 +83,7 @@
 		7616473F228D4AD800C1C5D3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				76175FE72299DC8600605C4B /* ResultCell.swift */,
 				76836D1A228D632F00906752 /* BikeAnnotation.swift */,
 				764199682295B23900801A9A /* BikeClusterAnnotationView.swift */,
 				767373E7228D9B0000A6AEC0 /* BikeMarkerView.swift */,
@@ -221,7 +224,10 @@
 				"${BUILT_PRODUCTS_DIR}/Cluster/Cluster.framework",
 				"${BUILT_PRODUCTS_DIR}/DeckTransition/DeckTransition.framework",
 				"${BUILT_PRODUCTS_DIR}/FontAwesome.swift/FontAwesome_swift.framework",
-				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
+				"${BUILT_PRODUCTS_DIR}/GestureRecognizerClosures/GestureRecognizerClosures.framework",
+				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/KeyboardHideManager/KeyboardHideManager.framework",
+				"${BUILT_PRODUCTS_DIR}/Motion/Motion.framework",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
@@ -235,7 +241,10 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cluster.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DeckTransition.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FontAwesome_swift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GestureRecognizerClosures.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeyboardHideManager.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Motion.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
@@ -276,6 +285,7 @@
 			files = (
 				767373E8228D9B0000A6AEC0 /* BikeMarkerView.swift in Sources */,
 				764199692295B23900801A9A /* BikeClusterAnnotationView.swift in Sources */,
+				76175FE82299DC8600605C4B /* ResultCell.swift in Sources */,
 				76836D1B228D632F00906752 /* BikeAnnotation.swift in Sources */,
 				7616473D228D4AC900C1C5D3 /* MapVC.swift in Sources */,
 				7655E14922661AFF0088DFAA /* AppDelegate.swift in Sources */,
