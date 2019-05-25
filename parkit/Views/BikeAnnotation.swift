@@ -18,8 +18,8 @@ class BikeAnnotation: NSObject, MKAnnotation {
     var size: Double
     var address: String
     
-    init(title: String, type: String, coordinate: CLLocationCoordinate2D, size: Double, address: String) {
-        self.title = title
+    init(type: String, coordinate: CLLocationCoordinate2D, size: Double, address: String) {
+//        self.title = title
         self.type = type
         self.coordinate = coordinate
         self.size = size

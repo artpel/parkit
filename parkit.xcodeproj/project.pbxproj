@@ -10,6 +10,7 @@
 		03ECA07126DDA87CACB42291 /* Pods_parkit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A90CF55D8A3077B6B10B298 /* Pods_parkit.framework */; };
 		7612DEA322661D8700B5EC43 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7612DEA222661D8700B5EC43 /* GoogleService-Info.plist */; };
 		7616473D228D4AC900C1C5D3 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7616473C228D4AC900C1C5D3 /* MapVC.swift */; };
+		761E61FD2298A2A50091510D /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761E61FC2298A2A50091510D /* SettingsVC.swift */; };
 		764199692295B23900801A9A /* BikeClusterAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764199682295B23900801A9A /* BikeClusterAnnotationView.swift */; };
 		7655E14922661AFF0088DFAA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7655E14822661AFF0088DFAA /* AppDelegate.swift */; };
 		7655E15022661AFF0088DFAA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7655E14E22661AFF0088DFAA /* Main.storyboard */; };
@@ -17,12 +18,14 @@
 		7655E15522661B010088DFAA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7655E15322661B010088DFAA /* LaunchScreen.storyboard */; };
 		767373E8228D9B0000A6AEC0 /* BikeMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767373E7228D9B0000A6AEC0 /* BikeMarkerView.swift */; };
 		76836D1B228D632F00906752 /* BikeAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76836D1A228D632F00906752 /* BikeAnnotation.swift */; };
+		76E169302299345400CAF5B1 /* ParksModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 76E1692E2299345400CAF5B1 /* ParksModel.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		760A4EC22292D5040045A6BE /* parkit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = parkit.entitlements; sourceTree = "<group>"; };
 		7612DEA222661D8700B5EC43 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7616473C228D4AC900C1C5D3 /* MapVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
+		761E61FC2298A2A50091510D /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		764199682295B23900801A9A /* BikeClusterAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BikeClusterAnnotationView.swift; sourceTree = "<group>"; };
 		7655E14522661AFF0088DFAA /* parkit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = parkit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7655E14822661AFF0088DFAA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -32,6 +35,7 @@
 		7655E15622661B010088DFAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		767373E7228D9B0000A6AEC0 /* BikeMarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BikeMarkerView.swift; sourceTree = "<group>"; };
 		76836D1A228D632F00906752 /* BikeAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BikeAnnotation.swift; path = parkit/Views/BikeAnnotation.swift; sourceTree = SOURCE_ROOT; };
+		76E1692F2299345400CAF5B1 /* ParksModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ParksModel.xcdatamodel; sourceTree = "<group>"; };
 		8B5400DA02B1CB5F1548ACB3 /* Pods-parkit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-parkit.release.xcconfig"; path = "Pods/Target Support Files/Pods-parkit/Pods-parkit.release.xcconfig"; sourceTree = "<group>"; };
 		9A90CF55D8A3077B6B10B298 /* Pods_parkit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_parkit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5A79A1E8221D9176B7F24FD /* Pods-parkit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-parkit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-parkit/Pods-parkit.debug.xcconfig"; sourceTree = "<group>"; };
@@ -60,6 +64,7 @@
 		7616473B228D4AC900C1C5D3 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				761E61FC2298A2A50091510D /* SettingsVC.swift */,
 				7616473C228D4AC900C1C5D3 /* MapVC.swift */,
 			);
 			path = Controllers;
@@ -68,6 +73,7 @@
 		7616473E228D4AD800C1C5D3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				76E1692E2299345400CAF5B1 /* ParksModel.xcdatamodeld */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -213,7 +219,9 @@
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
 				"${BUILT_PRODUCTS_DIR}/Cluster/Cluster.framework",
+				"${BUILT_PRODUCTS_DIR}/DeckTransition/DeckTransition.framework",
 				"${BUILT_PRODUCTS_DIR}/FontAwesome.swift/FontAwesome_swift.framework",
+				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
@@ -225,7 +233,9 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cluster.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DeckTransition.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FontAwesome_swift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
@@ -269,6 +279,8 @@
 				76836D1B228D632F00906752 /* BikeAnnotation.swift in Sources */,
 				7616473D228D4AC900C1C5D3 /* MapVC.swift in Sources */,
 				7655E14922661AFF0088DFAA /* AppDelegate.swift in Sources */,
+				76E169302299345400CAF5B1 /* ParksModel.xcdatamodeld in Sources */,
+				761E61FD2298A2A50091510D /* SettingsVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -474,6 +486,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		76E1692E2299345400CAF5B1 /* ParksModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				76E1692F2299345400CAF5B1 /* ParksModel.xcdatamodel */,
+			);
+			currentVersion = 76E1692F2299345400CAF5B1 /* ParksModel.xcdatamodel */;
+			path = ParksModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 7655E13D22661AFF0088DFAA /* Project object */;
 }

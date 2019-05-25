@@ -8,14 +8,16 @@
 
 import UIKit
 import MapKit
+import CoreLocation
+import CoreData
 import Alamofire
 import SwiftyJSON
-import CoreLocation
 import NVActivityIndicatorView
 import ChameleonFramework
 import Cluster
 import SnapKit
 import FontAwesome_swift
+
 
 class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
  
@@ -31,11 +33,20 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     @IBOutlet weak var tooltipSizeView: UIView!
     @IBOutlet weak var loadingView: UIView!
     @IBOutlet weak var loadingIndicator: NVActivityIndicatorView!
+    @IBOutlet weak var settingsButton: UIButton!
+    @IBOutlet weak var settingsView: UIView!
+    @IBOutlet weak var legendView: UIView!
+    @IBOutlet weak var legendDot1View: UIView!
+    @IBOutlet weak var legendDot2View: UIView!
+    @IBOutlet weak var legendLabel1: UILabel!
+    @IBOutlet weak var legendLabel2: UILabel!
     @IBOutlet weak var locationButtonView: UIView!
     @IBOutlet weak var locationButton: UIButton!
     @IBAction func locationButtonPressed(_ sender: Any) {
         setCenter()
     }
+    
+    var parks: [NSManagedObject] = []
     
     @IBAction func modeSwitched(_ sender: UISegmentedControl) {
         
@@ -52,7 +63,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             break
         }
         
-        setViewsAtBottom(vues: [self.locationButtonView])
+        setViewsAtBottom(vues: [self.locationButtonView, self.legendView])
         
     }
     
@@ -83,19 +94,45 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         setRoundView(vue: tooltipItineraryView, radius: 4)
         locationButtonView.layer.cornerRadius = 8
         locationButtonView.layer.masksToBounds = true
+        settingsView.layer.cornerRadius = 8
+        settingsView.layer.masksToBounds = true
+        legendView.layer.cornerRadius = 8
+        legendView.layer.masksToBounds = true
         locationButton.titleLabel?.font = UIFont.fontAwesome(ofSize: 15, style: FontAwesomeStyle.solid)
         locationButton.setTitle(String.fontAwesomeIcon(name: .locationArrow), for: .normal)
+        settingsButton.titleLabel?.font = UIFont.fontAwesome(ofSize: 15, style: FontAwesomeStyle.solid)
+        settingsButton.setTitle(String.fontAwesomeIcon(name: .cog), for: .normal)
+        
+        setLegend()
+        
+        
         
         getUserLocation()
-        
-        
         
         locationButtonView.snp.makeConstraints { (make) -> Void in
             let superview = self.view
             make.bottom.equalTo(superview!).offset(-8)
         }
+        
+        legendView.snp.makeConstraints { (make) -> Void in
+            let superview = self.view
+            make.bottom.equalTo(superview!).offset(-8)
+        }
+    
 
         
+    }
+    
+    func printer() {
+        print("coucou")
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if isCoreDataEmpty() {
+            getSpots()
+        } else {
+            getParks()
+        }
     }
     
     func setViewsAtBottom(vues: [UIView]) {
@@ -107,22 +144,22 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         }
     }
     
-    func getUserLocation() {
+    func setLegend() {
+        let mode = UserDefaults.standard.string(forKey: "mode") ?? "bike"
         
-        locationManager.delegate = self
-        
-        if CLLocationManager.locationServicesEnabled() {
-            
-            switch CLLocationManager.authorizationStatus() {
-            case .notDetermined, .restricted, .denied:
-                locationManager.desiredAccuracy = kCLLocationAccuracyBest
-                locationManager.requestWhenInUseAuthorization()
-            case .authorizedAlways, .authorizedWhenInUse:
-                locationManager.startUpdatingLocation()
-            }
+        if mode == "bike" {
+            legendDot1View.backgroundColor = UIColor(hexString: "#00cec9")
+            legendLabel1.text = "Vélos"
         } else {
-            print("Location services are not enabled")
+            legendDot1View.backgroundColor = UIColor(hexString: "#6c5ce7")
+            legendLabel1.text = "Motos"
         }
+        legendDot1View.layer.cornerRadius = 4
+        legendDot1View.layer.masksToBounds = true
+        legendDot2View.layer.cornerRadius = 4
+        legendDot2View.layer.masksToBounds = true
+        legendDot2View.backgroundColor = UIColor(hexString: "#0984e3")
+        legendLabel2.text = "Mixte"
         
     }
     
@@ -130,74 +167,6 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         vue.isHidden = true
         vue.layer.cornerRadius = CGFloat(integerLiteral: radius)
         vue.layer.masksToBounds = true
-    }
-
-    func setCenter() {
-        
-        let initialLocation = locationManager.location!
-        let regionRadius: CLLocationDistance = 500
-        let coordinateRegion = MKCoordinateRegion(center: initialLocation.coordinate, latitudinalMeters: regionRadius * 2.0, longitudinalMeters: regionRadius * 2.0)
-        carte.setRegion(coordinateRegion, animated: true)
-        
-        carte.showsUserLocation = true
-        carte.register(BikeMarkerView.self, forAnnotationViewWithReuseIdentifier: "bike")
-        carte.register(BikeClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: "cluster")
-        
-    }
-    
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        
-        // Don't want to show a custom image if the annotation is the user's location.
-        guard !(annotation is MKUserLocation) else {
-            return nil
-        }
-        
-        if let annotation = annotation as? ClusterAnnotation {
-            return BikeClusterAnnotationView(annotation: annotation, reuseIdentifier: "cluster")
-        } else {
-            return BikeMarkerView(annotation: annotation, reuseIdentifier: "bike")
-        }
-    }
-    
-    func getSpots(coord: CLLocationCoordinate2D, distance: Int) {
-        
-        spotVelos.removeAll()
-        spotMixte.removeAll()
-        spotMotos.removeAll()
-        
-        let coordinates = "\(coord.latitude),\(coord.longitude),\(distance)"
-        
-        let url = "https://parkit-server.herokuapp.com/getParks"
-        
-        self.toogleActivityIndicator(status: "on")
-        
-        Alamofire.request(url).responseJSON { (responseData) -> Void in
-            if let response = responseData.result.value {
-            
-                self.sortSpots(spots: JSON(response))
-            } else {
-                print("Error retrieving token")
-            }
-            
-            self.toogleActivityIndicator(status: "off")
-        }
-        
-    }
-    
-    func sortSpots(spots: JSON) {
-        
-        for (_, subJson) in spots {
-            
-            let field = subJson["type"].string!
-            
-            if field == "Vélos" { self.spotVelos.append(subJson) }
-            else if field == "Motos" { self.spotMotos.append(subJson) }
-            else { self.spotMixte.append(subJson) }
-            
-        }
-        
-        placeSpots()
-        
     }
     
     func toogleActivityIndicator(status: String) {
@@ -212,6 +181,166 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         default:
             break
         }
+    }
+    
+
+    // Annotations
+    
+    func getSpots() {
+        
+        spotVelos.removeAll()
+        spotMixte.removeAll()
+        spotMotos.removeAll()
+        
+        let url = "https://parkit-server.herokuapp.com/getParks"
+        
+        self.toogleActivityIndicator(status: "on")
+        
+        Alamofire.request(url).responseJSON { (responseData) -> Void in
+            if let response = responseData.result.value {
+                self.saveInCoreData(data: JSON(response))
+            } else {
+                print("Error retrieving token")
+            }
+            
+            self.getParks()
+            
+            self.toogleActivityIndicator(status: "off")
+        }
+        
+    }
+    
+    func saveInCoreData(data: JSON) {
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let entity = NSEntityDescription.entity(forEntityName: "Park", in: managedContext)!
+        
+        
+        for (_, subJson) in data {
+            
+            let park = NSManagedObject(entity: entity, insertInto: managedContext)
+            
+            let type = subJson["type"].string!
+            let address = subJson["address"].string!
+            let size = subJson["size"].double!
+            let lat = Double(subJson["coordinates"]["lat"].string!)!
+            let long = Double(subJson["coordinates"]["lon"].string!)!
+            let recordId = subJson["recordid"].string!
+            
+            park.setValue(type, forKey: "type")
+            park.setValue(address, forKey: "address")
+            park.setValue(size, forKey: "size")
+            park.setValue(lat, forKey: "lat")
+            park.setValue(long, forKey: "lon")
+            park.setValue(recordId, forKey: "objectId")
+            
+            
+            do {
+                try managedContext.save()
+                parks.append(park)
+            } catch  {
+                
+            }
+            
+        }
+        
+        
+    }
+    
+    func getParks() {
+        
+        
+        //1
+        guard let appDelegate =
+            UIApplication.shared.delegate as? AppDelegate else {
+                return
+        }
+        
+        let managedContext =
+            appDelegate.persistentContainer.viewContext
+        
+        //2
+        let fetchRequest =
+            NSFetchRequest<NSManagedObject>(entityName: "Park")
+        
+        //3
+        do {
+            parks = try managedContext.fetch(fetchRequest)
+            for park in parks {
+                
+                let mode = UserDefaults.standard.string(forKey: "mode") ?? "bike"
+                
+                let type = park.value(forKeyPath: "type") as? String
+                let address = park.value(forKeyPath: "address") as? String
+                let size = park.value(forKeyPath: "size") as? Double
+                let lat = park.value(forKeyPath: "lat")! as? Double
+                let long = park.value(forKeyPath: "lon") as? Double
+            
+            
+                if mode == "bike" && type! == "Vélos" || type! == "Mixte" {
+                    let annotation = BikeAnnotation(type: type!, coordinate: CLLocationCoordinate2D(latitude: lat!, longitude: long!), size: size!, address: address!)
+                    clusterManager.add(annotation)
+                    clusterManager.reload(mapView: carte)
+                } else if mode == "moto" && type! == "Motos" || type! == "Mixte" {
+                    let annotation = BikeAnnotation(type: type!, coordinate: CLLocationCoordinate2D(latitude: lat!, longitude: long!), size: size!, address: address!)
+                    clusterManager.add(annotation)
+                    clusterManager.reload(mapView: carte)
+                }
+                
+            }
+//            print(parks[0].value(forKeyPath: "address") as? String)
+
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
+    
+    func isCoreDataEmpty () -> Bool {
+        //1
+        guard let appDelegate =
+            UIApplication.shared.delegate as? AppDelegate else {
+                return true
+        }
+        
+        let managedContext =
+            appDelegate.persistentContainer.viewContext
+        
+        //2
+        let fetchRequest =
+            NSFetchRequest<NSManagedObject>(entityName: "Park")
+        
+        //3
+        do {
+            parks = try managedContext.fetch(fetchRequest)
+            if parks.count == 0 {
+                return true
+            } else {
+                return false
+            }
+            //            print(parks[0].value(forKeyPath: "address") as? String)
+            
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+            return true
+        }
+    }
+    
+    func sortSpots() {
+        
+//        for (_, subJson) in spots {
+//
+//
+//
+//
+////            if field == "Vélos" { self.spotVelos.append(subJson) }
+////            else if field == "Motos" { self.spotMotos.append(subJson) }
+////            else { self.spotMixte.append(subJson) }
+//
+//        }
+        
+//        placeSpots()
+        
     }
     
     func placeSpots() {
@@ -240,28 +369,14 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             let lat = Double(subJson["coordinates"]["lat"].string!)!
             let long = Double(subJson["coordinates"]["lon"].string!)!
             
-           
-            
-            let annotation = BikeAnnotation(title: "test", type: type, coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), size: size, address: address)
+            let annotation = BikeAnnotation(type: type, coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), size: size, address: address)
             clusterManager.add(annotation)
             clusterManager.reload(mapView: carte)
             
         }
     }
     
-    func openInMaps(annotation: BikeAnnotation, mode: String) {
-        
-        let coordinate = CLLocationCoordinate2DMake(annotation.coordinate.latitude, annotation.coordinate.longitude)
-        let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: coordinate, addressDictionary:nil))
-        mapItem.name = annotation.title
-        
-        if mode == "bike" {
-            mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeWalking])
-        } else {
-            mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving])
-        }
-        
-    }
+    // Itinerary
     
     func calculateInterary(destination: CLLocationCoordinate2D) {
         
@@ -300,10 +415,10 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             self.carte.addOverlay(route.polyline, level: .aboveRoads)
             
             //setting rect of our mapview to fit the two locations
-//            let rect = route.polyline.boundingMapRect
-//            let recta = rect.insetBy(dx: -1200, dy: -1200)
-//            let rectb = recta.offsetBy(dx: 0, dy: 400)
-//            self.carte.setRegion(MKCoordinateRegion(rectb), animated: true)
+            //            let rect = route.polyline.boundingMapRect
+            //            let recta = rect.insetBy(dx: -1200, dy: -1200)
+            //            let rectb = recta.offsetBy(dx: 0, dy: 400)
+            //            self.carte.setRegion(MKCoordinateRegion(rectb), animated: true)
         }
     }
     
@@ -314,12 +429,20 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         
     }
     
+    // Tooltip
+    
     func showTooltip(annotation: BikeAnnotation) {
-
+        
         locationButtonView.snp.remakeConstraints { (make) -> Void in
             let superview = self.view
             make.bottom.equalTo(superview!).offset(-140)
         }
+        
+        legendView.snp.remakeConstraints { (make) -> Void in
+            let superview = self.view
+            make.bottom.equalTo(superview!).offset(-140)
+        }
+        
         
         let coordinates = annotation.coordinate
         
@@ -331,7 +454,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         self.calculateSizeOfPark(size: annotation.size)
         self.setIconForTooltip(type: annotation.type, color: annotation.markerTintColor)
         self.setTooltipTitle(type: annotation.type)
-    
+        
     }
     
     func setTooltipTitle(type: String) {
@@ -376,6 +499,20 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         
     }
     
+    func openInMaps(annotation: BikeAnnotation, mode: String) {
+        
+        let coordinate = CLLocationCoordinate2DMake(annotation.coordinate.latitude, annotation.coordinate.longitude)
+        let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: coordinate, addressDictionary:nil))
+        mapItem.name = annotation.title
+        
+        if mode == "bike" {
+            mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeWalking])
+        } else {
+            mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving])
+        }
+        
+    }
+    
     // Map View
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
@@ -395,8 +532,25 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     }
     
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        getSpots(coord: carte.centerCoordinate, distance: Int(carte.currentRadius()))
+
+        clusterManager.reload(mapView: carte)
     }
+    
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        // Don't want to show a custom image if the annotation is the user's location.
+        guard !(annotation is MKUserLocation) else {
+            return nil
+        }
+        
+        if let annotation = annotation as? ClusterAnnotation {
+            return BikeClusterAnnotationView(annotation: annotation, reuseIdentifier: "cluster")
+        } else {
+            return BikeMarkerView(annotation: annotation, reuseIdentifier: "bike")
+        }
+    }
+    
     
     // Location manager
     
@@ -410,6 +564,41 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         } else if (status == CLAuthorizationStatus.authorizedWhenInUse) {
             setCenter()
         }
+    }
+    
+    func getUserLocation() {
+        
+        locationManager.delegate = self
+        
+        if CLLocationManager.locationServicesEnabled() {
+            
+            switch CLLocationManager.authorizationStatus() {
+            case .notDetermined, .restricted, .denied:
+                locationManager.desiredAccuracy = kCLLocationAccuracyBest
+                locationManager.requestWhenInUseAuthorization()
+            case .authorizedAlways, .authorizedWhenInUse:
+                locationManager.startUpdatingLocation()
+            @unknown default:
+                locationManager.desiredAccuracy = kCLLocationAccuracyBest
+                locationManager.requestWhenInUseAuthorization()
+            }
+        } else {
+            print("Location services are not enabled")
+        }
+        
+    }
+    
+    func setCenter() {
+        
+        let initialLocation = locationManager.location!
+        let regionRadius: CLLocationDistance = 500
+        let coordinateRegion = MKCoordinateRegion(center: initialLocation.coordinate, latitudinalMeters: regionRadius * 2.0, longitudinalMeters: regionRadius * 2.0)
+        carte.setRegion(coordinateRegion, animated: true)
+        
+        carte.showsUserLocation = true
+        carte.register(BikeMarkerView.self, forAnnotationViewWithReuseIdentifier: "bike")
+        carte.register(BikeClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: "cluster")
+        
     }
     
 }

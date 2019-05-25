@@ -31,21 +31,43 @@ class BikeClusterAnnotationView: ClusterAnnotationView {
     
     func color(for count: Int) -> CGColor {
         if count < 5 {
-            return UIColor(hexString: "#78e08f")!.cgColor
+            return UIColor(hexString: "#9CDA85")!.cgColor
         } else if count < 10 {
-            return UIColor(hexString: "#fad390")!.cgColor
+            return UIColor(hexString: "#B0DA85")!.cgColor
+        } else if count < 20 {
+            return UIColor(hexString: "#BECF78")!.cgColor
+        } else if count < 30 {
+            return UIColor(hexString: "#C9D369")!.cgColor
+        } else if count < 40 {
+            return UIColor(hexString: "#D6E077")!.cgColor
+        } else if count < 80 {
+            return UIColor(hexString: "#D8C974")!.cgColor
+        } else if count < 140 {
+            return UIColor(hexString: "#D8AF74")!.cgColor
+        } else if count < 300 {
+            return UIColor(hexString: "#D89974")!.cgColor
         } else {
-            return UIColor(hexString: "#E68364")!.cgColor
+            return UIColor(hexString: "#D88674")!.cgColor
         }
     }
     
     func radius(for count: Int) -> CGFloat {
         if count < 5 {
-            return 12
+            return 10
         } else if count < 10 {
+            return 12
+        } else if count < 20 {
+            return 14
+        } else if count < 30 {
             return 16
-        } else {
+        } else if count < 40 {
+            return 18
+        } else if count < 140 {
             return 20
+        } else if count < 300 {
+            return 24
+        } else {
+            return 30
         }
     }
 }

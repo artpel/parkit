@@ -8,24 +8,22 @@ ParkIt is an open-source Swift application aimed to help bike and motorbike owne
 
 #### Annotations View
 
-- Configure Cluster to have nice clustering
-- Serialize properly annotations
-- Download first annotations around user, then download them all and store them in CoreData
+- Optimize first annotation loading time
 
 #### Itinerary tooltip
 
 - Refactor tooltip view to display it programmatically
 - Create service to convert mins in hours
+- Add swipe to dismiss and clear itinerary
 
 #### Map
 
-- Add a legend on the map
-- Add a button to center map
 
 #### Misc 
 
 - Refactor functions
 - Add Settings to manage saving, add copyrights and data privacy information
+- Add Transition effect to Settings
 - Keep information of selected mode of transportation 
 
 ### Gists
