@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0089DB3D9BEA001EF2B80BA0 /* Pods_WIMBWidget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A58761327CBCD06B876AE5D /* Pods_WIMBWidget.framework */; };
 		03ECA07126DDA87CACB42291 /* Pods_parkit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A90CF55D8A3077B6B10B298 /* Pods_parkit.framework */; };
 		7612DEA322661D8700B5EC43 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7612DEA222661D8700B5EC43 /* GoogleService-Info.plist */; };
 		7616473D228D4AC900C1C5D3 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7616473C228D4AC900C1C5D3 /* MapVC.swift */; };
@@ -48,6 +49,8 @@
 		767373E8228D9B0000A6AEC0 /* BikeMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767373E7228D9B0000A6AEC0 /* BikeMarkerView.swift */; };
 		76836D1B228D632F00906752 /* BikeAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76836D1A228D632F00906752 /* BikeAnnotation.swift */; };
 		76E169302299345400CAF5B1 /* WhereIsMyBike.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 76E1692E2299345400CAF5B1 /* WhereIsMyBike.xcdatamodeld */; };
+		7D976DE1ED5AEB984C181808 /* Pods_WhereIsMyBikeUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE3A596804E57A434D374046 /* Pods_WhereIsMyBikeUI.framework */; };
+		B30DCCE713DFA6B28E538CD3 /* Pods_WhereIsMyBike.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE564187C8C4DAC743B79D6E /* Pods_WhereIsMyBike.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +94,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1240624A0176C8C804891B0D /* Pods-WIMBWidget.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WIMBWidget.release.xcconfig"; path = "Pods/Target Support Files/Pods-WIMBWidget/Pods-WIMBWidget.release.xcconfig"; sourceTree = "<group>"; };
+		184D8CA71A6FEE9D02B9C0E5 /* Pods-WIMBWidget.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WIMBWidget.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WIMBWidget/Pods-WIMBWidget.debug.xcconfig"; sourceTree = "<group>"; };
+		222AF1CEE759EB63365E8987 /* Pods-WhereIsMyBike.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhereIsMyBike.release.xcconfig"; path = "Pods/Target Support Files/Pods-WhereIsMyBike/Pods-WhereIsMyBike.release.xcconfig"; sourceTree = "<group>"; };
 		760A4EC22292D5040045A6BE /* parkit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = parkit.entitlements; sourceTree = "<group>"; };
 		7612DEA222661D8700B5EC43 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7616473C228D4AC900C1C5D3 /* MapVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
@@ -129,9 +135,15 @@
 		767373E7228D9B0000A6AEC0 /* BikeMarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BikeMarkerView.swift; sourceTree = "<group>"; };
 		76836D1A228D632F00906752 /* BikeAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BikeAnnotation.swift; path = parkit/Views/BikeAnnotation.swift; sourceTree = SOURCE_ROOT; };
 		76E1692F2299345400CAF5B1 /* ParksModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ParksModel.xcdatamodel; sourceTree = "<group>"; };
+		7A58761327CBCD06B876AE5D /* Pods_WIMBWidget.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WIMBWidget.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		89264684EF5D271696D8DC24 /* Pods-WhereIsMyBikeUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhereIsMyBikeUI.release.xcconfig"; path = "Pods/Target Support Files/Pods-WhereIsMyBikeUI/Pods-WhereIsMyBikeUI.release.xcconfig"; sourceTree = "<group>"; };
 		8B5400DA02B1CB5F1548ACB3 /* Pods-parkit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-parkit.release.xcconfig"; path = "Pods/Target Support Files/Pods-parkit/Pods-parkit.release.xcconfig"; sourceTree = "<group>"; };
 		9A90CF55D8A3077B6B10B298 /* Pods_parkit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_parkit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD400AB627880D5D74A63EAB /* Pods-WhereIsMyBikeUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhereIsMyBikeUI.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WhereIsMyBikeUI/Pods-WhereIsMyBikeUI.debug.xcconfig"; sourceTree = "<group>"; };
+		CE564187C8C4DAC743B79D6E /* Pods_WhereIsMyBike.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WhereIsMyBike.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5A79A1E8221D9176B7F24FD /* Pods-parkit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-parkit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-parkit/Pods-parkit.debug.xcconfig"; sourceTree = "<group>"; };
+		E7615A0F312689D765C2C22C /* Pods-WhereIsMyBike.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhereIsMyBike.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WhereIsMyBike/Pods-WhereIsMyBike.debug.xcconfig"; sourceTree = "<group>"; };
+		EE3A596804E57A434D374046 /* Pods_WhereIsMyBikeUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WhereIsMyBikeUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +153,7 @@
 			files = (
 				763E2978229ABF10001FD1B5 /* MapKit.framework in Frameworks */,
 				763E2968229ABEDD001FD1B5 /* NotificationCenter.framework in Frameworks */,
+				0089DB3D9BEA001EF2B80BA0 /* Pods_WIMBWidget.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -157,6 +170,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				763E2979229ABF1A001FD1B5 /* MapKit.framework in Frameworks */,
+				B30DCCE713DFA6B28E538CD3 /* Pods_WhereIsMyBike.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,6 +180,7 @@
 			files = (
 				763E297A229ABF24001FD1B5 /* MapKit.framework in Frameworks */,
 				7659A5E42299FDC400F9A173 /* IntentsUI.framework in Frameworks */,
+				7D976DE1ED5AEB984C181808 /* Pods_WhereIsMyBikeUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -179,6 +194,9 @@
 				9A90CF55D8A3077B6B10B298 /* Pods_parkit.framework */,
 				7659A5E32299FDC400F9A173 /* IntentsUI.framework */,
 				763E2967229ABEDD001FD1B5 /* NotificationCenter.framework */,
+				7A58761327CBCD06B876AE5D /* Pods_WIMBWidget.framework */,
+				CE564187C8C4DAC743B79D6E /* Pods_WhereIsMyBike.framework */,
+				EE3A596804E57A434D374046 /* Pods_WhereIsMyBikeUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -292,6 +310,12 @@
 			children = (
 				D5A79A1E8221D9176B7F24FD /* Pods-parkit.debug.xcconfig */,
 				8B5400DA02B1CB5F1548ACB3 /* Pods-parkit.release.xcconfig */,
+				184D8CA71A6FEE9D02B9C0E5 /* Pods-WIMBWidget.debug.xcconfig */,
+				1240624A0176C8C804891B0D /* Pods-WIMBWidget.release.xcconfig */,
+				E7615A0F312689D765C2C22C /* Pods-WhereIsMyBike.debug.xcconfig */,
+				222AF1CEE759EB63365E8987 /* Pods-WhereIsMyBike.release.xcconfig */,
+				CD400AB627880D5D74A63EAB /* Pods-WhereIsMyBikeUI.debug.xcconfig */,
+				89264684EF5D271696D8DC24 /* Pods-WhereIsMyBikeUI.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -303,6 +327,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 763E2973229ABEDD001FD1B5 /* Build configuration list for PBXNativeTarget "WIMBWidget" */;
 			buildPhases = (
+				7FDAFB8231C836FD30881B75 /* [CP] Check Pods Manifest.lock */,
 				763E2962229ABEDD001FD1B5 /* Sources */,
 				763E2963229ABEDD001FD1B5 /* Frameworks */,
 				763E2964229ABEDD001FD1B5 /* Resources */,
@@ -343,6 +368,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7659A5F52299FDC400F9A173 /* Build configuration list for PBXNativeTarget "WhereIsMyBike" */;
 			buildPhases = (
+				268B780856A3AE9D9862F2C6 /* [CP] Check Pods Manifest.lock */,
 				7659A5D52299FDC400F9A173 /* Sources */,
 				7659A5D62299FDC400F9A173 /* Frameworks */,
 				7659A5D72299FDC400F9A173 /* Resources */,
@@ -360,6 +386,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7659A5F22299FDC400F9A173 /* Build configuration list for PBXNativeTarget "WhereIsMyBikeUI" */;
 			buildPhases = (
+				5B81E86B4164B1F209084C7D /* [CP] Check Pods Manifest.lock */,
 				7659A5DE2299FDC400F9A173 /* Sources */,
 				7659A5DF2299FDC400F9A173 /* Frameworks */,
 				7659A5E02299FDC400F9A173 /* Resources */,
@@ -492,6 +519,28 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		268B780856A3AE9D9862F2C6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-WhereIsMyBike-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		4AA646BD3B13E72084237684 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -507,12 +556,12 @@
 				"${BUILT_PRODUCTS_DIR}/DeckTransition/DeckTransition.framework",
 				"${BUILT_PRODUCTS_DIR}/FontAwesome.swift/FontAwesome_swift.framework",
 				"${BUILT_PRODUCTS_DIR}/GestureRecognizerClosures/GestureRecognizerClosures.framework",
-				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/KeyboardHideManager/KeyboardHideManager.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/Motion/Motion.framework",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
@@ -524,16 +573,60 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DeckTransition.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FontAwesome_swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GestureRecognizerClosures.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeyboardHideManager.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Motion.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-parkit/Pods-parkit-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5B81E86B4164B1F209084C7D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-WhereIsMyBikeUI-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7FDAFB8231C836FD30881B75 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-WIMBWidget-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		87649A93DA8F72700C2C68C7 /* [CP] Check Pods Manifest.lock */ = {
@@ -676,6 +769,7 @@
 /* Begin XCBuildConfiguration section */
 		763E2974229ABEDD001FD1B5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 184D8CA71A6FEE9D02B9C0E5 /* Pods-WIMBWidget.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = WIMBWidget/WIMBWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -697,6 +791,7 @@
 		};
 		763E2975229ABEDD001FD1B5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1240624A0176C8C804891B0D /* Pods-WIMBWidget.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = WIMBWidget/WIMBWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -838,7 +933,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D5A79A1E8221D9176B7F24FD /* Pods-parkit.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = parkit/parkit.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -860,7 +954,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8B5400DA02B1CB5F1548ACB3 /* Pods-parkit.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = parkit/parkit.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -880,6 +973,7 @@
 		};
 		7659A5F32299FDC400F9A173 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CD400AB627880D5D74A63EAB /* Pods-WhereIsMyBikeUI.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = WhereIsMyBikeUI/WhereIsMyBikeUI.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -900,6 +994,7 @@
 		};
 		7659A5F42299FDC400F9A173 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 89264684EF5D271696D8DC24 /* Pods-WhereIsMyBikeUI.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = WhereIsMyBikeUI/WhereIsMyBikeUI.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -920,6 +1015,7 @@
 		};
 		7659A5F62299FDC400F9A173 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E7615A0F312689D765C2C22C /* Pods-WhereIsMyBike.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = WhereIsMyBike/WhereIsMyBike.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -940,6 +1036,7 @@
 		};
 		7659A5F72299FDC400F9A173 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 222AF1CEE759EB63365E8987 /* Pods-WhereIsMyBike.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = WhereIsMyBike/WhereIsMyBike.entitlements;
 				CODE_SIGN_STYLE = Automatic;

@@ -7,10 +7,9 @@ target 'parkit' do
 
   # Pods for parkit
 
-#  pod 'Firebase/Core'
-#  pod 'Firebase/Database'
-#  pod 'Firebase/Auth'
-#  pod 'Firebase/Storage'
+pod 'Firebase'
+  pod 'Firebase/Core'
+
 
   # Divers
 
@@ -32,3 +31,32 @@ target 'parkit' do
 #  pod 'OneSignal', '>= 2.6.2', '< 3.0'
 
 end
+
+target 'WIMBWidget' do
+# Comment the next line if you're not using Swift and don't want to use dynamic frameworks
+use_frameworks!
+
+pod 'Firebase'
+pod 'Firebase/Core'
+
+end
+
+target 'WhereIsMyBike' do
+    # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
+    use_frameworks!
+    
+    pod 'Firebase'
+    pod 'Firebase/Core'
+    
+end
+
+
+target 'WhereIsMyBikeUI' do
+    # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
+    use_frameworks!
+    
+    pod 'Firebase'
+    pod 'Firebase/Core'
+
+end
+

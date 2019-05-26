@@ -10,6 +10,8 @@ import UIKit
 import MapKit
 import CoreLocation
 import CoreData
+import IntentsUI
+import Intents
 import Alamofire
 import SwiftyJSON
 import NVActivityIndicatorView
@@ -19,68 +21,17 @@ import SnapKit
 import FontAwesome_swift
 import Motion
 import GestureRecognizerClosures
-import IntentsUI
-import Intents
 
 class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, MKLocalSearchCompleterDelegate, UITextFieldDelegate {
     
-    @IBOutlet weak var AddToSiriButton: UIView!
-
-    
-    func addSiriButton(to view: UIView) {
-        
-        let button = INUIAddVoiceShortcutButton(style: .whiteOutline)
-        button.shortcut = INShortcut(intent: intent)
-        let shot = INShortcut(intent: intent)
-        if shot != nil {
-            print("déjà")
-        } else {
-            print("pas encore")
-        }
-        button.delegate = self
-
-        button.translatesAutoresizingMaskIntoConstraints = false
-
-        view.addSubview(button)
-        view.centerXAnchor.constraint(equalTo: button.centerXAnchor).isActive = true
-        view.centerYAnchor.constraint(equalTo: button.centerYAnchor).isActive = true
-    }
-    
-   
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return searchResults.count
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>,
-                               with event: UIEvent?) {
-        self.resultView.isHidden = true
-        self.view.endEditing(true)
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let searchResult = searchResults[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "resultCell") as! ResultCell
-        
-        cell.selectionStyle = .none
-        tableView.rowHeight = 57
-        tableView.backgroundColor = UIColor.clear
-        tableView.separatorStyle = .none
-        
-        cell.searchResultAddress.text = searchResult.title
-        cell.searchResultAddress2.text = searchResult.subtitle
-        return cell
-        
-    }
-    
- 
+    @IBOutlet weak var addToSiriButton: UIView!
     @IBOutlet weak var resultView: UIVisualEffectView!
     @IBOutlet weak var carte: MKMapView!
     @IBOutlet weak var tooltipItinerary: UIView!
     @IBOutlet weak var tooltipTitle: UILabel!
     @IBOutlet weak var tooltipAddress: UILabel!
     @IBOutlet weak var tooltipTravelTime: UILabel!
-    @IBOutlet weak var tooltipTransportView: UIView!
+    @IBOutlet weak var tooltipTransportModeView: UIView!
     @IBOutlet weak var tooltipTransportIcon: UIImageView!
     @IBOutlet weak var tooltipSize: UILabel!
     @IBOutlet weak var tooltipItineraryView: UIView!
@@ -97,37 +48,35 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     @IBOutlet weak var locationButtonView: UIView!
     @IBOutlet weak var locationButton: UIButton!
     @IBOutlet weak var findMyRideView: UIView!
-    
     @IBOutlet weak var searchIcon: UIButton!
     @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var searchField: UITextField!
-    
+    @IBOutlet weak var addToSiriView: UIView!
+    @IBOutlet weak var searchResultsTableView: UITableView!
     @IBAction func findMyRide(_ sender: Any) {
         
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Park")
-        fetchRequest.predicate = NSPredicate(format: "park = %@", NSNumber(value: true))
-        
-        do {
-            parks = try managedContext.fetch(fetchRequest)
-            let type = parks[0].value(forKeyPath: "type") as? String
-            let address = parks[0].value(forKeyPath: "address") as? String
-            let size = parks[0].value(forKeyPath: "size") as? Double
-            let lat = parks[0].value(forKeyPath: "lat")! as? Double
-            let long = parks[0].value(forKeyPath: "lon") as? Double
-            let objectId = parks[0].value(forKeyPath: "objectId") as? String
-            let park = parks[0].value(forKeyPath: "park") as? Bool
+        if park.count != 0 {
             
-            let annotation = BikeAnnotation(type: type!, coordinate: CLLocationCoordinate2D(latitude: lat!, longitude: long!), size: size!, address: address!, indexPark: objectId!, park: park!)
+            let type = park[0].value(forKeyPath: "type") as? String
+            let address = park[0].value(forKeyPath: "address") as? String
+            let size = park[0].value(forKeyPath: "size") as? Double
+            let lat = park[0].value(forKeyPath: "lat")! as? Double
+            let long = park[0].value(forKeyPath: "lon") as? Double
+            let objectId = park[0].value(forKeyPath: "objectId") as? String
+            let parked = park[0].value(forKeyPath: "park") as? Bool
+            
+            let annotation = BikeAnnotation(type: type!, coordinate: CLLocationCoordinate2D(latitude: lat!, longitude: long!), size: size!, address: address!, indexPark: objectId!, park: parked!)
             showTooltip(annotation: annotation)
             let myLocation = CLLocation(latitude: lat!, longitude: long!)
             calculateInterary(destination: myLocation.coordinate)
-        } catch {
-            
         }
         
-        
+     
+    }
+    
+    @IBAction func textFieldEditingDidChange(_ sender: Any) {
+        self.resultView.isHidden = false
+        searchCompleter.queryFragment = searchField.text!
     }
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
@@ -143,130 +92,70 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         setCenter()
     }
     @IBAction func parkedButton(_ sender: Any) {
-        self.printer()
+//        self.parkMyRide()
+        setUpSiri(to: self.addToSiriButton)
     }
     
-    var parks: [NSManagedObject] = []
+    var spots: [NSManagedObject] = []
+    var park: [NSManagedObject] = []
     
-    @IBAction func modeSwitched(_ sender: UISegmentedControl) {
-        
-        self.deleteRoute()
-        
-        switch sender.selectedSegmentIndex {
-        case 0:
-            mode = "bike"
-            placeSpots()
-        case 1:
-            mode = "motorbike"
-            placeSpots()
-        default:
-            break
-        }
-        
-        setViewsAtBottom(vues: [self.locationButtonView, self.legendView, self.findMyRideView])
-        
-    }
+    var managedContext = NSManagedObjectContext()
+    var entity = NSEntityDescription()
     
     @IBAction func openInMapsButton(_ sender: Any) {
-        
+        let mode = UserDefaults.standard.string(forKey: "mode") ?? "bike"
         openInMaps(annotation: selectedAnnotation!, mode: mode)
         
     }
-    
-    var mode = "bike"
+
     let locationManager = CLLocationManager()
     var selectedAnnotation: BikeAnnotation?
     var targetAnnotation: BikeAnnotation?
     
-    var spotVelos = [JSON]()
-    var spotMotos = [JSON]()
-    var spotMixte = [JSON]()
-    
     var clusterManager = ClusterManager()
-    
-    @IBOutlet weak var addToSiriView: UIView!
-    func addToSiri() {
-        donateInteraction()
-        addSiriButton(to: self.AddToSiriButton)
-   
-    }
-    
-    func donateInteraction() {
-        let intent = WhereIsMyBikeIntent()
-        let interaction = INInteraction(intent: intent, response: nil)
-        
-        interaction.donate { (error) in
-            print("yeah")
-            if error != nil {
-                if let error = error as NSError? {
-                    print("error")
-                    
-                } else {
-                    print("OOO saved")
-                }
-            }
-        }
-        
-        
-    }
-    
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        addToSiri()
+        // Authorizations
         
+        getUserLocation()
+        donateSiriInteraction()
         
+        // Views
         
-        addToSiriView.dropShadow()
-        addToSiriView.layer.cornerRadius = 8
-        addToSiriView.layer.masksToBounds = true
-        
-        setRoundView(vue: tooltipItinerary, radius: 8)
-        tooltipItinerary.onSwipeDown { _ in
-              self.tooltipItinerary.isHidden = true
-            self.deleteRoute()
-            self.setViewsAtBottom(vues: [self.locationButtonView, self.legendView, self.findMyRideView])
-        }
-        tooltipItinerary.dropShadow()
-        setRoundView(vue: loadingView, radius: 8)
-        setRoundView(vue: tooltipSizeView, radius: 4)
-        setRoundView(vue: tooltipTransportView, radius: 8)
-        setRoundView(vue: tooltipItineraryView, radius: 4)
-//        setRoundView(vue: findMyRideView, radius: 8)
-        locationButtonView.layer.cornerRadius = 8
-        locationButtonView.layer.masksToBounds = true
-        locationButtonView.dropShadow()
-        loadingView.dropShadow()
-        settingsView.layer.cornerRadius = 8
-        settingsView.layer.masksToBounds = true
-        findMyRideView.layer.cornerRadius = 8
-        findMyRideView.layer.masksToBounds = true
-        findMyRideView.dropShadow()
-        settingsView.dropShadow()
-        legendView.layer.cornerRadius = 8
-        legendView.layer.masksToBounds = true
-        legendView.dropShadow()
-        locationButton.titleLabel?.font = UIFont.fontAwesome(ofSize: 15, style: FontAwesomeStyle.solid)
-        locationButton.setTitle(String.fontAwesomeIcon(name: .locationArrow), for: .normal)
-        settingsButton.titleLabel?.font = UIFont.fontAwesome(ofSize: 15, style: FontAwesomeStyle.solid)
-        settingsButton.setTitle(String.fontAwesomeIcon(name: .cog), for: .normal)
-        searchIcon.titleLabel?.font = UIFont.fontAwesome(ofSize: 15, style: FontAwesomeStyle.solid)
-        searchIcon.setTitle(String.fontAwesomeIcon(name: .search), for: .normal)
-        searchView.dropShadow()
-        searchView.layer.cornerRadius = 8
-        searchView.layer.masksToBounds = true
-        
-        setRoundView(vue: resultView, radius: 8)
-        
+        setButtonsIcons()
         setLegend()
+        addToSiriView.roundView(8, true)
+        tooltipItinerary.roundView(8, true)
+        loadingView.roundView(8, true)
+        tooltipSizeView.roundView(4, false)
+        tooltipItineraryView.roundView(4, false)
+        tooltipTransportModeView.roundView(4, false)
+        locationButtonView.roundView(8, true)
+        settingsView.roundView(8, true)
+        findMyRideView.roundView(8, true)
+        legendView.roundView(8, true)
+        searchView.roundView(8, true)
+        
+        loadingView.isHidden = true
+        tooltipItinerary.isHidden = true
+        resultView.isHidden = true
+        addToSiriView.isHidden = true
+        
+        // Delegates & Actions
         
         searchField.delegate = self
         searchField.addTarget(self, action: #selector(textFieldEditingDidChange), for: UIControl.Event.editingChanged)
-        
         searchCompleter.delegate = self
-        getUserLocation()
+        
+        tooltipItinerary.onSwipeDown { _ in
+            self.tooltipItinerary.isHidden = true
+            self.deleteRoute()
+            self.setViewsAtBottom(vues: [self.locationButtonView, self.legendView, self.findMyRideView])
+        }
+        
+        // Constraintes
         
         locationButtonView.snp.makeConstraints { (make) -> Void in
             let superview = self.view
@@ -284,28 +173,23 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         }
     }
     
-    var searchCompleter = MKLocalSearchCompleter()
-    var searchResults = [MKLocalSearchCompletion]()
-    
-    @IBAction func textFieldEditingDidChange(_ sender: Any) {
-        
-        
-        
-        
-        self.resultView.isHidden = false
-        
-        searchCompleter.queryFragment = searchField.text!
-    }
-
-
     override func viewDidAppear(_ animated: Bool) {
         if isCoreDataEmpty() {
             getSpots()
         } else {
-            getParks()
+            getParksInCoreData()
         }
     }
     
+    func setButtonsIcons() {
+        locationButton.titleLabel?.font = UIFont.fontAwesome(ofSize: 15, style: FontAwesomeStyle.solid)
+        locationButton.setTitle(String.fontAwesomeIcon(name: .locationArrow), for: .normal)
+        settingsButton.titleLabel?.font = UIFont.fontAwesome(ofSize: 15, style: FontAwesomeStyle.solid)
+        settingsButton.setTitle(String.fontAwesomeIcon(name: .cog), for: .normal)
+        searchIcon.titleLabel?.font = UIFont.fontAwesome(ofSize: 15, style: FontAwesomeStyle.solid)
+        searchIcon.setTitle(String.fontAwesomeIcon(name: .search), for: .normal)
+    }
+
     func setViewsAtBottom(vues: [UIView]) {
         for vue in vues {
             vue.snp.remakeConstraints { (make) -> Void in
@@ -334,12 +218,6 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         
     }
     
-    func setRoundView(vue: UIView, radius: Int) {
-        vue.isHidden = true
-        vue.layer.cornerRadius = CGFloat(integerLiteral: radius)
-        vue.layer.masksToBounds = true
-    }
-    
     func toogleActivityIndicator(status: String) {
         
         switch status {
@@ -354,14 +232,15 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         }
     }
     
-
+    override func touchesBegan(_ touches: Set<UITouch>,
+                               with event: UIEvent?) {
+        self.resultView.isHidden = true
+        self.view.endEditing(true)
+    }
+    
     // Annotations
     
     func getSpots() {
-        
-        spotVelos.removeAll()
-        spotMixte.removeAll()
-        spotMotos.removeAll()
         
         let url = "https://parkit-server.herokuapp.com/getParks"
         
@@ -371,11 +250,9 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             if let response = responseData.result.value {
                 self.saveInCoreData(data: JSON(response))
             } else {
-//                print("Error retrieving token")
             }
             
-            self.getParks()
-            
+            self.getParksInCoreData()
             self.toogleActivityIndicator(status: "off")
         }
         
@@ -383,14 +260,12 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     
     func saveInCoreData(data: JSON) {
         
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let entity = NSEntityDescription.entity(forEntityName: "Park", in: managedContext)!
         
+        entity = NSEntityDescription.entity(forEntityName: "Park", in: managedContext)!
         
         for (_, subJson) in data {
             
-            let park = NSManagedObject(entity: entity, insertInto: managedContext)
+            let park = NSManagedObject(entity: self.entity, insertInto: managedContext)
             
             let type = subJson["type"].string!
             let address = subJson["address"].string!
@@ -406,11 +281,10 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             park.setValue(long, forKey: "lon")
             park.setValue(recordId, forKey: "objectId")
             park.setValue(false, forKey: "park")
-            
-            
+
             do {
                 try managedContext.save()
-                parks.append(park)
+                spots.append(park)
             } catch  {
                 
             }
@@ -420,32 +294,20 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         
     }
     
-    func printer() {
+    func getParksInCoreData() {
+     
+        for park in spots {
+            
+            let mode = UserDefaults.standard.string(forKey: "mode") ?? "bike"
+            
+            let type = park.value(forKeyPath: "type") as? String
+            let address = park.value(forKeyPath: "address") as? String
+            let size = park.value(forKeyPath: "size") as? Double
+            let lat = park.value(forKeyPath: "lat")! as? Double
+            let long = park.value(forKeyPath: "lon") as? Double
+            let objectId = park.value(forKeyPath: "objectId") as? String
+            let park = park.value(forKeyPath: "park") as? Bool
         
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Park")
-        fetchRequest.predicate = NSPredicate(format: "objectId = %@", selectedAnnotation!.indexPark)
-        
-        do {
-            parks = try managedContext.fetch(fetchRequest)
-            parks[0].setValue(true, forKey: "park")
-            clusterManager.remove(selectedAnnotation!)
-            
-            let type = parks[0].value(forKeyPath: "type") as? String
-            let address = parks[0].value(forKeyPath: "address") as? String
-            let size = parks[0].value(forKeyPath: "size") as? Double
-            let lat = parks[0].value(forKeyPath: "lat")! as? Double
-            let long = parks[0].value(forKeyPath: "lon") as? Double
-            let objectId = parks[0].value(forKeyPath: "objectId") as? String
-            let park = parks[0].value(forKeyPath: "park") as? Bool
-            
-            do {
-                try managedContext.save()
-            } catch {
-                
-            }
-            
             if mode == "bike" && type! == "Vélos" || type! == "Mixte" {
                 let annotation = BikeAnnotation(type: type!, coordinate: CLLocationCoordinate2D(latitude: lat!, longitude: long!), size: size!, address: address!, indexPark: objectId!, park: park!)
                 clusterManager.add(annotation)
@@ -453,163 +315,101 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             } else if mode == "moto" && type! == "Motos" || type! == "Mixte" {
                 let annotation = BikeAnnotation(type: type!, coordinate: CLLocationCoordinate2D(latitude: lat!, longitude: long!), size: size!, address: address!, indexPark: objectId!, park: park!)
                 clusterManager.add(annotation)
-                clusterManager.reload(mapView: self.carte)
+                clusterManager.reload(mapView: carte)
             }
-        
-        } catch {
-            
         }
-        
-        
-        
-    }
-    
-    
-    @IBOutlet weak var searchResultsTableView: UITableView!
-    func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
-        searchResults = completer.results
-        searchResultsTableView.reloadData()
-    }
-    
-    func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
-        // handle error
-    }
-    
-    func getParks() {
-        
-        //1
-        guard let appDelegate =
-            UIApplication.shared.delegate as? AppDelegate else {
-                return
-        }
-        
-        let managedContext =
-            appDelegate.persistentContainer.viewContext
-        
-        //2
-        let fetchRequest =
-            NSFetchRequest<NSManagedObject>(entityName: "Park")
-        
-        //3
-        do {
-            parks = try managedContext.fetch(fetchRequest)
-            var i = 0
-            for park in parks {
-                
-                let mode = UserDefaults.standard.string(forKey: "mode") ?? "bike"
-                
-                let type = park.value(forKeyPath: "type") as? String
-                let address = park.value(forKeyPath: "address") as? String
-                let size = park.value(forKeyPath: "size") as? Double
-                let lat = park.value(forKeyPath: "lat")! as? Double
-                let long = park.value(forKeyPath: "lon") as? Double
-                let objectId = park.value(forKeyPath: "objectId") as? String
-                let park = park.value(forKeyPath: "park") as? Bool
-            
-                if mode == "bike" && type! == "Vélos" || type! == "Mixte" {
-                    let annotation = BikeAnnotation(type: type!, coordinate: CLLocationCoordinate2D(latitude: lat!, longitude: long!), size: size!, address: address!, indexPark: objectId!, park: park!)
-                    clusterManager.add(annotation)
-                    clusterManager.reload(mapView: carte)
-                } else if mode == "moto" && type! == "Motos" || type! == "Mixte" {
-                    let annotation = BikeAnnotation(type: type!, coordinate: CLLocationCoordinate2D(latitude: lat!, longitude: long!), size: size!, address: address!, indexPark: objectId!, park: park!)
-                    clusterManager.add(annotation)
-                    clusterManager.reload(mapView: carte)
-                }
-             i = i + 1
-            }
-//            print(parks[0].value(forKeyPath: "address") as? String)
 
-        } catch let error as NSError {
-//            print("Could not fetch. \(error), \(error.userInfo)")
-        }
+
     }
     
     func isCoreDataEmpty () -> Bool {
-        //1
-        guard let appDelegate =
-            UIApplication.shared.delegate as? AppDelegate else {
-                return true
-        }
         
-        let managedContext =
-            appDelegate.persistentContainer.viewContext
-        
-        //2
-        let fetchRequest =
-            NSFetchRequest<NSManagedObject>(entityName: "Park")
-        
-        //3
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return true }
+        managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Park")
+
         do {
-            parks = try managedContext.fetch(fetchRequest)
-            if parks.count == 0 {
+            spots = try managedContext.fetch(fetchRequest)
+            if spots.count == 0 {
                 return true
             } else {
                 return false
             }
-            //            print(parks[0].value(forKeyPath: "address") as? String)
-            
         } catch let error as NSError {
-//            print("Could not fetch. \(error), \(error.userInfo)")
+            print("Could not fetch. \(error), \(error.userInfo)")
             return true
         }
     }
     
-    func sortSpots() {
-        
-//        for (_, subJson) in spots {
+//    // Park Ride
+
+//    func parkMyRide() {
 //
+//        let mode = UserDefaults.standard.string(forKey: "mode") ?? "bike"
 //
+//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
 //
+//        let deleteRequest = NSFetchRequest<NSManagedObject>(entityName: "Park")
+//        deleteRequest.predicate = NSPredicate(format: "park = %@", NSNumber(value: true))
+//        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Park")
+//        fetchRequest.predicate = NSPredicate(format: "objectId = %@", selectedAnnotation!.indexPark)
 //
-////            if field == "Vélos" { self.spotVelos.append(subJson) }
-////            else if field == "Motos" { self.spotMotos.append(subJson) }
-////            else { self.spotMixte.append(subJson) }
+//        do {
+//            park = try managedContext.fetch(deleteRequest)
+//
+//            park[0].setValue(false, forKeyPath: "park")
+//            do {
+//                try managedContext.save()
+//
+//            } catch {
+//
+//            }
+//            clusterManager.reload(mapView: self.carte)
+//        } catch {
 //
 //        }
-        
-//        placeSpots()
-        
-    }
-    
-    func placeSpots() {
-        
-        let allAnnotations = self.carte.annotations
-        carte.removeAnnotations(allAnnotations)
-        clusterManager.removeAll()
-        clusterManager.reload(mapView: carte)
-        
-        if mode == "bike" {
-            loopSpots(coll: self.spotVelos)
-        } else if mode == "motorbike" {
-            loopSpots(coll: self.spotMotos)
-        }
-        
-        loopSpots(coll: self.spotMixte)
-    }
-    
-    func loopSpots(coll: [JSON]) {
-        var i = 0
-        
-        for subJson in coll {
-            
-            let type = subJson["type"].string!
-            let address = subJson["address"].string!
-            let size = subJson["size"].double!
-            let lat = Double(subJson["coordinates"]["lat"].string!)!
-            let long = Double(subJson["coordinates"]["lon"].string!)!
-            let recordId = subJson["recordid"].string!
-            let park = subJson["park"].bool!
-            
-            let annotation = BikeAnnotation(type: type, coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), size: size, address: address, indexPark: recordId, park: park)
-            clusterManager.add(annotation)
-            clusterManager.reload(mapView: carte)
-            i = i + 1
-        }
-    }
+//
+//        do {
+//            park = try managedContext.fetch(fetchRequest)
+//            park.setValue(true, forKey: "park")
+//            clusterManager.remove(selectedAnnotation!)
+//
+//            let type = parks[0].value(forKeyPath: "type") as? String
+//            let address = parks[0].value(forKeyPath: "address") as? String
+//            let size = parks[0].value(forKeyPath: "size") as? Double
+//            let lat = parks[0].value(forKeyPath: "lat")! as? Double
+//            let long = parks[0].value(forKeyPath: "lon") as? Double
+//            let objectId = parks[0].value(forKeyPath: "objectId") as? String
+//            let park = parks[0].value(forKeyPath: "park") as? Bool
+//
+//            do {
+//                try managedContext.save()
+//
+//            } catch {
+//
+//            }
+//
+//            if mode == "bike" && type! == "Vélos" || type! == "Mixte" {
+//                let annotation = BikeAnnotation(type: type!, coordinate: CLLocationCoordinate2D(latitude: lat!, longitude: long!), size: size!, address: address!, indexPark: objectId!, park: park!)
+//                clusterManager.add(annotation)
+//                clusterManager.reload(mapView: carte)
+//            } else if mode == "moto" && type! == "Motos" || type! == "Mixte" {
+//                let annotation = BikeAnnotation(type: type!, coordinate: CLLocationCoordinate2D(latitude: lat!, longitude: long!), size: size!, address: address!, indexPark: objectId!, park: park!)
+//                clusterManager.add(annotation)
+//                clusterManager.reload(mapView: self.carte)
+//            }
+//
+//        } catch {
+//
+//        }
+
+//    }
     
     // Itinerary
     
     func calculateInterary(destination: CLLocationCoordinate2D) {
+        
+        let mode = UserDefaults.standard.string(forKey: "mode") ?? "bike"
         
         var modeString = ""
         
@@ -634,7 +434,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         directions.calculate { (response, error) in
             guard let directionResonse = response else {
                 if let error = error {
-//                    print("we have error getting directions==\(error.localizedDescription)")
+                    print("we have error getting directions==\(error.localizedDescription)")
                 }
                 return
             }
@@ -646,10 +446,10 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             self.carte.addOverlay(route.polyline, level: .aboveRoads)
             
             //setting rect of our mapview to fit the two locations
-            //            let rect = route.polyline.boundingMapRect
-            //            let recta = rect.insetBy(dx: -1200, dy: -1200)
-            //            let rectb = recta.offsetBy(dx: 0, dy: 400)
-            //            self.carte.setRegion(MKCoordinateRegion(rectb), animated: true)
+            // let rect = route.polyline.boundingMapRect
+            // let recta = rect.insetBy(dx: -1200, dy: -1200)
+            // let rectb = recta.offsetBy(dx: 0, dy: 400)
+            // self.carte.setRegion(MKCoordinateRegion(rectb), animated: true)
         }
     }
     
@@ -685,7 +485,6 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         self.deleteRoute()
 
         self.tooltipItinerary.isHidden = false
-        self.tooltipItineraryView.isHidden = false
         
         self.tooltipItinerary.animate(.fadeIn)
         self.calculateInterary(destination: coordinates)
@@ -716,9 +515,9 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         if type == "Vélos" { image = "bike" }
         if type == "Motos" { image = "moto" }
         
-        self.tooltipTransportView.isHidden = false
+        self.tooltipTransportModeView.isHidden = false
         self.tooltipTransportIcon.image = UIImage(named: image)
-        self.tooltipTransportView.backgroundColor = color
+        self.tooltipTransportModeView.backgroundColor = color
     }
     
     func calculateSizeOfPark(size: Double) {
@@ -790,10 +589,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         } else {
             self.present(mapsProvider, animated: true, completion: nil)
         }
-        
-        
-        
-        
+  
     }
     
     // Map View
@@ -822,7 +618,6 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         clusterManager.reload(mapView: carte)
     }
     
-    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
         // Don't want to show a custom image if the annotation is the user's location.
@@ -836,7 +631,6 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             return BikeMarkerView(annotation: annotation, reuseIdentifier: "bike")
         }
     }
-    
     
     // Location manager
     
@@ -889,6 +683,18 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     
     // Results Table View
     
+    var searchCompleter = MKLocalSearchCompleter()
+    var searchResults = [MKLocalSearchCompletion]()
+    
+    func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
+        searchResults = completer.results
+        searchResultsTableView.reloadData()
+    }
+    
+    func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
+        // handle error
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
@@ -915,6 +721,57 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         }
     }
     
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return searchResults.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let searchResult = searchResults[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "resultCell") as! ResultCell
+        
+        cell.selectionStyle = .none
+        tableView.rowHeight = 57
+        tableView.backgroundColor = UIColor.clear
+        tableView.separatorStyle = .none
+        
+        cell.searchResultAddress.text = searchResult.title
+        cell.searchResultAddress2.text = searchResult.subtitle
+        return cell
+        
+    }
+    
+    // Siri
+    
+    func donateSiriInteraction() {
+        let intent = WhereIsMyBikeIntent()
+        let interaction = INInteraction(intent: intent, response: nil)
+        
+        interaction.donate { (error) in
+            print("yeah")
+            if error != nil {
+                
+            }
+        }
+    }
+    
+    func setUpSiri(to view: UIView) {
+        
+        let button = INUIAddVoiceShortcutButton(style: .whiteOutline)
+        button.shortcut = INShortcut(intent: intent)
+        let shot = INShortcut(intent: intent)
+        if shot != nil {
+            //            print("déjà")
+        } else {
+            self.addToSiriView.isHidden = false
+            button.delegate = self
+            button.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview(button)
+            view.centerXAnchor.constraint(equalTo: button.centerXAnchor).isActive = true
+            view.centerYAnchor.constraint(equalTo: button.centerYAnchor).isActive = true
+        }
+        
+    }
 }
 
 extension Double {
@@ -926,16 +783,19 @@ extension Double {
 
 extension UIView {
     
-    func dropShadow() {
-        self.layer.masksToBounds = false
-        self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowOpacity = 0.15
-        self.layer.shadowOffset = CGSize(width: 1, height: 1)
-        self.layer.shadowRadius = 5
-        self.layer.shadowPath = UIBezierPath(rect: self.bounds).cgPath
-        self.layer.shouldRasterize = true
-        self.layer.rasterizationScale = UIScreen.main.scale
+    func roundView(_ radius: Int,_ shadow: Bool) {
+        self.layer.cornerRadius = CGFloat(exactly: radius)!
+        self.layer.masksToBounds = true
         
+        if shadow {
+            self.layer.masksToBounds = false
+            self.layer.shadowPath = UIBezierPath(rect: self.bounds).cgPath
+            self.layer.shadowRadius = 5
+            self.layer.shadowOffset = .zero
+            self.layer.shadowOpacity = 1
+            self.layer.shadowOpacity = 0.15
+            self.layer.shadowColor = UIColor.black.cgColor
+        }
     }
 }
 
@@ -955,52 +815,50 @@ extension MKMapView {
 }
 
 extension MapVC: INUIAddVoiceShortcutButtonDelegate {
-    @available(iOS 12.0, *)
+    
     func present(_ addVoiceShortcutViewController: INUIAddVoiceShortcutViewController, for addVoiceShortcutButton: INUIAddVoiceShortcutButton) {
         addVoiceShortcutViewController.delegate = self
         addVoiceShortcutViewController.modalPresentationStyle = .formSheet
         present(addVoiceShortcutViewController, animated: true, completion: nil)
     }
     
-    @available(iOS 12.0, *) func present(_ editVoiceShortcutViewController: INUIEditVoiceShortcutViewController, for addVoiceShortcutButton: INUIAddVoiceShortcutButton) {
+    func present(_ editVoiceShortcutViewController: INUIEditVoiceShortcutViewController, for addVoiceShortcutButton: INUIAddVoiceShortcutButton) {
         editVoiceShortcutViewController.delegate = self
         editVoiceShortcutViewController.modalPresentationStyle = .formSheet
         present(editVoiceShortcutViewController, animated: true, completion: nil)
     }
     
-    
 }
 
 extension MapVC: INUIAddVoiceShortcutViewControllerDelegate {
-    @available(iOS 12.0, *) func addVoiceShortcutViewController(_ controller: INUIAddVoiceShortcutViewController, didFinishWith voiceShortcut: INVoiceShortcut?, error: Error?) {
+    func addVoiceShortcutViewController(_ controller: INUIAddVoiceShortcutViewController, didFinishWith voiceShortcut: INVoiceShortcut?, error: Error?) {
         
         controller.dismiss(animated: true, completion: nil)
     }
     
-    @available(iOS 12.0, *) func addVoiceShortcutViewControllerDidCancel(_ controller: INUIAddVoiceShortcutViewController) {
+    func addVoiceShortcutViewControllerDidCancel(_ controller: INUIAddVoiceShortcutViewController) {
         controller.dismiss(animated: true, completion: nil)
     }
-    
     
 }
 
 extension MapVC: INUIEditVoiceShortcutViewControllerDelegate {
-    @available(iOS 12.0, *) func editVoiceShortcutViewController(_ controller: INUIEditVoiceShortcutViewController, didUpdate voiceShortcut: INVoiceShortcut?, error: Error?) {
+    func editVoiceShortcutViewController(_ controller: INUIEditVoiceShortcutViewController, didUpdate voiceShortcut: INVoiceShortcut?, error: Error?) {
         controller.dismiss(animated: true, completion: nil)
     }
     
-    @available(iOS 12.0, *) func editVoiceShortcutViewController(_ controller: INUIEditVoiceShortcutViewController, didDeleteVoiceShortcutWithIdentifier deletedVoiceShortcutIdentifier: UUID) {
+    func editVoiceShortcutViewController(_ controller: INUIEditVoiceShortcutViewController, didDeleteVoiceShortcutWithIdentifier deletedVoiceShortcutIdentifier: UUID) {
         controller.dismiss(animated: true, completion: nil)
     }
     
-    @available(iOS 12.0, *) func editVoiceShortcutViewControllerDidCancel(_ controller: INUIEditVoiceShortcutViewController) {
+    func editVoiceShortcutViewControllerDidCancel(_ controller: INUIEditVoiceShortcutViewController) {
         controller.dismiss(animated: true, completion: nil)
     }
 }
 
 extension MapVC {
-    @available(iOS 12.0, *) public var intent: WhereIsMyBikeIntent {
-        let testIntent = WhereIsMyBikeIntent()
-        return testIntent
+    public var intent: WhereIsMyBikeIntent {
+        let intent = WhereIsMyBikeIntent()
+        return intent
     }
 }

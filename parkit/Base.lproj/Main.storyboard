@@ -488,14 +488,9 @@
                             <constraint firstItem="Ozg-lz-OOP" firstAttribute="top" secondItem="PQr-Ze-W5v" secondAttribute="top" constant="5" id="zXC-Mj-neR"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="PQr-Ze-W5v"/>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="nKa-4j-YHN"/>
-                            </mask>
-                        </variation>
                     </view>
                     <connections>
-                        <outlet property="AddToSiriButton" destination="LWb-e1-gVS" id="uh5-SL-y53"/>
+                        <outlet property="addToSiriButton" destination="LWb-e1-gVS" id="s32-Pl-hA5"/>
                         <outlet property="addToSiriView" destination="nKa-4j-YHN" id="mef-e7-Iak"/>
                         <outlet property="carte" destination="0Rb-wT-LEY" id="cBu-ga-vfz"/>
                         <outlet property="findMyRideView" destination="crS-oe-XWs" id="psX-L3-gxx"/>
@@ -522,16 +517,11 @@
                         <outlet property="tooltipSizeView" destination="0Lu-0o-HmH" id="pCR-2C-KTK"/>
                         <outlet property="tooltipTitle" destination="k61-ze-jdH" id="iM5-8U-KuR"/>
                         <outlet property="tooltipTransportIcon" destination="gwb-QP-0mg" id="3Qk-dA-DwA"/>
-                        <outlet property="tooltipTransportView" destination="D2M-BA-x0R" id="Lja-C3-GO8"/>
+                        <outlet property="tooltipTransportModeView" destination="D2M-BA-x0R" id="Cpo-mG-GN4"/>
                         <outlet property="tooltipTravelTime" destination="Azw-C2-DHI" id="7um-6i-MI2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
-                <customObject id="W1N-nd-sYE" customClass="KeyboardHideManager" customModule="KeyboardHideManager">
-                    <connections>
-                        <outletCollection property="targets" destination="0Rb-wT-LEY" collectionClass="NSMutableArray" id="dR1-jw-1vs"/>
-                    </connections>
-                </customObject>
             </objects>
             <point key="canvasLocation" x="749.60000000000002" y="-320.68965517241384"/>
         </scene>
