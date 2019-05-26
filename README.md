@@ -1,6 +1,7 @@
 #  ParkIt! Swift Edition
 
-[https://i.imgur.com/BYkvNQJ.png](https://i.imgur.com/BYkvNQJ.png)
+[https://i.imgur.com/BYkvNQJ.png](
+![IParkIt!](https://i.imgur.com/BYkvNQJ.png)
 
 ## The Project
 
