@@ -14,7 +14,6 @@ ParkIt is an open-source Swift application aimed to help bike and motorbike owne
 
 - Refactor tooltip view to display it programmatically
 - Create service to convert mins in hours
-- Add swipe to dismiss and clear itinerary
 
 #### Map
 
