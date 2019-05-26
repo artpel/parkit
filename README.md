@@ -1,5 +1,7 @@
 #  ParkIt! Swift Edition
 
+[https://i.imgur.com/BYkvNQJ.png](https://i.imgur.com/BYkvNQJ.png)
+
 ## The Project
 
 ParkIt is an open-source Swift application aimed to help bike and motorbike owners in Paris find a parking nearby.
