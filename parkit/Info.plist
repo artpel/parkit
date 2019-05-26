@@ -17,15 +17,19 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>0.2</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>MGLMapboxAccessToken</key>
-	<string>pk.eyJ1IjoiYXRodXIiLCJhIjoiY2o4eWMxeG9tMXQ0MDMzcjA5eHk1cGVyZyJ9.HfqP9IdP60ubPz9L4yFt6Q</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Nous souhaitons vous aider à trouver votre chemin. Nous ne conservons pas ces données.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Nous souhaitons vous aider à trouver votre chemin. Nous ne conservons pas ces données.</string>
+	<key>NSUserActivityTypes</key>
+	<array>
+		<string>WhereIsMyBikeIntent</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -48,8 +52,6 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Nous souhaitons vous aider à trouver votre chemin. Nous ne conservons pas ces données.</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

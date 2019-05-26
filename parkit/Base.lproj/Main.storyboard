@@ -306,7 +306,7 @@
                                     <constraint firstItem="WT6-2p-geQ" firstAttribute="top" secondItem="crS-oe-XWs" secondAttribute="top" id="dqy-LH-fcs"/>
                                 </constraints>
                             </view>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ozg-lz-OOP">
+                            <view clipsSubviews="YES" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="Ozg-lz-OOP">
                                 <rect key="frame" x="47" y="25" width="281" height="29"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lzt-5Q-gOG">
@@ -409,6 +409,53 @@
                                 </constraints>
                                 <blurEffect style="light"/>
                             </visualEffectView>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nKa-4j-YHN">
+                                <rect key="frame" x="53.5" y="183.5" width="268" height="300"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Où est ma bécane ?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eky-Ym-VNw">
+                                        <rect key="frame" x="31" y="122" width="208" height="26.5"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vous pouvez utiliser Siri pour retrouver facilement votre deux-roues garé" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kso-gc-xCr">
+                                        <rect key="frame" x="30" y="156.5" width="208" height="54"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="looking" translatesAutoresizingMaskIntoConstraints="NO" id="ap4-UL-yyY">
+                                        <rect key="frame" x="30" y="8" width="208" height="106"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="106" id="yEn-nN-E1F"/>
+                                        </constraints>
+                                    </imageView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LWb-e1-gVS">
+                                        <rect key="frame" x="71" y="245" width="128" height="35"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="128" id="5Eb-sU-G34"/>
+                                            <constraint firstAttribute="height" constant="35" id="th6-k2-3f9"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="eky-Ym-VNw" firstAttribute="leading" secondItem="nKa-4j-YHN" secondAttribute="leading" constant="31" id="0cE-lL-hVS"/>
+                                    <constraint firstItem="kso-gc-xCr" firstAttribute="top" secondItem="eky-Ym-VNw" secondAttribute="bottom" constant="8" id="DRg-ka-gJw"/>
+                                    <constraint firstItem="kso-gc-xCr" firstAttribute="width" secondItem="eky-Ym-VNw" secondAttribute="width" id="EL8-dH-yID"/>
+                                    <constraint firstAttribute="trailing" secondItem="eky-Ym-VNw" secondAttribute="trailing" constant="29" id="HsU-KI-dIG"/>
+                                    <constraint firstItem="ap4-UL-yyY" firstAttribute="leading" secondItem="nKa-4j-YHN" secondAttribute="leading" constant="30" id="JtN-bF-0Nz"/>
+                                    <constraint firstAttribute="width" constant="268" id="PJD-5C-0b4"/>
+                                    <constraint firstAttribute="bottom" secondItem="LWb-e1-gVS" secondAttribute="bottom" constant="20" id="RMU-ww-Qkg"/>
+                                    <constraint firstItem="LWb-e1-gVS" firstAttribute="centerX" secondItem="nKa-4j-YHN" secondAttribute="centerX" constant="1" id="bbq-0I-EY8"/>
+                                    <constraint firstItem="eky-Ym-VNw" firstAttribute="top" secondItem="ap4-UL-yyY" secondAttribute="bottom" constant="8" id="f2A-nK-6Gy"/>
+                                    <constraint firstItem="kso-gc-xCr" firstAttribute="centerX" secondItem="nKa-4j-YHN" secondAttribute="centerX" id="fTa-lZ-XeS"/>
+                                    <constraint firstAttribute="trailing" secondItem="ap4-UL-yyY" secondAttribute="trailing" constant="30" id="pXD-T9-lkG"/>
+                                    <constraint firstItem="ap4-UL-yyY" firstAttribute="top" secondItem="nKa-4j-YHN" secondAttribute="top" constant="8" id="rYy-OA-n2r"/>
+                                    <constraint firstAttribute="height" constant="300" id="ywf-sx-Viq"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -423,9 +470,13 @@
                             <constraint firstItem="PQr-Ze-W5v" firstAttribute="trailing" secondItem="LlW-zR-Z8x" secondAttribute="trailing" constant="10" id="Oow-xT-gp1"/>
                             <constraint firstItem="ISb-7r-gvK" firstAttribute="top" secondItem="Ozg-lz-OOP" secondAttribute="bottom" constant="8" id="P8X-mn-tZx"/>
                             <constraint firstItem="PQr-Ze-W5v" firstAttribute="trailing" secondItem="EgH-uw-bDg" secondAttribute="trailing" constant="10" id="Pnt-Xd-Pbq"/>
+                            <constraint firstItem="nKa-4j-YHN" firstAttribute="centerY" secondItem="tsR-hK-woN" secondAttribute="centerY" id="Rf0-ns-R3u"/>
                             <constraint firstItem="PQr-Ze-W5v" firstAttribute="trailing" secondItem="gjJ-gj-1ai" secondAttribute="trailing" constant="10" id="Upc-Gg-QyX"/>
+                            <constraint firstItem="nKa-4j-YHN" firstAttribute="centerX" secondItem="tsR-hK-woN" secondAttribute="centerX" id="V06-CX-Fun"/>
                             <constraint firstItem="0Rb-wT-LEY" firstAttribute="trailing" secondItem="PQr-Ze-W5v" secondAttribute="trailing" id="Zsv-uB-MQs"/>
                             <constraint firstItem="0Rb-wT-LEY" firstAttribute="top" secondItem="tsR-hK-woN" secondAttribute="top" id="dLa-G5-Od1"/>
+                            <constraint firstItem="nKa-4j-YHN" firstAttribute="centerY" secondItem="tsR-hK-woN" secondAttribute="centerY" id="fGt-e4-TZa"/>
+                            <constraint firstItem="nKa-4j-YHN" firstAttribute="centerX" secondItem="tsR-hK-woN" secondAttribute="centerX" id="gV7-XF-Gm9"/>
                             <constraint firstAttribute="bottom" secondItem="0Rb-wT-LEY" secondAttribute="bottom" id="k10-Vy-AdF"/>
                             <constraint firstItem="LlW-zR-Z8x" firstAttribute="top" secondItem="crS-oe-XWs" secondAttribute="bottom" constant="8" id="k8X-Wd-mRc"/>
                             <constraint firstItem="ISb-7r-gvK" firstAttribute="centerX" secondItem="tsR-hK-woN" secondAttribute="centerX" id="kRb-HV-5jO"/>
@@ -437,8 +488,15 @@
                             <constraint firstItem="Ozg-lz-OOP" firstAttribute="top" secondItem="PQr-Ze-W5v" secondAttribute="top" constant="5" id="zXC-Mj-neR"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="PQr-Ze-W5v"/>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="nKa-4j-YHN"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
+                        <outlet property="AddToSiriButton" destination="LWb-e1-gVS" id="uh5-SL-y53"/>
+                        <outlet property="addToSiriView" destination="nKa-4j-YHN" id="mef-e7-Iak"/>
                         <outlet property="carte" destination="0Rb-wT-LEY" id="cBu-ga-vfz"/>
                         <outlet property="findMyRideView" destination="crS-oe-XWs" id="psX-L3-gxx"/>
                         <outlet property="legendDot1View" destination="JFM-0W-jHm" id="Ewy-5j-U1r"/>
@@ -578,5 +636,6 @@
     </scenes>
     <resources>
         <image name="logo" width="512" height="512"/>
+        <image name="looking" width="615" height="399"/>
     </resources>
 </document>

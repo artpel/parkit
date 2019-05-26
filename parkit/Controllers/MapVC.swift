@@ -19,8 +19,34 @@ import SnapKit
 import FontAwesome_swift
 import Motion
 import GestureRecognizerClosures
+import IntentsUI
+import Intents
 
 class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, MKLocalSearchCompleterDelegate, UITextFieldDelegate {
+    
+    @IBOutlet weak var AddToSiriButton: UIView!
+
+    
+    func addSiriButton(to view: UIView) {
+        
+        let button = INUIAddVoiceShortcutButton(style: .whiteOutline)
+        button.shortcut = INShortcut(intent: intent)
+        let shot = INShortcut(intent: intent)
+        if shot != nil {
+            print("déjà")
+        } else {
+            print("pas encore")
+        }
+        button.delegate = self
+
+        button.translatesAutoresizingMaskIntoConstraints = false
+
+        view.addSubview(button)
+        view.centerXAnchor.constraint(equalTo: button.centerXAnchor).isActive = true
+        view.centerYAnchor.constraint(equalTo: button.centerYAnchor).isActive = true
+    }
+    
+   
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return searchResults.count
     }
@@ -158,8 +184,44 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     
     var clusterManager = ClusterManager()
     
+    @IBOutlet weak var addToSiriView: UIView!
+    func addToSiri() {
+        donateInteraction()
+        addSiriButton(to: self.AddToSiriButton)
+   
+    }
+    
+    func donateInteraction() {
+        let intent = WhereIsMyBikeIntent()
+        let interaction = INInteraction(intent: intent, response: nil)
+        
+        interaction.donate { (error) in
+            print("yeah")
+            if error != nil {
+                if let error = error as NSError? {
+                    print("error")
+                    
+                } else {
+                    print("OOO saved")
+                }
+            }
+        }
+        
+        
+    }
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        addToSiri()
+        
+        
+        
+        addToSiriView.dropShadow()
+        addToSiriView.layer.cornerRadius = 8
+        addToSiriView.layer.masksToBounds = true
         
         setRoundView(vue: tooltipItinerary, radius: 8)
         tooltipItinerary.onSwipeDown { _ in
@@ -823,7 +885,7 @@ extension UIView {
     func dropShadow() {
         self.layer.masksToBounds = false
         self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowOpacity = 0.1
+        self.layer.shadowOpacity = 0.15
         self.layer.shadowOffset = CGSize(width: 1, height: 1)
         self.layer.shadowRadius = 5
         self.layer.shadowPath = UIBezierPath(rect: self.bounds).cgPath
@@ -848,4 +910,53 @@ extension MKMapView {
     
 }
 
+extension MapVC: INUIAddVoiceShortcutButtonDelegate {
+    @available(iOS 12.0, *)
+    func present(_ addVoiceShortcutViewController: INUIAddVoiceShortcutViewController, for addVoiceShortcutButton: INUIAddVoiceShortcutButton) {
+        addVoiceShortcutViewController.delegate = self
+        addVoiceShortcutViewController.modalPresentationStyle = .formSheet
+        present(addVoiceShortcutViewController, animated: true, completion: nil)
+    }
+    
+    @available(iOS 12.0, *) func present(_ editVoiceShortcutViewController: INUIEditVoiceShortcutViewController, for addVoiceShortcutButton: INUIAddVoiceShortcutButton) {
+        editVoiceShortcutViewController.delegate = self
+        editVoiceShortcutViewController.modalPresentationStyle = .formSheet
+        present(editVoiceShortcutViewController, animated: true, completion: nil)
+    }
+    
+    
+}
 
+extension MapVC: INUIAddVoiceShortcutViewControllerDelegate {
+    @available(iOS 12.0, *) func addVoiceShortcutViewController(_ controller: INUIAddVoiceShortcutViewController, didFinishWith voiceShortcut: INVoiceShortcut?, error: Error?) {
+        
+        controller.dismiss(animated: true, completion: nil)
+    }
+    
+    @available(iOS 12.0, *) func addVoiceShortcutViewControllerDidCancel(_ controller: INUIAddVoiceShortcutViewController) {
+        controller.dismiss(animated: true, completion: nil)
+    }
+    
+    
+}
+
+extension MapVC: INUIEditVoiceShortcutViewControllerDelegate {
+    @available(iOS 12.0, *) func editVoiceShortcutViewController(_ controller: INUIEditVoiceShortcutViewController, didUpdate voiceShortcut: INVoiceShortcut?, error: Error?) {
+        controller.dismiss(animated: true, completion: nil)
+    }
+    
+    @available(iOS 12.0, *) func editVoiceShortcutViewController(_ controller: INUIEditVoiceShortcutViewController, didDeleteVoiceShortcutWithIdentifier deletedVoiceShortcutIdentifier: UUID) {
+        controller.dismiss(animated: true, completion: nil)
+    }
+    
+    @available(iOS 12.0, *) func editVoiceShortcutViewControllerDidCancel(_ controller: INUIEditVoiceShortcutViewController) {
+        controller.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension MapVC {
+    @available(iOS 12.0, *) public var intent: WhereIsMyBikeIntent {
+        let testIntent = WhereIsMyBikeIntent()
+        return testIntent
+    }
+}

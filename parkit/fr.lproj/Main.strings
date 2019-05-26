@@ -1,0 +1,75 @@
+
+/* Class = "UILabel"; text = "Situé à 12 mn à vélo"; ObjectID = "Azw-C2-DHI"; */
+"Azw-C2-DHI.text" = "Situé à 12 mn à vélo";
+
+/* Class = "UILabel"; text = "Version 0.1"; ObjectID = "C4g-Bg-Bua"; */
+"C4g-Bg-Bua.text" = "Version 0.1";
+
+/* Class = "UILabel"; text = "Vélos"; ObjectID = "CDX-ek-9HP"; */
+"CDX-ek-9HP.text" = "Vélos";
+
+/* Class = "UIButton"; normalTitle = "S'y rendre"; ObjectID = "Ef7-zt-VBC"; */
+"Ef7-zt-VBC.normalTitle" = "S'y rendre";
+
+/* Class = "UISegmentedControl"; H5S-4c-yym.segmentTitles[0] = "Vélo"; ObjectID = "H5S-4c-yym"; */
+"H5S-4c-yym.segmentTitles[0]" = "Vélo";
+
+/* Class = "UISegmentedControl"; H5S-4c-yym.segmentTitles[1] = "Motos"; ObjectID = "H5S-4c-yym"; */
+"H5S-4c-yym.segmentTitles[1]" = "Motos";
+
+/* Class = "UILabel"; text = "Moyen"; ObjectID = "Hw4-B4-gtj"; */
+"Hw4-B4-gtj.text" = "Moyen";
+
+/* Class = "UILabel"; text = "ParkIt!"; ObjectID = "KPP-UD-NQW"; */
+"KPP-UD-NQW.text" = "ParkIt!";
+
+/* Class = "UILabel"; text = "Situé à 12 mn à vélo"; ObjectID = "QwV-O2-OrJ"; */
+"QwV-O2-OrJ.text" = "Situé à 12 mn à vélo";
+
+/* Class = "UIButton"; normalTitle = "Actualiser les parkings"; ObjectID = "VDg-Jl-5LK"; */
+"VDg-Jl-5LK.normalTitle" = "Actualiser les parkings";
+
+/* Class = "UILabel"; text = "Arthur Péligry"; ObjectID = "VZZ-ty-oap"; */
+"VZZ-ty-oap.text" = "Arthur Péligry";
+
+/* Class = "UIButton"; normalTitle = "Find my ride"; ObjectID = "WT6-2p-geQ"; */
+"WT6-2p-geQ.normalTitle" = "Find my ride";
+
+/* Class = "UITextField"; placeholder = "Entrez une adresse..."; ObjectID = "XHY-NE-BkQ"; */
+"XHY-NE-BkQ.placeholder" = "Entrez une adresse...";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "bCO-IA-cHZ"; */
+"bCO-IA-cHZ.text" = "Label";
+
+/* Class = "UILabel"; text = "Où est ma bécane ?"; ObjectID = "eky-Ym-VNw"; */
+"eky-Ym-VNw.text" = "Où est ma bécane ?";
+
+/* Class = "UIButton"; normalTitle = "J'y suis garé"; ObjectID = "hqQ-qL-EbA"; */
+"hqQ-qL-EbA.normalTitle" = "J'y suis garé";
+
+/* Class = "UILabel"; text = "Parking"; ObjectID = "k61-ze-jdH"; */
+"k61-ze-jdH.text" = "Parking";
+
+/* Class = "UILabel"; text = "Vélos"; ObjectID = "kM0-9I-Tp4"; */
+"kM0-9I-Tp4.text" = "Vélos";
+
+/* Class = "UILabel"; text = "Vous pouvez utiliser Siri pour retrouver facilement votre deux-roues garé"; ObjectID = "kso-gc-xCr"; */
+"kso-gc-xCr.text" = "Vous pouvez utiliser Siri pour retrouver facilement votre deux-roues garé";
+
+/* Class = "UIButton"; normalTitle = "x"; ObjectID = "lzt-5Q-gOG"; */
+"lzt-5Q-gOG.normalTitle" = "x";
+
+/* Class = "UIButton"; normalTitle = "x"; ObjectID = "oKV-J0-O4p"; */
+"oKV-J0-O4p.normalTitle" = "x";
+
+/* Class = "UIViewController"; title = "SettingsVC"; ObjectID = "qJP-Ga-y7d"; */
+"qJP-Ga-y7d.title" = "SettingsVC";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "rvm-BQ-2j7"; */
+"rvm-BQ-2j7.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "l"; ObjectID = "tkx-kZ-LAi"; */
+"tkx-kZ-LAi.normalTitle" = "l";
+
+/* Class = "UIButton"; normalTitle = "l"; ObjectID = "ur3-1y-aJN"; */
+"ur3-1y-aJN.normalTitle" = "l";
