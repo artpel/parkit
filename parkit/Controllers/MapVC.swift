@@ -743,12 +743,56 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         let coordinate = CLLocationCoordinate2DMake(annotation.coordinate.latitude, annotation.coordinate.longitude)
         let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: coordinate, addressDictionary:nil))
         mapItem.name = annotation.title
+        let latlon = "\(annotation.coordinate.latitude),\(annotation.coordinate.longitude)"
         
-        if mode == "bike" {
-            mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeWalking])
-        } else {
-            mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving])
+        let mapsProvider: UIAlertController = UIAlertController(title: "Quel service souhaitez-vous utiliser ?", message: "Votre sélection sera sauvegardée sur votre iPhone", preferredStyle: .actionSheet)
+        
+        let cancelActionButton = UIAlertAction(title: "Apple Maps", style: .default) { _ in
+            openInAppMaps()
+            UserDefaults.standard.set("apple", forKey: "mapsProvider")
         }
+        mapsProvider.addAction(cancelActionButton)
+        
+        let saveActionButton = UIAlertAction(title: "Google Maps", style: .default)
+        { _ in
+            openInGMaps()
+            UserDefaults.standard.set("google", forKey: "mapsProvider")
+        }
+        mapsProvider.addAction(saveActionButton)
+        
+        func openInAppMaps() {
+            if mode == "bike" {
+                mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeWalking])
+            } else {
+                mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving])
+            }
+        }
+        
+        func openInGMaps() {
+            let urlApi = "https://www.google.com/maps/dir/?api=1"
+            
+            let destination = "&destination="
+            let travelModeString = "&travelmode=bicycling"
+            
+            let fullUrl = "\(urlApi)\(destination)\(latlon)\(travelModeString)"
+            
+            UIApplication.shared.openURL(URL(string:fullUrl)!)
+            
+            
+        }
+        
+        if let name = UserDefaults.standard.string(forKey: "mapsProvider") {
+            if name == "google" {
+                openInGMaps()
+            } else {
+                openInAppMaps()
+            }
+        } else {
+            self.present(mapsProvider, animated: true, completion: nil)
+        }
+        
+        
+        
         
     }
     

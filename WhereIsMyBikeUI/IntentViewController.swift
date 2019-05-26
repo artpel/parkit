@@ -89,7 +89,7 @@ class IntentViewController: UIViewController, INUIHostedViewControlling, MKMapVi
             carte.addAnnotation(london)
             let regionRadius: CLLocationDistance = 250
             let coordinateRegion = MKCoordinateRegion(center: london.coordinate, latitudinalMeters: regionRadius * 2.0, longitudinalMeters: regionRadius * 2.0)
-            carte.setRegion(coordinateRegion, animated: true)
+            carte.setRegion(coordinateRegion, animated: false)
 //            carte.addAn
             
         } catch {
