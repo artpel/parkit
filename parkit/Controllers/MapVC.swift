@@ -1,5 +1,5 @@
 //
-//  FirstViewController.swift
+//  MapVC.swift
 //  parkit
 //
 //  Created by Arthur Péligry on 16/04/2019.
@@ -19,7 +19,7 @@ import ChameleonFramework
 import Cluster
 import SnapKit
 import FontAwesome_swift
-import Motion
+//import Motion
 import GestureRecognizerClosures
 
 class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, MKLocalSearchCompleterDelegate, UITextFieldDelegate {
@@ -55,15 +55,17 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     @IBOutlet weak var searchResultsTableView: UITableView!
     @IBAction func findMyRide(_ sender: Any) {
         
-        if park.count != 0 {
+        let parkedSpot = getSpotsFromCoreData(mode!, true) as! [NSManagedObject]
+        
+        if parkedSpot != [] {
             
-            let type = park[0].value(forKeyPath: "type") as? String
-            let address = park[0].value(forKeyPath: "address") as? String
-            let size = park[0].value(forKeyPath: "size") as? Double
-            let lat = park[0].value(forKeyPath: "lat")! as? Double
-            let long = park[0].value(forKeyPath: "lon") as? Double
-            let objectId = park[0].value(forKeyPath: "objectId") as? String
-            let parked = park[0].value(forKeyPath: "park") as? Bool
+            let type = parkedSpot[0].value(forKeyPath: "type") as? String
+            let address = parkedSpot[0].value(forKeyPath: "address") as? String
+            let size = parkedSpot[0].value(forKeyPath: "size") as? Double
+            let lat = parkedSpot[0].value(forKeyPath: "lat")! as? Double
+            let long = parkedSpot[0].value(forKeyPath: "lon") as? Double
+            let objectId = parkedSpot[0].value(forKeyPath: "objectId") as? String
+            let parked = parkedSpot[0].value(forKeyPath: "park") as? Bool
             
             let annotation = BikeAnnotation(type: type!, coordinate: CLLocationCoordinate2D(latitude: lat!, longitude: long!), size: size!, address: address!, indexPark: objectId!, park: parked!)
             showTooltip(annotation: annotation)
@@ -92,15 +94,9 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         setCenter()
     }
     @IBAction func parkedButton(_ sender: Any) {
-//        self.parkMyRide()
+        self.parkMyRide()
         setUpSiri(to: self.addToSiriButton)
     }
-    
-    var spots: [NSManagedObject] = []
-    var park: [NSManagedObject] = []
-    
-    var managedContext = NSManagedObjectContext()
-    var entity = NSEntityDescription()
     
     @IBAction func openInMapsButton(_ sender: Any) {
         let mode = UserDefaults.standard.string(forKey: "mode") ?? "bike"
@@ -113,6 +109,8 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     var targetAnnotation: BikeAnnotation?
     
     var clusterManager = ClusterManager()
+    
+    var mode: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -174,10 +172,13 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        
+        mode = UserDefaults.standard.string(forKey: "mode") ?? "Vélos"
+        
         if isCoreDataEmpty() {
             getSpots()
         } else {
-            getParksInCoreData()
+            setSpots(getSpotsFromCoreData(mode!))
         }
     }
     
@@ -238,6 +239,57 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         self.view.endEditing(true)
     }
     
+    // Core Data
+    
+    func getSpotsFromCoreData(_ mode: String, _ park: Bool = false) -> [Any] {
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return [] }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Park")
+        var predicates: [NSPredicate] = []
+        
+        predicates.append(NSPredicate(format: "type = %@", mode))
+        
+        if park {
+            predicates.append(NSPredicate(format: "park = %@", NSNumber(value: park)))
+        }
+
+        let andPredicate = NSCompoundPredicate(type: .and, subpredicates: predicates)
+        fetchRequest.predicate = andPredicate
+        
+        do {
+            let result = try managedContext.fetch(fetchRequest)
+
+            return result
+        } catch {
+            return []
+        }
+        
+    }
+    
+    func deleteSpotsFromCoreData(_ all: Bool = false, _ id : String = "0") {
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Park")
+        
+        if all != true {
+            let predicate = NSPredicate(format: "objectId = %@", id)
+            fetchRequest.predicate = predicate
+        }
+        
+        do {
+            let results = try managedContext.fetch(fetchRequest)
+            for result in results as! [NSManagedObject] {
+                managedContext.delete(result)
+            }
+            do {
+                try managedContext.save()
+            } catch { }
+        } catch { }
+        
+    }
+    
     // Annotations
     
     func getSpots() {
@@ -249,23 +301,22 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         Alamofire.request(url).responseJSON { (responseData) -> Void in
             if let response = responseData.result.value {
                 self.saveInCoreData(data: JSON(response))
-            } else {
-            }
-            
-            self.getParksInCoreData()
+            } else { }
+
+            self.setSpots(self.getSpotsFromCoreData(self.mode!))
             self.toogleActivityIndicator(status: "off")
         }
-        
     }
     
     func saveInCoreData(data: JSON) {
         
-        
-        entity = NSEntityDescription.entity(forEntityName: "Park", in: managedContext)!
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let entity = NSEntityDescription.entity(forEntityName: "Park", in: managedContext)!
         
         for (_, subJson) in data {
             
-            let park = NSManagedObject(entity: self.entity, insertInto: managedContext)
+            let park = NSManagedObject(entity: entity, insertInto: managedContext)
             
             let type = subJson["type"].string!
             let address = subJson["address"].string!
@@ -284,21 +335,17 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
 
             do {
                 try managedContext.save()
-                spots.append(park)
-            } catch  {
-                
-            }
+            } catch  { }
             
         }
         
+        setSpots(getSpotsFromCoreData(self.mode!))
         
     }
     
-    func getParksInCoreData() {
-     
-        for park in spots {
-            
-            let mode = UserDefaults.standard.string(forKey: "mode") ?? "bike"
+    func setSpots(_ spots: [Any]) {
+        
+        for park in spots as! [NSManagedObject] {
             
             let type = park.value(forKeyPath: "type") as? String
             let address = park.value(forKeyPath: "address") as? String
@@ -308,28 +355,27 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             let objectId = park.value(forKeyPath: "objectId") as? String
             let park = park.value(forKeyPath: "park") as? Bool
         
-            if mode == "bike" && type! == "Vélos" || type! == "Mixte" {
+            if mode == "Vélos" && type! == "Vélos" || type! == "Mixte" {
                 let annotation = BikeAnnotation(type: type!, coordinate: CLLocationCoordinate2D(latitude: lat!, longitude: long!), size: size!, address: address!, indexPark: objectId!, park: park!)
                 clusterManager.add(annotation)
                 clusterManager.reload(mapView: carte)
-            } else if mode == "moto" && type! == "Motos" || type! == "Mixte" {
+            } else if mode == "Motos" && type! == "Motos" || type! == "Mixte" {
                 let annotation = BikeAnnotation(type: type!, coordinate: CLLocationCoordinate2D(latitude: lat!, longitude: long!), size: size!, address: address!, indexPark: objectId!, park: park!)
                 clusterManager.add(annotation)
                 clusterManager.reload(mapView: carte)
             }
         }
 
-
     }
     
     func isCoreDataEmpty () -> Bool {
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return true }
-        managedContext = appDelegate.persistentContainer.viewContext
+        let managedContext = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Park")
 
         do {
-            spots = try managedContext.fetch(fetchRequest)
+            let spots = try managedContext.fetch(fetchRequest)
             if spots.count == 0 {
                 return true
             } else {
@@ -341,71 +387,41 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         }
     }
     
-//    // Park Ride
+    // Park Ride
 
-//    func parkMyRide() {
-//
-//        let mode = UserDefaults.standard.string(forKey: "mode") ?? "bike"
-//
-//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-//
-//        let deleteRequest = NSFetchRequest<NSManagedObject>(entityName: "Park")
-//        deleteRequest.predicate = NSPredicate(format: "park = %@", NSNumber(value: true))
-//        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Park")
-//        fetchRequest.predicate = NSPredicate(format: "objectId = %@", selectedAnnotation!.indexPark)
-//
-//        do {
-//            park = try managedContext.fetch(deleteRequest)
-//
-//            park[0].setValue(false, forKeyPath: "park")
-//            do {
-//                try managedContext.save()
-//
-//            } catch {
-//
-//            }
-//            clusterManager.reload(mapView: self.carte)
-//        } catch {
-//
-//        }
-//
-//        do {
-//            park = try managedContext.fetch(fetchRequest)
-//            park.setValue(true, forKey: "park")
-//            clusterManager.remove(selectedAnnotation!)
-//
-//            let type = parks[0].value(forKeyPath: "type") as? String
-//            let address = parks[0].value(forKeyPath: "address") as? String
-//            let size = parks[0].value(forKeyPath: "size") as? Double
-//            let lat = parks[0].value(forKeyPath: "lat")! as? Double
-//            let long = parks[0].value(forKeyPath: "lon") as? Double
-//            let objectId = parks[0].value(forKeyPath: "objectId") as? String
-//            let park = parks[0].value(forKeyPath: "park") as? Bool
-//
-//            do {
-//                try managedContext.save()
-//
-//            } catch {
-//
-//            }
-//
-//            if mode == "bike" && type! == "Vélos" || type! == "Mixte" {
-//                let annotation = BikeAnnotation(type: type!, coordinate: CLLocationCoordinate2D(latitude: lat!, longitude: long!), size: size!, address: address!, indexPark: objectId!, park: park!)
-//                clusterManager.add(annotation)
-//                clusterManager.reload(mapView: carte)
-//            } else if mode == "moto" && type! == "Motos" || type! == "Mixte" {
-//                let annotation = BikeAnnotation(type: type!, coordinate: CLLocationCoordinate2D(latitude: lat!, longitude: long!), size: size!, address: address!, indexPark: objectId!, park: park!)
-//                clusterManager.add(annotation)
-//                clusterManager.reload(mapView: self.carte)
-//            }
-//
-//        } catch {
-//
-//        }
+    func parkMyRide() {
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let coreDataValue = getSpotsFromCoreData(mode!, true)
+        
+        if coreDataValue.count != 0 {
+            let objectToUpdate = coreDataValue[0] as! NSManagedObject
+            objectToUpdate.setValue(false, forKey: "park")
+            do {
+                try managedContext.save()
+            } catch { }
+        }
+        
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Park")
+        fetchRequest.predicate = NSPredicate(format: "objectId = %@", selectedAnnotation!.indexPark)
+        
+        do {
+            let results = try managedContext.fetch(fetchRequest)
+            let resultat = results[0] as! NSManagedObject
+            resultat.setValue(true, forKey: "park")
+            do {
+                try managedContext.save()
+            } catch { }
+        } catch {
+            
+        }
+        
+        setSpots(getSpotsFromCoreData(self.mode!))
 
-//    }
+    }
     
-    // Itinerary
+//     Itinerary
     
     func calculateInterary(destination: CLLocationCoordinate2D) {
         
