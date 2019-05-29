@@ -52,6 +52,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var searchField: UITextField!
     @IBOutlet weak var addToSiriView: UIView!
+    @IBOutlet weak var searchResultsView: UIVisualEffectView!
     @IBOutlet weak var searchResultsTableView: UITableView!
     @IBAction func findMyRide(_ sender: Any) {
         
@@ -67,7 +68,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             let objectId = parkedSpot[0].value(forKeyPath: "objectId") as? String
             let parked = parkedSpot[0].value(forKeyPath: "park") as? Bool
             
-            let annotation = BikeAnnotation(type: type!, coordinate: CLLocationCoordinate2D(latitude: lat!, longitude: long!), size: size!, address: address!, indexPark: objectId!, park: parked!)
+            let annotation = BikeAnnotation(type!, CLLocationCoordinate2D(latitude: lat!, longitude: long!), size!, address!, objectId!, parked!)
             showTooltip(annotation: annotation)
             let myLocation = CLLocation(latitude: lat!, longitude: long!)
             calculateInterary(destination: myLocation.coordinate)
@@ -157,17 +158,17 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         
         locationButtonView.snp.makeConstraints { (make) -> Void in
             let superview = self.view
-            make.bottom.equalTo(superview!).offset(-8)
+            make.bottom.equalTo(superview!.safeAreaLayoutGuide.snp.bottom)
         }
         
         legendView.snp.makeConstraints { (make) -> Void in
             let superview = self.view
-            make.bottom.equalTo(superview!).offset(-8)
+            make.bottom.equalTo(superview!.safeAreaLayoutGuide.snp.bottom)
         }
         
         findMyRideView.snp.makeConstraints { (make) -> Void in
             let superview = self.view
-            make.bottom.equalTo(superview!).offset(-8)
+            make.bottom.equalTo(superview!.safeAreaLayoutGuide.snp.bottom)
         }
     }
     
@@ -195,7 +196,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         for vue in vues {
             vue.snp.remakeConstraints { (make) -> Void in
                 let superview = self.view
-                make.bottom.equalTo(superview!).offset(-8)
+                make.bottom.equalTo(superview!.safeAreaLayoutGuide.snp.bottom)
             }
         }
     }
@@ -345,7 +346,11 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     
     func setSpots(_ spots: [Any]) {
         
+        clusterManager.removeAll()
+        
         for park in spots as! [NSManagedObject] {
+            
+            print(park)
             
             let type = park.value(forKeyPath: "type") as? String
             let address = park.value(forKeyPath: "address") as? String
@@ -354,13 +359,13 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             let long = park.value(forKeyPath: "lon") as? Double
             let objectId = park.value(forKeyPath: "objectId") as? String
             let park = park.value(forKeyPath: "park") as? Bool
-        
+            
             if mode == "Vélos" && type! == "Vélos" || type! == "Mixte" {
-                let annotation = BikeAnnotation(type: type!, coordinate: CLLocationCoordinate2D(latitude: lat!, longitude: long!), size: size!, address: address!, indexPark: objectId!, park: park!)
+                let annotation = BikeAnnotation(type!, CLLocationCoordinate2D(latitude: lat!, longitude: long!), size!, address!, objectId!, park!)
                 clusterManager.add(annotation)
                 clusterManager.reload(mapView: carte)
             } else if mode == "Motos" && type! == "Motos" || type! == "Mixte" {
-                let annotation = BikeAnnotation(type: type!, coordinate: CLLocationCoordinate2D(latitude: lat!, longitude: long!), size: size!, address: address!, indexPark: objectId!, park: park!)
+                let annotation = BikeAnnotation(type!, CLLocationCoordinate2D(latitude: lat!, longitude: long!), size!, address!, objectId!, park!)
                 clusterManager.add(annotation)
                 clusterManager.reload(mapView: carte)
             }
@@ -408,7 +413,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         
         do {
             let results = try managedContext.fetch(fetchRequest)
-            let resultat = results[0] as! NSManagedObject
+            let resultat = results[0]
             resultat.setValue(true, forKey: "park")
             do {
                 try managedContext.save()
@@ -481,20 +486,19 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     func showTooltip(annotation: BikeAnnotation) {
         
         locationButtonView.snp.remakeConstraints { (make) -> Void in
-            let superview = self.view
-            make.bottom.equalTo(superview!).offset(-140)
+            let superview = self.tooltipItinerary
+            make.bottom.equalTo(superview!.snp.top).offset(-8)
         }
         
         legendView.snp.remakeConstraints { (make) -> Void in
-            let superview = self.view
-            make.bottom.equalTo(superview!).offset(-140)
+            let superview = self.tooltipItinerary
+            make.bottom.equalTo(superview!.snp.top).offset(-8)
         }
         
         findMyRideView.snp.remakeConstraints { (make) -> Void in
-            let superview = self.view
-            make.bottom.equalTo(superview!).offset(-140)
+            let superview = self.tooltipItinerary
+            make.bottom.equalTo(superview!.snp.top).offset(-8)
         }
-        
         
         let coordinates = annotation.coordinate
         
@@ -557,7 +561,6 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         
         let coordinate = CLLocationCoordinate2DMake(annotation.coordinate.latitude, annotation.coordinate.longitude)
         let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: coordinate, addressDictionary:nil))
-        mapItem.name = annotation.title
         let latlon = "\(annotation.coordinate.latitude),\(annotation.coordinate.longitude)"
         
         let mapsProvider: UIAlertController = UIAlertController(title: "Quel service souhaitez-vous utiliser ?", message: "Votre sélection sera sauvegardée sur votre iPhone", preferredStyle: .actionSheet)
@@ -731,7 +734,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             self.carte.setRegion(coordinateRegion, animated: true)
             self.resultView.isHidden = true
             self.view.endEditing(true)
-            let annotation = BikeAnnotation(type: "Target", coordinate: myLocation.coordinate, size: 0, address: "", indexPark: "", park: false)
+            let annotation = BikeAnnotation("Target", myLocation.coordinate, 0, "", "", false)
             self.targetAnnotation = annotation
             self.carte.addAnnotation(self.targetAnnotation!)
         }

@@ -27,6 +27,8 @@ ParkIt is an open-source Swift application aimed to help bike and motorbike owne
 - Add Transition effect to Settings
 - Keep information of selected mode of transportation 
 - Dissociate parks data from parked spot
+- Handle Core Data errors
+- Create AlertView class 
 
 ### Gists
 

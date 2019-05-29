@@ -11,16 +11,10 @@ import Foundation
 class WhereIsMyBikeIntentHandler: NSObject, WhereIsMyBikeIntentHandling {
     
     func confirm(intent: WhereIsMyBikeIntent, completion: @escaping (WhereIsMyBikeIntentResponse) -> Void) {
-//        let mapIntent = MapIntentController()
-//
         completion(WhereIsMyBikeIntentResponse(code: .ready, userActivity: nil))
-        
-
     }
     
     func handle(intent: WhereIsMyBikeIntent, completion: @escaping (WhereIsMyBikeIntentResponse) -> Void) {
-
         completion(WhereIsMyBikeIntentResponse(code: .success, userActivity: nil))
-        
     }
 }

@@ -12,7 +12,6 @@ import ChameleonFramework
 
 class BikeAnnotation: NSObject, MKAnnotation {
 
-    var title: String?
     var type: String
     var coordinate: CLLocationCoordinate2D
     var size: Double
@@ -20,8 +19,7 @@ class BikeAnnotation: NSObject, MKAnnotation {
     var indexPark: String
     var park:Bool = false
     
-    init(type: String, coordinate: CLLocationCoordinate2D, size: Double, address: String, indexPark: String, park: Bool) {
-//        self.title = title
+    init(_ type: String, _ coordinate: CLLocationCoordinate2D, _ size: Double, _ address: String, _ indexPark: String, _ park: Bool) {
         self.type = type
         self.coordinate = coordinate
         self.size = size
