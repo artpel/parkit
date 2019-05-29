@@ -22,24 +22,9 @@ ParkIt is an open-source Swift application aimed to help bike and motorbike owne
 
 #### Misc 
 
-- Refactor functions
 - Add Settings to manage saving, add copyrights and data privacy information
 - Add Transition effect to Settings
 - Keep information of selected mode of transportation 
-- Dissociate parks data from parked spot
+- Dissociate parks data from parked spot in Core Data
 - Handle Core Data errors
 - Create AlertView class 
-
-### Gists
-
-__Detect touch outside view__
-
-```
-override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-    let touch = touches.first
-    guard let location = touch?.location(in: self.view) else { return }
-    if !tooltipItinerary.frame.contains(location) {
-        tooltipItinerary.isHidden = true
-    }
-}
-```

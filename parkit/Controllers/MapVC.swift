@@ -19,7 +19,7 @@ import ChameleonFramework
 import Cluster
 import SnapKit
 import FontAwesome_swift
-//import Motion
+
 import GestureRecognizerClosures
 
 class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, MKLocalSearchCompleterDelegate, UITextFieldDelegate {
@@ -506,7 +506,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
 
         self.tooltipItinerary.isHidden = false
         
-        self.tooltipItinerary.animate(.fadeIn)
+
         self.calculateInterary(destination: coordinates)
         self.tooltipAddress.text = annotation.address
         self.calculateSizeOfPark(size: annotation.size)

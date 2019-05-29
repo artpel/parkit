@@ -7,7 +7,7 @@ target 'parkit' do
 
   # Pods for parkit
 
-pod 'Firebase'
+  pod 'Firebase'
   pod 'Firebase/Core'
 
 
@@ -24,7 +24,7 @@ pod 'Firebase'
 #  pod 'IQKeyboardManagerSwift'
   pod 'FontAwesome.swift'
   pod 'DeckTransition'
-  pod 'Motion'
+  pod 'Spring'
   pod 'GestureRecognizerClosures'
 #  pod 'CFAlertViewController'
 #  pod 'Pastel'
