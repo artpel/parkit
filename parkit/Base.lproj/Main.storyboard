@@ -25,7 +25,7 @@
                                     <outlet property="delegate" destination="9pv-A4-QxB" id="3zz-fd-i2w"/>
                                 </connections>
                             </mapView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LlW-zR-Z8x">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LlW-zR-Z8x" customClass="SpringView" customModule="Spring">
                                 <rect key="frame" x="10" y="728" width="394" height="124"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Parking" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k61-ze-jdH">
@@ -202,7 +202,7 @@
                                     <constraint firstAttribute="bottom" secondItem="ur3-1y-aJN" secondAttribute="bottom" id="hnI-oE-8YZ"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xgj-7d-BAk">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xgj-7d-BAk" customClass="SpringView" customModule="Spring">
                                 <rect key="frame" x="10" y="691" width="128" height="29"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JFM-0W-jHm">
@@ -255,10 +255,10 @@
                                     <constraint firstItem="JFM-0W-jHm" firstAttribute="leading" secondItem="xgj-7d-BAk" secondAttribute="leading" constant="8" id="zjP-cM-Ysb"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EgH-uw-bDg">
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EgH-uw-bDg" customClass="SpringView" customModule="Spring">
                                 <rect key="frame" x="375" y="496" width="29" height="29"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tkx-kZ-LAi">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tkx-kZ-LAi" customClass="Je">
                                         <rect key="frame" x="0.0" y="0.0" width="29" height="29"/>
                                         <state key="normal" title="l">
                                             <color key="titleColor" red="1" green="0.75686274509999996" blue="0.027450980390000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -278,7 +278,7 @@
                                     <constraint firstAttribute="trailing" secondItem="tkx-kZ-LAi" secondAttribute="trailing" id="s5g-2u-uVG"/>
                                 </constraints>
                             </view>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="crS-oe-XWs">
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="crS-oe-XWs" customClass="SpringView" customModule="Spring">
                                 <rect key="frame" x="146" y="691" width="100" height="29"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WT6-2p-geQ">
@@ -513,7 +513,7 @@
                         <outlet property="settingsButton" destination="ur3-1y-aJN" id="MdJ-Wm-k8K"/>
                         <outlet property="settingsView" destination="gjJ-gj-1ai" id="Rub-2D-PWg"/>
                         <outlet property="tooltipAddress" destination="QwV-O2-OrJ" id="HzF-pI-Tzy"/>
-                        <outlet property="tooltipItinerary" destination="LlW-zR-Z8x" id="QYc-Rw-853"/>
+                        <outlet property="tooltipItinerary" destination="LlW-zR-Z8x" id="fMd-xu-JmD"/>
                         <outlet property="tooltipItineraryView" destination="fhJ-Sg-qRJ" id="mh4-vk-E3f"/>
                         <outlet property="tooltipSize" destination="Hw4-B4-gtj" id="gRI-3k-U9a"/>
                         <outlet property="tooltipSizeView" destination="0Lu-0o-HmH" id="pCR-2C-KTK"/>
@@ -555,11 +555,11 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VZZ-ty-oap">
-                                <rect key="frame" x="10" y="762" width="394" height="90"/>
+                                <rect key="frame" x="20" y="792" width="374" height="60"/>
                                 <string key="text">© Foxmob - 2019
 Fonctionne avec les données de la Marie de Paris, 24/05/2019, sous license ODb
-ParkIt! ne récolte aucune donnée, et ne stock l'emplacement de votre deux-roue que sur votre mobile</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+ParkIt! ne récolte aucune donnée, et ne sauvegarde l'emplacement de votre deux-roues que sur votre mobile</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -602,8 +602,8 @@ ParkIt! ne récolte aucune donnée, et ne stock l'emplacement de votre deux-roue
                         <constraints>
                             <constraint firstItem="jEp-XM-tb8" firstAttribute="bottom" secondItem="VZZ-ty-oap" secondAttribute="bottom" constant="10" id="0ez-vg-zvV"/>
                             <constraint firstItem="Pid-xA-hWm" firstAttribute="top" secondItem="jEp-XM-tb8" secondAttribute="top" constant="30" id="2uD-qV-QDx"/>
-                            <constraint firstItem="jEp-XM-tb8" firstAttribute="trailing" secondItem="VZZ-ty-oap" secondAttribute="trailing" constant="10" id="7RN-oi-bG6"/>
-                            <constraint firstItem="VZZ-ty-oap" firstAttribute="leading" secondItem="jEp-XM-tb8" secondAttribute="leading" constant="10" id="E67-5I-KMb"/>
+                            <constraint firstItem="jEp-XM-tb8" firstAttribute="trailing" secondItem="VZZ-ty-oap" secondAttribute="trailing" constant="20" id="7RN-oi-bG6"/>
+                            <constraint firstItem="VZZ-ty-oap" firstAttribute="leading" secondItem="jEp-XM-tb8" secondAttribute="leading" constant="20" id="E67-5I-KMb"/>
                             <constraint firstItem="VDg-Jl-5LK" firstAttribute="top" secondItem="C4g-Bg-Bua" secondAttribute="bottom" constant="23" id="InK-8D-Yz7"/>
                             <constraint firstItem="Pid-xA-hWm" firstAttribute="centerX" secondItem="Xfl-wc-wQv" secondAttribute="centerX" id="PJf-cS-Lca"/>
                             <constraint firstItem="C4g-Bg-Bua" firstAttribute="top" secondItem="KPP-UD-NQW" secondAttribute="bottom" constant="8" id="Tgb-Hz-gcw"/>

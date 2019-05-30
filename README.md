@@ -15,16 +15,15 @@ ParkIt is an open-source Swift application aimed to help bike and motorbike owne
 #### Itinerary tooltip
 
 - Refactor tooltip view to display it programmatically
-- Create service to convert mins in hours
 
 #### Map
 
 
 #### Misc 
-
-- Add Settings to manage saving, add copyrights and data privacy information
-- Add Transition effect to Settings
-- Keep information of selected mode of transportation 
+ 
 - Dissociate parks data from parked spot in Core Data
 - Handle Core Data errors
 - Create AlertView class 
+- Test if mode is well set at View Did Appear with NSUserDefaults
+- Change button title to "Je suis parti" and remove parked annotation
+- Fix destination name in Apple Maps

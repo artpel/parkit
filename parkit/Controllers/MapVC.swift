@@ -19,7 +19,7 @@ import ChameleonFramework
 import Cluster
 import SnapKit
 import FontAwesome_swift
-
+import Spring
 import GestureRecognizerClosures
 
 class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, MKLocalSearchCompleterDelegate, UITextFieldDelegate {
@@ -27,7 +27,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     @IBOutlet weak var addToSiriButton: UIView!
     @IBOutlet weak var resultView: UIVisualEffectView!
     @IBOutlet weak var carte: MKMapView!
-    @IBOutlet weak var tooltipItinerary: UIView!
+    @IBOutlet weak var tooltipItinerary: SpringView!
     @IBOutlet weak var tooltipTitle: UILabel!
     @IBOutlet weak var tooltipAddress: UILabel!
     @IBOutlet weak var tooltipTravelTime: UILabel!
@@ -40,14 +40,14 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     @IBOutlet weak var loadingIndicator: NVActivityIndicatorView!
     @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var settingsView: UIView!
-    @IBOutlet weak var legendView: UIView!
+    @IBOutlet weak var legendView: SpringView!
     @IBOutlet weak var legendDot1View: UIView!
     @IBOutlet weak var legendDot2View: UIView!
     @IBOutlet weak var legendLabel1: UILabel!
     @IBOutlet weak var legendLabel2: UILabel!
-    @IBOutlet weak var locationButtonView: UIView!
+    @IBOutlet weak var locationButtonView: SpringView!
     @IBOutlet weak var locationButton: UIButton!
-    @IBOutlet weak var findMyRideView: UIView!
+    @IBOutlet weak var findMyRideView: SpringView!
     @IBOutlet weak var searchIcon: UIButton!
     @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var searchField: UITextField!
@@ -125,7 +125,6 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         // Views
         
         setButtonsIcons()
-        setLegend()
         addToSiriView.roundView(8, true)
         tooltipItinerary.roundView(8, true)
         loadingView.roundView(8, true)
@@ -133,10 +132,10 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         tooltipItineraryView.roundView(4, false)
         tooltipTransportModeView.roundView(4, false)
         locationButtonView.roundView(8, true)
+        searchView.roundView(8, true)
         settingsView.roundView(8, true)
         findMyRideView.roundView(8, true)
         legendView.roundView(8, true)
-        searchView.roundView(8, true)
         
         loadingView.isHidden = true
         tooltipItinerary.isHidden = true
@@ -150,32 +149,23 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         searchCompleter.delegate = self
         
         tooltipItinerary.onSwipeDown { _ in
-            self.tooltipItinerary.isHidden = true
+            
             self.deleteRoute()
+            self.tooltipItinerary.isHidden = true
             self.setViewsAtBottom(vues: [self.locationButtonView, self.legendView, self.findMyRideView])
         }
         
         // Constraintes
         
-        locationButtonView.snp.makeConstraints { (make) -> Void in
-            let superview = self.view
-            make.bottom.equalTo(superview!.safeAreaLayoutGuide.snp.bottom)
-        }
-        
-        legendView.snp.makeConstraints { (make) -> Void in
-            let superview = self.view
-            make.bottom.equalTo(superview!.safeAreaLayoutGuide.snp.bottom)
-        }
-        
-        findMyRideView.snp.makeConstraints { (make) -> Void in
-            let superview = self.view
-            make.bottom.equalTo(superview!.safeAreaLayoutGuide.snp.bottom)
-        }
+        setViewsAtBottom(vues: [locationButtonView, legendView, findMyRideView])
+
     }
     
     override func viewDidAppear(_ animated: Bool) {
         
         mode = UserDefaults.standard.string(forKey: "mode") ?? "Vélos"
+        
+        setLegend()
         
         if isCoreDataEmpty() {
             getSpots()
@@ -197,7 +187,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         for vue in vues {
             vue.snp.remakeConstraints { (make) -> Void in
                 let superview = self.view
-                make.bottom.equalTo(superview!.safeAreaLayoutGuide.snp.bottom)
+                make.bottom.equalTo(superview!.safeAreaLayoutGuide.snp.bottom).offset(-15)
             }
         }
     }
@@ -429,8 +419,6 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     
     func calculateInterary(destination: CLLocationCoordinate2D) {
         
-        let mode = UserDefaults.standard.string(forKey: "mode") ?? "bike"
-        
         var modeString = ""
         
         let sourceLocation = locationManager.location!.coordinate
@@ -441,7 +429,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         directionRequest.source = MKMapItem(placemark: sourcePlaceMark)
         directionRequest.destination = MKMapItem(placemark: destinationPlaceMark)
         
-        if mode == "bike" {
+        if mode == "Vélos" {
             directionRequest.transportType = .walking
             modeString = "vélo"
         }
@@ -458,11 +446,14 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
                 }
                 return
             }
-            
+  
             //get route and assign to our route variable
             let route = directionResonse.routes[0]
-            let travelTime = (route.expectedTravelTime / 60).roundToDecimal(1)
-            self.tooltipTravelTime.text = "Situé à \(travelTime) minute(s) en \(modeString)"
+            var travelTime = (route.expectedTravelTime / 60)
+            if self.mode == "Vélos" {
+                travelTime = travelTime / 2.4
+            }
+            self.tooltipTravelTime.text = "Situé à \(self.formatTime(travelTime)) en \(modeString)"
             self.carte.addOverlay(route.polyline, level: .aboveRoads)
             
             //setting rect of our mapview to fit the two locations
@@ -473,39 +464,46 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         }
     }
     
+    func formatTime(_ time: Double) -> String {
+        var travelTime = Int(time.roundToDecimal(0))
+        
+        if travelTime < 60 {
+            return "\(String(describing: travelTime)) minute(s)"
+        } else {
+            travelTime = travelTime / 60
+            return "\(String(describing: travelTime)) heure(s)"
+        }
+        
+        
+    }
+
     func deleteRoute() {
         let overlays = self.carte.overlays
         carte.removeOverlays(overlays)
-        self.tooltipItinerary.isHidden = true
-        
     }
     
     // Tooltip
     
     func showTooltip(annotation: BikeAnnotation) {
         
-        locationButtonView.snp.remakeConstraints { (make) -> Void in
-            let superview = self.tooltipItinerary
-            make.bottom.equalTo(superview!.snp.top).offset(-8)
-        }
+        if self.tooltipItinerary.isHidden {
+            let views = [locationButtonView, legendView, findMyRideView]
         
-        legendView.snp.remakeConstraints { (make) -> Void in
-            let superview = self.tooltipItinerary
-            make.bottom.equalTo(superview!.snp.top).offset(-8)
-        }
+            for vue in views as! [SpringView] {
+                
+                vue.isHidden = true
+                vue.snp.remakeConstraints { (make) -> Void in
+                    let superview = self.tooltipItinerary
+                    make.bottom.equalTo(superview!.snp.top).offset(-8)
+                }
+                self.squeeze(vue: vue)
+            }
         
-        findMyRideView.snp.remakeConstraints { (make) -> Void in
-            let superview = self.tooltipItinerary
-            make.bottom.equalTo(superview!.snp.top).offset(-8)
+            self.squeeze(vue: self.tooltipItinerary)
         }
-        
-        let coordinates = annotation.coordinate
         
         self.deleteRoute()
-
-        self.tooltipItinerary.isHidden = false
-        
-
+        let coordinates = annotation.coordinate
         self.calculateInterary(destination: coordinates)
         self.tooltipAddress.text = annotation.address
         self.calculateSizeOfPark(size: annotation.size)
@@ -544,8 +542,8 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         if size <= 10 {
             self.tooltipSizeView.backgroundColor = UIColor(hexString: "#ED7070")
             self.tooltipSize.text = "Petit"
-        } else if size > 10 && size < 50 {
-            self.tooltipSizeView.backgroundColor = UIColor(hexString: "#ED9070")
+        } else if size > 10 && size < 30 {
+            self.tooltipSizeView.backgroundColor = UIColor(hexString: "#edaf70")
             self.tooltipSize.text = "Moyen"
         } else {
             self.tooltipSizeView.backgroundColor = UIColor(hexString: "#A6D58A")
@@ -792,6 +790,18 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         }
         
     }
+    
+    // Animations
+    
+    func squeeze(_ mode: String = "in", vue: SpringView) {
+        
+        vue.isHidden = false
+        vue.animation = "squeezeUp"
+        vue.curve = "easeInOut"
+        vue.duration = 0.8
+        vue.animate()
+ 
+    }
 }
 
 extension Double {
@@ -810,9 +820,8 @@ extension UIView {
         if shadow {
             self.layer.masksToBounds = false
             self.layer.shadowPath = UIBezierPath(rect: self.bounds).cgPath
-            self.layer.shadowRadius = 5
+            self.layer.shadowRadius = 3
             self.layer.shadowOffset = .zero
-            self.layer.shadowOpacity = 1
             self.layer.shadowOpacity = 0.15
             self.layer.shadowColor = UIColor.black.cgColor
         }
