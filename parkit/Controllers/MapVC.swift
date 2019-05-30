@@ -54,6 +54,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     @IBOutlet weak var addToSiriView: UIView!
     @IBOutlet weak var searchResultsView: UIVisualEffectView!
     @IBOutlet weak var searchResultsTableView: UITableView!
+    
     @IBAction func findMyRide(_ sender: Any) {
         
         let parkedSpot = getSpotsFromCoreData(mode!, true) as! [NSManagedObject]
@@ -249,7 +250,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Park")
         var predicates: [NSPredicate] = []
         
-        predicates.append(NSPredicate(format: "type = %@", mode))
+//        predicates.append(NSPredicate(format: "type = %@", mode))
         
         if park {
             predicates.append(NSPredicate(format: "park = %@", NSNumber(value: park)))
@@ -325,7 +326,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             let lat = Double(subJson["coordinates"]["lat"].string!)!
             let long = Double(subJson["coordinates"]["lon"].string!)!
             let recordId = subJson["recordid"].string!
-            
+
             park.setValue(type, forKey: "type")
             park.setValue(address, forKey: "address")
             park.setValue(size, forKey: "size")
@@ -349,8 +350,6 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         clusterManager.removeAll()
         
         for park in spots as! [NSManagedObject] {
-            
-            print(park)
             
             let type = park.value(forKeyPath: "type") as? String
             let address = park.value(forKeyPath: "address") as? String
@@ -426,7 +425,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
 
     }
     
-//     Itinerary
+    // Itinerary
     
     func calculateInterary(destination: CLLocationCoordinate2D) {
         
@@ -563,12 +562,13 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: coordinate, addressDictionary:nil))
         let latlon = "\(annotation.coordinate.latitude),\(annotation.coordinate.longitude)"
         
-        let mapsProvider: UIAlertController = UIAlertController(title: "Quel service souhaitez-vous utiliser ?", message: "Votre sélection sera sauvegardée sur votre iPhone", preferredStyle: .actionSheet)
+        let mapsProvider: UIAlertController = UIAlertController(title: "Quel service de navigation souhaitez-vous utiliser ?", message: "Votre sélection sera sauvegardée sur votre iPhone", preferredStyle: .actionSheet)
         
         let cancelActionButton = UIAlertAction(title: "Apple Maps", style: .default) { _ in
             openInAppMaps()
             UserDefaults.standard.set("apple", forKey: "mapsProvider")
         }
+        
         mapsProvider.addAction(cancelActionButton)
         
         let saveActionButton = UIAlertAction(title: "Google Maps", style: .default)
@@ -576,6 +576,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             openInGMaps()
             UserDefaults.standard.set("google", forKey: "mapsProvider")
         }
+        
         mapsProvider.addAction(saveActionButton)
         
         func openInAppMaps() {
@@ -587,6 +588,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         }
         
         func openInGMaps() {
+            
             let urlApi = "https://www.google.com/maps/dir/?api=1"
             
             let destination = "&destination="
@@ -594,8 +596,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             
             let fullUrl = "\(urlApi)\(destination)\(latlon)\(travelModeString)"
             
-            UIApplication.shared.openURL(URL(string:fullUrl)!)
-            
+            UIApplication.shared.open(URL(string:fullUrl)!)
             
         }
         
@@ -850,6 +851,7 @@ extension MapVC: INUIAddVoiceShortcutButtonDelegate {
 }
 
 extension MapVC: INUIAddVoiceShortcutViewControllerDelegate {
+    
     func addVoiceShortcutViewController(_ controller: INUIAddVoiceShortcutViewController, didFinishWith voiceShortcut: INVoiceShortcut?, error: Error?) {
         
         controller.dismiss(animated: true, completion: nil)

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="XDt-FM-Cpf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="9pv-A4-QxB">
     <device id="retina6_1" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -554,8 +554,11 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Arthur Péligry" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VZZ-ty-oap">
-                                <rect key="frame" x="10" y="834" width="394" height="18"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VZZ-ty-oap">
+                                <rect key="frame" x="10" y="762" width="394" height="90"/>
+                                <string key="text">© Foxmob - 2019
+Fonctionne avec les données de la Marie de Paris, 24/05/2019, sous license ODb
+ParkIt! ne récolte aucune donnée, et ne stock l'emplacement de votre deux-roue que sur votre mobile</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -577,6 +580,9 @@
                                     <segment title="Motos"/>
                                 </segments>
                                 <color key="tintColor" red="1" green="0.75686274509999996" blue="0.027450980390000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <connections>
+                                    <action selector="didChangeMode:" destination="qJP-Ga-y7d" eventType="valueChanged" id="lxc-Ha-Jon"/>
+                                </connections>
                             </segmentedControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oKV-J0-O4p">
                                 <rect key="frame" x="374" y="44" width="30" height="30"/>
@@ -589,7 +595,6 @@
                                 </state>
                                 <connections>
                                     <action selector="closeSettings:" destination="qJP-Ga-y7d" eventType="touchUpInside" id="yUl-R0-ZCG"/>
-                                    <action selector="resetData:" destination="qJP-Ga-y7d" eventType="touchUpInside" id="hDP-Hy-eFx"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -618,6 +623,7 @@
                     </userDefinedRuntimeAttributes>
                     <connections>
                         <outlet property="closeSettings" destination="oKV-J0-O4p" id="g5G-J6-6w9"/>
+                        <outlet property="modeSelector" destination="H5S-4c-yym" id="QT8-ye-XBP"/>
                         <outlet property="versionLabel" destination="C4g-Bg-Bua" id="1oc-SK-IHE"/>
                     </connections>
                 </viewController>
@@ -633,7 +639,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NDZ-9h-7Lp">
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NDZ-9h-7Lp" customClass="SpringView" customModule="Spring">
                                 <rect key="frame" x="87" y="435" width="240" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.8862745098" green="0.42745098040000001" blue="0.35294117650000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -650,13 +656,16 @@
                                 <rect key="frame" x="229" y="344" width="46" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="button2:" destination="XDt-FM-Cpf" eventType="touchUpInside" id="CTh-UO-1Pp"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="0R8-Tp-dPu"/>
                     </view>
                     <connections>
-                        <outlet property="vue" destination="NDZ-9h-7Lp" id="jG2-1f-VwM"/>
+                        <outlet property="vue" destination="NDZ-9h-7Lp" id="830-W2-Wf5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dz6-Iq-jwk" userLabel="First Responder" sceneMemberID="firstResponder"/>
