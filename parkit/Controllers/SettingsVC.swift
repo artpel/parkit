@@ -25,7 +25,7 @@ class SettingsVC: UIViewController {
             UserDefaults.standard.set("Vélos", forKey: "mode")
         }
         
-        resetAllRecords(in: "Park")
+        resetAllRecords(in: "Spot")
         
     }
     @IBOutlet weak var modeSelector: UISegmentedControl!
@@ -35,7 +35,7 @@ class SettingsVC: UIViewController {
     }
     @IBOutlet weak var closeSettings: UIButton!
     @IBAction func resetData(_ sender: Any) {
-        resetAllRecords(in: "Park")
+        resetAllRecords(in: "Spot")
     }
     
     open override func viewDidLoad() {

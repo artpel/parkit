@@ -27,3 +27,4 @@ ParkIt is an open-source Swift application aimed to help bike and motorbike owne
 - Test if mode is well set at View Did Appear with NSUserDefaults
 - Change button title to "Je suis parti" and remove parked annotation
 - Fix destination name in Apple Maps
+- Fetch only bikes or motos from API

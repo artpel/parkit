@@ -237,7 +237,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return [] }
         let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Park")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Spot")
         var predicates: [NSPredicate] = []
         
 //        predicates.append(NSPredicate(format: "type = %@", mode))
@@ -303,8 +303,8 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     func saveInCoreData(data: JSON) {
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let entity = NSEntityDescription.entity(forEntityName: "Park", in: managedContext)!
+        let managedContext = appDelegate.persistentContainer.newBackgroundContext()
+        let entity = NSEntityDescription.entity(forEntityName: "Spot", in: managedContext)!
         
         for (_, subJson) in data {
             
@@ -324,12 +324,13 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             park.setValue(long, forKey: "lon")
             park.setValue(recordId, forKey: "objectId")
             park.setValue(false, forKey: "park")
-
-            do {
-                try managedContext.save()
-            } catch  { }
-            
+           
         }
+        
+        do {
+            try managedContext.save()
+        } catch  { }
+        
         
         setSpots(getSpotsFromCoreData(self.mode!))
         
@@ -366,7 +367,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return true }
         let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Park")
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Spot")
 
         do {
             let spots = try managedContext.fetch(fetchRequest)
@@ -397,7 +398,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             } catch { }
         }
         
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Park")
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Spot")
         fetchRequest.predicate = NSPredicate(format: "objectId = %@", selectedAnnotation!.indexPark)
         
         do {
@@ -766,7 +767,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         let interaction = INInteraction(intent: intent, response: nil)
         
         interaction.donate { (error) in
-            print("yeah")
+            
             if error != nil {
                 
             }
@@ -797,7 +798,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         
         vue.isHidden = false
         vue.animation = "squeezeUp"
-        vue.curve = "easeInOut"
+        vue.curve = "easeIn"
         vue.duration = 0.8
         vue.animate()
  
