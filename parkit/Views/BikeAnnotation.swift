@@ -34,11 +34,11 @@ class BikeAnnotation: NSObject, MKAnnotation {
         
         var colorous: UIColor
         
-        if type == "Vélos" {
+        if type == "bike" {
              colorous = UIColor(hexString:"#00cec9")
-        } else if type == "Motos" {
+        } else if type == "moto" {
             colorous = UIColor(hexString:"#6c5ce7")
-        } else if type == "Mixte" {
+        } else if type == "mix" {
             colorous = UIColor(hexString:"#0984e3")
         } else if type == "Target" {
             colorous = UIColor(hexString:"#F5C042")
@@ -55,8 +55,8 @@ class BikeAnnotation: NSObject, MKAnnotation {
     
     var imageName: String? {
         if type == "Target" { return "pin" }
-        if type == "Vélos" { return "bike" }
-        if type == "Motos" { return "moto" }
+        if type == "bike" { return "bike" }
+        if type == "moto" { return "moto" }
         return "mix"
     }
 

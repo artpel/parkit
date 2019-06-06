@@ -18,11 +18,11 @@ class SettingsVC: UIViewController {
         
         switch sender.selectedSegmentIndex{
         case 0:
-            UserDefaults.standard.set("Vélos", forKey: "mode")
+            UserDefaults.standard.set("bike", forKey: "mode")
         case 1:
-            UserDefaults.standard.set("Motos", forKey: "mode")
+            UserDefaults.standard.set("moto", forKey: "mode")
         default:
-            UserDefaults.standard.set("Vélos", forKey: "mode")
+            UserDefaults.standard.set("bike", forKey: "mode")
         }
         
         resetAllRecords(in: "Spot")
@@ -44,7 +44,7 @@ class SettingsVC: UIViewController {
         setButtonsIcons()
         
         if let mode = UserDefaults.standard.value(forKey: "mode") as? String {
-            if mode == "Vélos" {
+            if mode == "bike" {
                 modeSelector.selectedSegmentIndex = 0
             } else {
                 modeSelector.selectedSegmentIndex = 1

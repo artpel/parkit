@@ -112,7 +112,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     
     var clusterManager = ClusterManager()
     
-    var mode: String?
+    var mode: String!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -163,7 +163,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     
     override func viewDidAppear(_ animated: Bool) {
         
-        mode = UserDefaults.standard.string(forKey: "mode") ?? "Vélos"
+        mode = UserDefaults.standard.string(forKey: "mode") ?? "bike"
         
         setLegend()
         
@@ -193,7 +193,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     }
     
     func setLegend() {
-        let mode = UserDefaults.standard.string(forKey: "mode") ?? "bike"
+        let mode = UserDefaults.standard.string(forKey: "mode")
         
         if mode == "bike" {
             legendDot1View.backgroundColor = UIColor(hexString: "#00cec9")
@@ -286,7 +286,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     
     func getSpots() {
         
-        let url = "https://parkit-server.herokuapp.com/getParks"
+        let url = "https://parkit-server.herokuapp.com/getParks?mode=\(mode!)"
         
         self.toogleActivityIndicator(status: "on")
         
@@ -350,11 +350,11 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             let objectId = park.value(forKeyPath: "objectId") as? String
             let park = park.value(forKeyPath: "park") as? Bool
             
-            if mode == "Vélos" && type! == "Vélos" || type! == "Mixte" {
+            if mode == "bike" && type! == "bike" || type! == "mix" {
                 let annotation = BikeAnnotation(type!, CLLocationCoordinate2D(latitude: lat!, longitude: long!), size!, address!, objectId!, park!)
                 clusterManager.add(annotation)
                 clusterManager.reload(mapView: carte)
-            } else if mode == "Motos" && type! == "Motos" || type! == "Mixte" {
+            } else if mode == "moto" && type! == "moto" || type! == "mix" {
                 let annotation = BikeAnnotation(type!, CLLocationCoordinate2D(latitude: lat!, longitude: long!), size!, address!, objectId!, park!)
                 clusterManager.add(annotation)
                 clusterManager.reload(mapView: carte)
@@ -430,7 +430,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         directionRequest.source = MKMapItem(placemark: sourcePlaceMark)
         directionRequest.destination = MKMapItem(placemark: destinationPlaceMark)
         
-        if mode == "Vélos" {
+        if mode == "bike" {
             directionRequest.transportType = .walking
             modeString = "vélo"
         }
@@ -451,7 +451,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             //get route and assign to our route variable
             let route = directionResonse.routes[0]
             var travelTime = (route.expectedTravelTime / 60)
-            if self.mode == "Vélos" {
+            if self.mode == "bike" {
                 travelTime = travelTime / 2.4
             }
             self.tooltipTravelTime.text = "Situé à \(self.formatTime(travelTime)) en \(modeString)"
@@ -516,9 +516,9 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     func setTooltipTitle(type: String) {
         
         switch type {
-        case "Vélos":
+        case "bike":
             return self.tooltipTitle.text = "Parking à vélo"
-        case "Motos":
+        case "moto":
             return self.tooltipTitle.text = "Parking deux-roues"
         default:
             return self.tooltipTitle.text = "Parking mixte"
@@ -530,8 +530,8 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         
         var image = "mix"
         
-        if type == "Vélos" { image = "bike" }
-        if type == "Motos" { image = "moto" }
+        if type == "bike" { image = "bike" }
+        if type == "moto" { image = "moto" }
         
         self.tooltipTransportModeView.isHidden = false
         self.tooltipTransportIcon.image = UIImage(named: image)

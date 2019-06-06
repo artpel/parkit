@@ -618,9 +618,6 @@ ParkIt! ne récolte aucune donnée, et ne sauvegarde l'emplacement de votre deux
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="jEp-XM-tb8"/>
                     </view>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabled" value="YES"/>
-                    </userDefinedRuntimeAttributes>
                     <connections>
                         <outlet property="closeSettings" destination="oKV-J0-O4p" id="g5G-J6-6w9"/>
                         <outlet property="modeSelector" destination="H5S-4c-yym" id="QT8-ye-XBP"/>
