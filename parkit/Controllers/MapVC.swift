@@ -15,7 +15,6 @@ import Intents
 import Alamofire
 import SwiftyJSON
 import NVActivityIndicatorView
-import ChameleonFramework
 import Cluster
 import SnapKit
 import FontAwesome_swift
@@ -75,17 +74,12 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             let myLocation = CLLocation(latitude: lat!, longitude: long!)
             calculateInterary(destination: myLocation.coordinate)
         } else {
-            // create the alert
+            
             let alert = UIAlertController(title: "Aucun emplacement enregistré", message: "Vous devez d'abord garer votre deux-roues pour pouvoir le retrouver !", preferredStyle: UIAlertController.Style.alert)
-            
-            // add an action (button)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-            
-            // show the alert
             self.present(alert, animated: true, completion: nil)
         }
-        
-     
+    
     }
     
     @IBAction func textFieldEditingDidChange(_ sender: Any) {
@@ -166,7 +160,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         
         tooltipItinerary.onSwipeDown { _ in
             
-            self.deleteRoute()
+            self.deleteRoute(self.carte)
             self.tooltipItinerary.isHidden = true
             self.setViewsAtBottom(vues: [self.locationButtonView, self.legendView, self.findMyRideView])
         }
@@ -209,20 +203,17 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     }
     
     func setLegend() {
-        let mode = UserDefaults.standard.string(forKey: "mode")
         
-        if mode == "bike" {
-            legendDot1View.backgroundColor = UIColor(hexString: "#00cec9")
+        if self.mode == "bike" {
+            legendDot1View.backgroundColor = UIColor(named: "bikeColor")
             legendLabel1.text = "Vélos"
         } else {
-            legendDot1View.backgroundColor = UIColor(hexString: "#6c5ce7")
+            legendDot1View.backgroundColor = UIColor(named: "motoColor")
             legendLabel1.text = "Motos"
         }
-        legendDot1View.layer.cornerRadius = 4
-        legendDot1View.layer.masksToBounds = true
-        legendDot2View.layer.cornerRadius = 4
-        legendDot2View.layer.masksToBounds = true
-        legendDot2View.backgroundColor = UIColor(hexString: "#0984e3")
+        legendDot1View.roundView(4, false)
+        legendDot2View.roundView(4, false)
+        legendDot2View.backgroundColor = UIColor(named: "mixColor")!
         legendLabel2.text = "Mixte"
         
     }
@@ -298,6 +289,61 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         
     }
     
+    func saveInCoreData(data: JSON) {
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.newBackgroundContext()
+        let entity = NSEntityDescription.entity(forEntityName: "Spot", in: managedContext)!
+        
+        for (_, subJson) in data {
+            
+            let park = NSManagedObject(entity: entity, insertInto: managedContext)
+            
+            let type = subJson["type"].string!
+            let address = subJson["address"].string!
+            let size = subJson["size"].double!
+            let lat = Double(subJson["coordinates"]["lat"].string!)!
+            let long = Double(subJson["coordinates"]["lon"].string!)!
+            let recordId = subJson["recordid"].string!
+            
+            park.setValue(type, forKey: "type")
+            park.setValue(address, forKey: "address")
+            park.setValue(size, forKey: "size")
+            park.setValue(lat, forKey: "lat")
+            park.setValue(long, forKey: "lon")
+            park.setValue(recordId, forKey: "objectId")
+            park.setValue(false, forKey: "park")
+            
+        }
+        
+        do {
+            try managedContext.save()
+        } catch  { }
+        
+        
+        setSpots(getSpotsFromCoreData(self.mode!))
+        
+    }
+    
+    func isCoreDataEmpty () -> Bool {
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return true }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Spot")
+        
+        do {
+            let spots = try managedContext.fetch(fetchRequest)
+            if spots.count == 0 {
+                return true
+            } else {
+                return false
+            }
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+            return true
+        }
+    }
+    
     // Annotations
     
     func getSpots() {
@@ -315,43 +361,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             self.toogleActivityIndicator(status: "off")
         }
     }
-    
-    func saveInCoreData(data: JSON) {
-        
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let managedContext = appDelegate.persistentContainer.newBackgroundContext()
-        let entity = NSEntityDescription.entity(forEntityName: "Spot", in: managedContext)!
-        
-        for (_, subJson) in data {
-            
-            let park = NSManagedObject(entity: entity, insertInto: managedContext)
-            
-            let type = subJson["type"].string!
-            let address = subJson["address"].string!
-            let size = subJson["size"].double!
-            let lat = Double(subJson["coordinates"]["lat"].string!)!
-            let long = Double(subJson["coordinates"]["lon"].string!)!
-            let recordId = subJson["recordid"].string!
 
-            park.setValue(type, forKey: "type")
-            park.setValue(address, forKey: "address")
-            park.setValue(size, forKey: "size")
-            park.setValue(lat, forKey: "lat")
-            park.setValue(long, forKey: "lon")
-            park.setValue(recordId, forKey: "objectId")
-            park.setValue(false, forKey: "park")
-           
-        }
-        
-        do {
-            try managedContext.save()
-        } catch  { }
-        
-        
-        setSpots(getSpotsFromCoreData(self.mode!))
-        
-    }
-    
     func setSpots(_ spots: [Any]) {
         
         clusterManager.removeAll()
@@ -378,26 +388,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         }
 
     }
-    
-    func isCoreDataEmpty () -> Bool {
-        
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return true }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Spot")
 
-        do {
-            let spots = try managedContext.fetch(fetchRequest)
-            if spots.count == 0 {
-                return true
-            } else {
-                return false
-            }
-        } catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
-            return true
-        }
-    }
-    
     // Park Ride
 
     func parkMyRide(_ on: Bool) {
@@ -431,7 +422,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         
         setSpots(getSpotsFromCoreData(self.mode!))
         
-        self.deleteRoute()
+        self.deleteRoute(self.carte)
         self.tooltipItinerary.isHidden = true
         self.setViewsAtBottom(vues: [self.locationButtonView, self.legendView, self.findMyRideView])
     }
@@ -489,17 +480,17 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         var travelTime = Int(time.roundToDecimal(0))
         
         if travelTime < 60 {
-            return "\(String(describing: travelTime)) minute(s)"
+            return "\(String(describing: travelTime)) minutes"
         } else {
             travelTime = travelTime / 60
-            return "\(String(describing: travelTime)) heure(s)"
+            return "\(String(describing: travelTime)) heures"
         }
         
         
     }
 
-    func deleteRoute() {
-        let overlays = self.carte.overlays
+    func deleteRoute(_ carte: MKMapView) {
+        let overlays = carte.overlays
         carte.removeOverlays(overlays)
     }
     
@@ -524,13 +515,13 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         
         if annotation.park {
             self.parkedBtn.setTitle("Je suis parti", for: .normal)
-            self.parkedBtn.setTitleColor(UIColor(hexString: "#EB3637"), for: .normal)
+            self.parkedBtn.setTitleColor(UIColor(named: "parkColor")!, for: .normal)
         } else {
             self.parkedBtn.setTitle("Je suis garé", for: .normal)
-            self.parkedBtn.setTitleColor(UIColor(hexString: "#F5C042"), for: .normal)
+            self.parkedBtn.setTitleColor(UIColor(named: "appMainColor")!, for: .normal)
         }
         
-        self.deleteRoute()
+        self.deleteRoute(self.carte)
         let coordinates = annotation.coordinate
         self.calculateInterary(destination: coordinates)
         self.tooltipAddress.text = annotation.address
@@ -568,13 +559,13 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     func calculateSizeOfPark(size: Double) {
         
         if size <= 10 {
-            self.tooltipSizeView.backgroundColor = UIColor(hexString: "#ED7070")
+            self.tooltipSizeView.backgroundColor = UIColor(named: "sizeSmallColor")!
             self.tooltipSize.text = "Petit"
         } else if size > 10 && size < 30 {
-            self.tooltipSizeView.backgroundColor = UIColor(hexString: "#edaf70")
+            self.tooltipSizeView.backgroundColor = UIColor(named: "sizeMediumColor")!
             self.tooltipSize.text = "Moyen"
         } else {
-            self.tooltipSizeView.backgroundColor = UIColor(hexString: "#A6D58A")
+            self.tooltipSizeView.backgroundColor = UIColor(named: "sizeBigColor")!
             self.tooltipSize.text = "Grande"
         }
         
@@ -655,7 +646,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let renderer = MKPolylineRenderer(overlay: overlay)
-        renderer.strokeColor = UIColor(hexString: "#FFC107")
+        renderer.strokeColor = UIColor(named: "appMainColor")!
         renderer.lineWidth = 4.0
         return renderer
     }

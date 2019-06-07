@@ -8,7 +8,6 @@
 
 import Foundation
 import MapKit
-import ChameleonFramework
 
 class BikeAnnotation: NSObject, MKAnnotation {
 
@@ -35,19 +34,19 @@ class BikeAnnotation: NSObject, MKAnnotation {
         var colorous: UIColor
         
         if type == "bike" {
-             colorous = UIColor(hexString:"#00cec9")
+            colorous = UIColor(named: "bikeColor")!
         } else if type == "moto" {
-            colorous = UIColor(hexString:"#6c5ce7")
+            colorous = UIColor(named: "motoColor")!
         } else if type == "mix" {
-            colorous = UIColor(hexString:"#0984e3")
+            colorous = UIColor(named: "mixColor")!
         } else if type == "Target" {
-            colorous = UIColor(hexString:"#F5C042")
+            colorous = UIColor(named: "appMainColor")!
         } else {
-            colorous = UIColor(hexString: "#FFFFFF")
+            colorous = UIColor.white
         }
         
         if (park == true) {
-            colorous = UIColor(hexString: "#EB3637")
+            colorous = UIColor(named: "parkColor")!
         }
 
         return colorous
