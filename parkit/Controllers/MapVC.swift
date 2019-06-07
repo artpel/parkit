@@ -51,6 +51,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     @IBOutlet weak var searchIcon: UIButton!
     @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var searchField: UITextField!
+    @IBOutlet weak var parkedBtn: UIButton!
     @IBOutlet weak var addToSiriView: UIView!
     @IBOutlet weak var searchResultsView: UIVisualEffectView!
     @IBOutlet weak var searchResultsTableView: UITableView!
@@ -73,6 +74,15 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             showTooltip(annotation: annotation)
             let myLocation = CLLocation(latitude: lat!, longitude: long!)
             calculateInterary(destination: myLocation.coordinate)
+        } else {
+            // create the alert
+            let alert = UIAlertController(title: "Aucun emplacement enregistré", message: "Vous devez d'abord garer votre deux-roues pour pouvoir le retrouver !", preferredStyle: UIAlertController.Style.alert)
+            
+            // add an action (button)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            
+            // show the alert
+            self.present(alert, animated: true, completion: nil)
         }
         
      
@@ -95,8 +105,14 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     @IBAction func locationButtonPressed(_ sender: Any) {
         setCenter()
     }
-    @IBAction func parkedButton(_ sender: Any) {
-        self.parkMyRide()
+    
+    @IBAction func parkedButton(_ sender: UIButton) {
+        if sender.title(for: .normal) == "Je suis parti" {
+            self.parkMyRide(false)
+        } else {
+            self.parkMyRide(true)
+        }
+        
         setUpSiri(to: self.addToSiriButton)
     }
     
@@ -384,7 +400,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     
     // Park Ride
 
-    func parkMyRide() {
+    func parkMyRide(_ on: Bool) {
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
@@ -398,22 +414,26 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             } catch { }
         }
         
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Spot")
-        fetchRequest.predicate = NSPredicate(format: "objectId = %@", selectedAnnotation!.indexPark)
-        
-        do {
-            let results = try managedContext.fetch(fetchRequest)
-            let resultat = results[0]
-            resultat.setValue(true, forKey: "park")
-            do {
-                try managedContext.save()
-            } catch { }
-        } catch {
+        if on {
+            let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Spot")
+            fetchRequest.predicate = NSPredicate(format: "objectId = %@", selectedAnnotation!.indexPark)
             
+            do {
+                let results = try managedContext.fetch(fetchRequest)
+                let resultat = results[0]
+                resultat.setValue(true, forKey: "park")
+                
+                do {
+                    try managedContext.save()
+                } catch { }
+            } catch { }
         }
         
         setSpots(getSpotsFromCoreData(self.mode!))
-
+        
+        self.deleteRoute()
+        self.tooltipItinerary.isHidden = true
+        self.setViewsAtBottom(vues: [self.locationButtonView, self.legendView, self.findMyRideView])
     }
     
     // Itinerary
@@ -489,9 +509,8 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         
         if self.tooltipItinerary.isHidden {
             let views = [locationButtonView, legendView, findMyRideView]
-        
+ 
             for vue in views as! [SpringView] {
-                
                 vue.isHidden = true
                 vue.snp.remakeConstraints { (make) -> Void in
                     let superview = self.tooltipItinerary
@@ -501,6 +520,14 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             }
         
             self.squeeze(vue: self.tooltipItinerary)
+        }
+        
+        if annotation.park {
+            self.parkedBtn.setTitle("Je suis parti", for: .normal)
+            self.parkedBtn.setTitleColor(UIColor(hexString: "#EB3637"), for: .normal)
+        } else {
+            self.parkedBtn.setTitle("Je suis garé", for: .normal)
+            self.parkedBtn.setTitleColor(UIColor(hexString: "#F5C042"), for: .normal)
         }
         
         self.deleteRoute()
@@ -579,6 +606,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         mapsProvider.addAction(saveActionButton)
         
         func openInAppMaps() {
+            mapItem.name = annotation.address
             if mode == "bike" {
                 mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeWalking])
             } else {
