@@ -258,7 +258,7 @@
                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EgH-uw-bDg" customClass="SpringView" customModule="Spring">
                                 <rect key="frame" x="375" y="496" width="29" height="29"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tkx-kZ-LAi" customClass="Je">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tkx-kZ-LAi">
                                         <rect key="frame" x="0.0" y="0.0" width="29" height="29"/>
                                         <state key="normal" title="l">
                                             <color key="titleColor" red="1" green="0.75686274509999996" blue="0.027450980390000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -289,7 +289,6 @@
                                         </state>
                                         <connections>
                                             <action selector="findMyRide:" destination="9pv-A4-QxB" eventType="touchUpInside" id="qiX-di-ayv"/>
-                                            <action selector="locationButtonPressed:" destination="9pv-A4-QxB" eventType="touchUpInside" id="2Of-aQ-s12"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -504,6 +503,7 @@
                         <outlet property="loadingView" destination="bP1-eY-Ndf" id="Q7T-fa-sHA"/>
                         <outlet property="locationButton" destination="tkx-kZ-LAi" id="T6a-P5-BlP"/>
                         <outlet property="locationButtonView" destination="EgH-uw-bDg" id="Hfj-ND-g1v"/>
+                        <outlet property="parkedBtn" destination="hqQ-qL-EbA" id="WhD-hX-Mk1"/>
                         <outlet property="resultView" destination="ISb-7r-gvK" id="bAM-ux-UFB"/>
                         <outlet property="searchField" destination="XHY-NE-BkQ" id="vXf-i0-Lnh"/>
                         <outlet property="searchIcon" destination="lzt-5Q-gOG" id="T9T-fK-NST"/>
@@ -618,9 +618,6 @@ ParkIt! ne récolte aucune donnée, et ne sauvegarde l'emplacement de votre deux
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="jEp-XM-tb8"/>
                     </view>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabled" value="YES"/>
-                    </userDefinedRuntimeAttributes>
                     <connections>
                         <outlet property="closeSettings" destination="oKV-J0-O4p" id="g5G-J6-6w9"/>
                         <outlet property="modeSelector" destination="H5S-4c-yym" id="QT8-ye-XBP"/>
