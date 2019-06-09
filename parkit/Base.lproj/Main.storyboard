@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -34,7 +35,7 @@
                                             <constraint firstAttribute="height" constant="22" id="Qfb-tr-onC"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="18"/>
-                                        <color key="textColor" red="1" green="0.75686274509999996" blue="0.027450980390000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="textColor" name="appMainColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Situé à 12 mn à vélo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QwV-O2-OrJ">
@@ -86,7 +87,7 @@
                                                 </connections>
                                             </button>
                                         </subviews>
-                                        <color key="backgroundColor" red="1" green="0.75686274509999996" blue="0.027450980390000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="backgroundColor" name="appMainColor"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="100" id="0jA-88-Hnd"/>
                                             <constraint firstAttribute="bottom" secondItem="Ef7-zt-VBC" secondAttribute="bottom" id="3Zz-0B-3uy"/>
@@ -123,7 +124,7 @@
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
                                         <state key="normal" title="J'y suis garé">
-                                            <color key="titleColor" red="0.96084696049999996" green="0.75389647479999999" blue="0.25864499810000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <color key="titleColor" name="appMainColor"/>
                                         </state>
                                         <connections>
                                             <action selector="parkedButton:" destination="9pv-A4-QxB" eventType="touchUpInside" id="bzP-Cv-Uyp"/>
@@ -165,7 +166,7 @@
                                         </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="color" keyPath="color">
-                                                <color key="value" red="1" green="0.75686274509999996" blue="0.027450980390000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <color key="value" name="appMainColor"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="string" keyPath="typeName" value="circleStrokeSpin"/>
                                         </userDefinedRuntimeAttributes>
@@ -185,7 +186,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ur3-1y-aJN">
                                         <rect key="frame" x="0.0" y="0.0" width="29" height="29"/>
                                         <state key="normal" title="l">
-                                            <color key="titleColor" red="1" green="0.75686274509999996" blue="0.027450980390000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <color key="titleColor" name="appMainColor"/>
                                         </state>
                                         <connections>
                                             <segue destination="qJP-Ga-y7d" kind="presentation" id="N4Q-iv-rg8"/>
@@ -261,7 +262,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tkx-kZ-LAi">
                                         <rect key="frame" x="0.0" y="0.0" width="29" height="29"/>
                                         <state key="normal" title="l">
-                                            <color key="titleColor" red="1" green="0.75686274509999996" blue="0.027450980390000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <color key="titleColor" name="appMainColor"/>
                                         </state>
                                         <connections>
                                             <action selector="locationButtonPressed:" destination="9pv-A4-QxB" eventType="touchUpInside" id="HrZ-24-bbC"/>
@@ -292,7 +293,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.96078431372549022" green="0.75294117647058822" blue="0.25882352941176467" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" name="appMainColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="29" id="3PW-V4-f6X"/>
                                     <constraint firstItem="WT6-2p-geQ" firstAttribute="top" secondItem="crS-oe-XWs" secondAttribute="top" id="9lG-EQ-eD6"/>
@@ -545,11 +546,11 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ParkIt!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KPP-UD-NQW">
                                 <rect key="frame" x="142.5" y="222" width="129" height="48"/>
                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="40"/>
-                                <color key="textColor" red="0.96084696054458618" green="0.75389647483825684" blue="0.25864499807357788" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="textColor" name="appMainColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version 0.1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C4g-Bg-Bua">
-                                <rect key="frame" x="172.5" y="278" width="69" height="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version 0.2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C4g-Bg-Bua">
+                                <rect key="frame" x="171.5" y="278" width="71" height="17"/>
                                 <fontDescription key="fontDescription" type="system" weight="thin" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -566,7 +567,7 @@ ParkIt! ne récolte aucune donnée, et ne sauvegarde l'emplacement de votre deux
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VDg-Jl-5LK">
                                 <rect key="frame" x="129.5" y="318" width="155" height="30"/>
                                 <state key="normal" title="Actualiser les parkings">
-                                    <color key="titleColor" red="0.96084696049999996" green="0.75389647479999999" blue="0.25864499810000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <color key="titleColor" name="appMainColor"/>
                                 </state>
                                 <connections>
                                     <action selector="resetData:" destination="qJP-Ga-y7d" eventType="touchUpInside" id="vM4-ZW-1dt"/>
@@ -579,7 +580,7 @@ ParkIt! ne récolte aucune donnée, et ne sauvegarde l'emplacement de votre deux
                                     <segment title="Vélo"/>
                                     <segment title="Motos"/>
                                 </segments>
-                                <color key="tintColor" red="1" green="0.75686274509999996" blue="0.027450980390000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="tintColor" name="appMainColor"/>
                                 <connections>
                                     <action selector="didChangeMode:" destination="qJP-Ga-y7d" eventType="valueChanged" id="lxc-Ha-Jon"/>
                                 </connections>
@@ -673,5 +674,8 @@ ParkIt! ne récolte aucune donnée, et ne sauvegarde l'emplacement de votre deux
     <resources>
         <image name="logo" width="512" height="512"/>
         <image name="looking" width="615" height="399"/>
+        <namedColor name="appMainColor">
+            <color red="0.96078431372549022" green="0.75294117647058822" blue="0.25882352941176473" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>
