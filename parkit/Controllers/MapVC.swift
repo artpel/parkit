@@ -20,6 +20,7 @@ import SnapKit
 import FontAwesome_swift
 import Spring
 import GestureRecognizerClosures
+import BLTNBoard
 
 class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, MKLocalSearchCompleterDelegate, UITextFieldDelegate {
     
@@ -122,6 +123,25 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     
     var clusterManager = ClusterManager()
     
+    lazy var bulletinManager: BLTNItemManager = {
+        let page = BLTNPageItem(title: "Bienvenue dans ParkIt!")
+        page.descriptionText = "Conduisez-vous un vélo où un scooter/moto ? Vous pourrez modifier ce choix par la suite"
+        page.appearance.descriptionFontSize = 16
+        page.actionButtonTitle = "🚲 Un vélo"
+        page.appearance.actionButtonColor = UIColor.clear
+        page.appearance.actionButtonTitleColor = UIColor(named: "appMainColor")!
+        page.appearance.actionButtonFontSize = 16
+        page.appearance.alternativeButtonFontSize = 16
+        page.alternativeButtonTitle = "🛵 Un scooter/moto"
+        page.appearance.alternativeButtonTitleColor = UIColor(named: "appMainColor")!
+        page.appearance.titleFontSize = 20
+//        page.appearance. = UIColor.clear
+        page.requiresCloseButton = false
+        let rootItem: BLTNItem = page
+        
+        return BLTNItemManager(rootItem: rootItem)
+    }()
+    
     var mode: String!
 
     override func viewDidLoad() {
@@ -172,6 +192,9 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        
+        bulletinManager.backgroundViewStyle = .blurredDark
+        bulletinManager.showBulletin(above: self)
         
         mode = UserDefaults.standard.string(forKey: "mode") ?? "bike"
         

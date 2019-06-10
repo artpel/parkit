@@ -17,6 +17,8 @@
 		<dict>
 			<key>INIntentCategory</key>
 			<string>information</string>
+			<key>INIntentDefaultImageName</key>
+			<string>looking</string>
 			<key>INIntentDescription</key>
 			<string>Permet de retrouver son vélo garé dans ParkIt!</string>
 			<key>INIntentDescriptionID</key>
