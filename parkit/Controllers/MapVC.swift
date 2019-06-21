@@ -124,20 +124,67 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     var clusterManager = ClusterManager()
     
     lazy var bulletinManager: BLTNItemManager = {
-        let page = BLTNPageItem(title: "Bienvenue dans ParkIt!")
-        page.descriptionText = "Conduisez-vous un vélo où un scooter/moto ? Vous pourrez modifier ce choix par la suite"
-        page.appearance.descriptionFontSize = 16
-        page.actionButtonTitle = "🚲 Un vélo"
-        page.appearance.actionButtonColor = UIColor.clear
-        page.appearance.actionButtonTitleColor = UIColor(named: "appMainColor")!
-        page.appearance.actionButtonFontSize = 16
-        page.appearance.alternativeButtonFontSize = 16
-        page.alternativeButtonTitle = "🛵 Un scooter/moto"
-        page.appearance.alternativeButtonTitleColor = UIColor(named: "appMainColor")!
-        page.appearance.titleFontSize = 20
-//        page.appearance. = UIColor.clear
-        page.requiresCloseButton = false
-        let rootItem: BLTNItem = page
+        let modeSelector = BLTNPageItem(title: "Bienvenue dans ParkIt!")
+        modeSelector.descriptionText = "Conduisez-vous un vélo où un scooter/moto ? Vous pourrez modifier ce choix par la suite"
+        modeSelector.appearance.titleFontSize = 20
+        modeSelector.appearance.descriptionFontSize = 16
+        
+        modeSelector.actionButtonTitle = "🚲 Un vélo"
+        modeSelector.appearance.actionButtonColor = UIColor.clear
+        modeSelector.appearance.actionButtonTitleColor = UIColor(named: "appMainColor")!
+        modeSelector.appearance.actionButtonFontSize = 16
+
+        modeSelector.alternativeButtonTitle = "🛵 Un scooter/moto"
+        modeSelector.appearance.alternativeButtonTitleColor = UIColor(named: "appMainColor")!
+        modeSelector.appearance.alternativeButtonFontSize = 16
+        
+        modeSelector.requiresCloseButton = false
+        modeSelector.isDismissable = false
+        
+        let loc = BLTNPageItem(title: "Activer la localisation")
+        loc.descriptionText = "Cliquez sur le bouton ci-dessous pour nous autoriser à vous localiser afin de trouver les spots de parking près de vous.\nCes données ne quittent pas votre iPhone."
+        loc.appearance.titleFontSize = 20
+        loc.appearance.descriptionFontSize = 14
+        
+        loc.actionButtonTitle = "Activer"
+        loc.appearance.actionButtonColor = UIColor(named: "appMainColor")!
+        
+        loc.alternativeButtonTitle = "Non, merci"
+        loc.appearance.alternativeButtonTitleColor = UIColor(named: "appMainColor")!
+        
+        loc.requiresCloseButton = false
+        loc.isDismissable = false
+        
+        modeSelector.next = loc
+        
+        modeSelector.actionHandler = { (item: BLTNActionItem) in
+            item.manager?.displayActivityIndicator()
+            UserDefaults.standard.set("bike", forKey: "mode")
+            self.mode = UserDefaults.standard.string(forKey: "mode")
+            self.setSpots(self.getSpotsFromCoreData(self.mode!))
+            item.manager?.displayNextItem()
+        }
+        
+        modeSelector.alternativeHandler = { (item: BLTNActionItem) in
+            item.manager?.displayActivityIndicator()
+            UserDefaults.standard.set("moto", forKey: "mode")
+            self.mode = UserDefaults.standard.string(forKey: "mode")
+            print(self.mode)
+            self.setSpots(self.getSpotsFromCoreData(self.mode!))
+            item.manager?.displayNextItem()
+        }
+        
+        loc.actionHandler = { (item: BLTNActionItem) in
+            item.manager?.displayActivityIndicator()
+            self.getUserLocation()
+            item.manager?.dismissBulletin(animated: true)
+        }
+        
+        loc.alternativeHandler = { (item: BLTNActionItem) in
+            item.manager?.dismissBulletin(animated: true)
+        }
+        
+        let rootItem: BLTNItem = modeSelector
         
         return BLTNItemManager(rootItem: rootItem)
     }()
@@ -149,7 +196,6 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         
         // Authorizations
         
-        getUserLocation()
         donateSiriInteraction()
         
         // Views
@@ -193,17 +239,22 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     
     override func viewDidAppear(_ animated: Bool) {
         
-        bulletinManager.backgroundViewStyle = .blurredDark
-        bulletinManager.showBulletin(above: self)
-        
-        mode = UserDefaults.standard.string(forKey: "mode") ?? "bike"
-        
+        launchOnboarding()
         setLegend()
         
-        if isCoreDataEmpty() {
-            getSpots()
+    }
+    
+    func launchOnboarding() {
+        if UserDefaults.standard.string(forKey: "onboarded") == nil {
+            bulletinManager.backgroundViewStyle = .blurredDark
+            bulletinManager.showBulletin(above: self)
         } else {
-            setSpots(getSpotsFromCoreData(mode!))
+            mode = UserDefaults.standard.string(forKey: "mode")
+            if isCoreDataEmpty() {
+                getSpots()
+            } else {
+                setSpots(getSpotsFromCoreData(mode!))
+            }
         }
     }
     
