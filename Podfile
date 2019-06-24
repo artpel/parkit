@@ -30,22 +30,3 @@ target 'WIMBWidget' do
     pod 'Firebase/Core'
 
 end
-
-target 'WhereIsMyBike' do
-    
-    use_frameworks!
-    
-    pod 'Firebase'
-    pod 'Firebase/Core'
-
-end
-
-
-target 'WhereIsMyBikeUI' do
-
-    use_frameworks!
-    pod 'Firebase'
-    pod 'Firebase/Core'
-
-end
-

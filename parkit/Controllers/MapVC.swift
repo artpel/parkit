@@ -10,8 +10,8 @@ import UIKit
 import MapKit
 import CoreLocation
 import CoreData
-import IntentsUI
-import Intents
+//import IntentsUI
+//import Intents
 import Alamofire
 import SwiftyJSON
 import NVActivityIndicatorView
@@ -107,8 +107,6 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         } else {
             self.parkMyRide(true)
         }
-        
-        setUpSiri(to: self.addToSiriButton)
     }
     
     @IBAction func openInMapsButton(_ sender: Any) {
@@ -196,9 +194,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         super.viewDidLoad()
         
         // Authorizations
-        
-        donateSiriInteraction()
-        
+  
         // Views
         
         setButtonsIcons()
@@ -251,6 +247,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             bulletinManager.showBulletin(above: self)
         } else {
             mode = UserDefaults.standard.string(forKey: "mode")
+            self.setCenter()
             if isCoreDataEmpty() {
                 getSpots()
             } else {
@@ -854,38 +851,6 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         
     }
     
-    // Siri
-    
-    func donateSiriInteraction() {
-        let intent = WhereIsMyBikeIntent()
-        let interaction = INInteraction(intent: intent, response: nil)
-        
-        interaction.donate { (error) in
-            
-            if error != nil {
-                
-            }
-        }
-    }
-    
-    func setUpSiri(to view: UIView) {
-        
-        let button = INUIAddVoiceShortcutButton(style: .whiteOutline)
-        button.shortcut = INShortcut(intent: intent)
-        let shot = INShortcut(intent: intent)
-        if shot != nil {
-            //            print("déjà")
-        } else {
-            self.addToSiriView.isHidden = false
-            button.delegate = self
-            button.translatesAutoresizingMaskIntoConstraints = false
-            view.addSubview(button)
-            view.centerXAnchor.constraint(equalTo: button.centerXAnchor).isActive = true
-            view.centerYAnchor.constraint(equalTo: button.centerYAnchor).isActive = true
-        }
-        
-    }
-    
     // Animations
     
     func squeeze(_ mode: String = "in", vue: SpringView) {
@@ -936,54 +901,4 @@ extension MKMapView {
         return centerLocation.distance(from: topCenterLocation)
     }
     
-}
-
-extension MapVC: INUIAddVoiceShortcutButtonDelegate {
-    
-    func present(_ addVoiceShortcutViewController: INUIAddVoiceShortcutViewController, for addVoiceShortcutButton: INUIAddVoiceShortcutButton) {
-        addVoiceShortcutViewController.delegate = self
-        addVoiceShortcutViewController.modalPresentationStyle = .formSheet
-        present(addVoiceShortcutViewController, animated: true, completion: nil)
-    }
-    
-    func present(_ editVoiceShortcutViewController: INUIEditVoiceShortcutViewController, for addVoiceShortcutButton: INUIAddVoiceShortcutButton) {
-        editVoiceShortcutViewController.delegate = self
-        editVoiceShortcutViewController.modalPresentationStyle = .formSheet
-        present(editVoiceShortcutViewController, animated: true, completion: nil)
-    }
-    
-}
-
-extension MapVC: INUIAddVoiceShortcutViewControllerDelegate {
-    
-    func addVoiceShortcutViewController(_ controller: INUIAddVoiceShortcutViewController, didFinishWith voiceShortcut: INVoiceShortcut?, error: Error?) {
-        
-        controller.dismiss(animated: true, completion: nil)
-    }
-    
-    func addVoiceShortcutViewControllerDidCancel(_ controller: INUIAddVoiceShortcutViewController) {
-        controller.dismiss(animated: true, completion: nil)
-    }
-    
-}
-
-extension MapVC: INUIEditVoiceShortcutViewControllerDelegate {
-    func editVoiceShortcutViewController(_ controller: INUIEditVoiceShortcutViewController, didUpdate voiceShortcut: INVoiceShortcut?, error: Error?) {
-        controller.dismiss(animated: true, completion: nil)
-    }
-    
-    func editVoiceShortcutViewController(_ controller: INUIEditVoiceShortcutViewController, didDeleteVoiceShortcutWithIdentifier deletedVoiceShortcutIdentifier: UUID) {
-        controller.dismiss(animated: true, completion: nil)
-    }
-    
-    func editVoiceShortcutViewControllerDidCancel(_ controller: INUIEditVoiceShortcutViewController) {
-        controller.dismiss(animated: true, completion: nil)
-    }
-}
-
-extension MapVC {
-    public var intent: WhereIsMyBikeIntent {
-        let intent = WhereIsMyBikeIntent()
-        return intent
-    }
 }

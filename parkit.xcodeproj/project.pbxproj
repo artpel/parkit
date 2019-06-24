@@ -14,16 +14,10 @@
 		76175FE82299DC8600605C4B /* ResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76175FE72299DC8600605C4B /* ResultCell.swift */; };
 		761E61FD2298A2A50091510D /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761E61FC2298A2A50091510D /* SettingsVC.swift */; };
 		763E2958229A99D8001FD1B5 /* NSCustomPersistentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763E2957229A99D8001FD1B5 /* NSCustomPersistentContainer.swift */; };
-		763E2959229A99E6001FD1B5 /* NSCustomPersistentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763E2957229A99D8001FD1B5 /* NSCustomPersistentContainer.swift */; };
-		763E295A229A99E6001FD1B5 /* NSCustomPersistentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763E2957229A99D8001FD1B5 /* NSCustomPersistentContainer.swift */; };
-		763E295D229A9B12001FD1B5 /* WhereIsMyBike.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 76E1692E2299345400CAF5B1 /* WhereIsMyBike.xcdatamodeld */; };
-		763E295E229A9B12001FD1B5 /* WhereIsMyBike.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 76E1692E2299345400CAF5B1 /* WhereIsMyBike.xcdatamodeld */; };
 		763E2968229ABEDD001FD1B5 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 763E2967229ABEDD001FD1B5 /* NotificationCenter.framework */; };
 		763E296B229ABEDD001FD1B5 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763E296A229ABEDD001FD1B5 /* TodayViewController.swift */; };
 		763E296E229ABEDD001FD1B5 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 763E296C229ABEDD001FD1B5 /* MainInterface.storyboard */; };
 		763E2978229ABF10001FD1B5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 763E2977229ABF10001FD1B5 /* MapKit.framework */; };
-		763E2979229ABF1A001FD1B5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 763E2977229ABF10001FD1B5 /* MapKit.framework */; };
-		763E297A229ABF24001FD1B5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 763E2977229ABF10001FD1B5 /* MapKit.framework */; };
 		763E297B229AC1B4001FD1B5 /* WhereIsMyBike.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 76E1692E2299345400CAF5B1 /* WhereIsMyBike.xcdatamodeld */; };
 		763E297C229AC355001FD1B5 /* NSCustomPersistentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763E2957229A99D8001FD1B5 /* NSCustomPersistentContainer.swift */; };
 		763E297D229AC757001FD1B5 /* WIMBWidget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 763E2966229ABEDD001FD1B5 /* WIMBWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -32,26 +26,10 @@
 		7655E15022661AFF0088DFAA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7655E14E22661AFF0088DFAA /* Main.storyboard */; };
 		7655E15222661B010088DFAA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7655E15122661B010088DFAA /* Assets.xcassets */; };
 		7655E15522661B010088DFAA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7655E15322661B010088DFAA /* LaunchScreen.storyboard */; };
-		7659A5D42299F4CF00F9A173 /* WhereIsMyBike.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 7659A5D32299F4CF00F9A173 /* WhereIsMyBike.intentdefinition */; };
-		7659A5DC2299FDC400F9A173 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7659A5DB2299FDC400F9A173 /* IntentHandler.swift */; };
-		7659A5E42299FDC400F9A173 /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7659A5E32299FDC400F9A173 /* IntentsUI.framework */; };
-		7659A5E72299FDC400F9A173 /* IntentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7659A5E62299FDC400F9A173 /* IntentViewController.swift */; };
-		7659A5EA2299FDC400F9A173 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7659A5E82299FDC400F9A173 /* MainInterface.storyboard */; };
-		7659A5EE2299FDC400F9A173 /* WhereIsMyBikeUI.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 7659A5E22299FDC400F9A173 /* WhereIsMyBikeUI.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		7659A5F12299FDC400F9A173 /* WhereIsMyBike.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 7659A5D92299FDC400F9A173 /* WhereIsMyBike.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		7659A5FA2299FE6800F9A173 /* WhereIsMyBikeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7659A5F92299FE6800F9A173 /* WhereIsMyBikeHandler.swift */; };
-		7659A5FB2299FE6800F9A173 /* WhereIsMyBikeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7659A5F92299FE6800F9A173 /* WhereIsMyBikeHandler.swift */; };
-		7659A5FC2299FE6800F9A173 /* WhereIsMyBikeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7659A5F92299FE6800F9A173 /* WhereIsMyBikeHandler.swift */; };
-		7659A5FD229A009600F9A173 /* WhereIsMyBike.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 7659A5D32299F4CF00F9A173 /* WhereIsMyBike.intentdefinition */; };
-		7659A5FE229A009600F9A173 /* WhereIsMyBike.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 7659A5D32299F4CF00F9A173 /* WhereIsMyBike.intentdefinition */; };
-		7659A60F229A13D700F9A173 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7655E14822661AFF0088DFAA /* AppDelegate.swift */; };
-		7659A610229A144400F9A173 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7655E14822661AFF0088DFAA /* AppDelegate.swift */; };
 		767373E8228D9B0000A6AEC0 /* BikeMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767373E7228D9B0000A6AEC0 /* BikeMarkerView.swift */; };
 		76836D1B228D632F00906752 /* BikeAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76836D1A228D632F00906752 /* BikeAnnotation.swift */; };
 		76BC98BA229E9D520034BB84 /* TestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BC98B9229E9D520034BB84 /* TestVC.swift */; };
 		76E169302299345400CAF5B1 /* WhereIsMyBike.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 76E1692E2299345400CAF5B1 /* WhereIsMyBike.xcdatamodeld */; };
-		7D976DE1ED5AEB984C181808 /* Pods_WhereIsMyBikeUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE3A596804E57A434D374046 /* Pods_WhereIsMyBikeUI.framework */; };
-		B30DCCE713DFA6B28E538CD3 /* Pods_WhereIsMyBike.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE564187C8C4DAC743B79D6E /* Pods_WhereIsMyBike.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,20 +39,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 763E2965229ABEDD001FD1B5;
 			remoteInfo = WIMBWidget;
-		};
-		7659A5EC2299FDC400F9A173 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7655E13D22661AFF0088DFAA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 7659A5E12299FDC400F9A173;
-			remoteInfo = WhereIsMyBikeUI;
-		};
-		7659A5EF2299FDC400F9A173 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7655E13D22661AFF0088DFAA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 7659A5D82299FDC400F9A173;
-			remoteInfo = WhereIsMyBike;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -86,8 +50,6 @@
 			dstSubfolderSpec = 13;
 			files = (
 				763E297D229AC757001FD1B5 /* WIMBWidget.appex in Embed App Extensions */,
-				7659A5EE2299FDC400F9A173 /* WhereIsMyBikeUI.appex in Embed App Extensions */,
-				7659A5F12299FDC400F9A173 /* WhereIsMyBike.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -104,11 +66,8 @@
 		76175FE72299DC8600605C4B /* ResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultCell.swift; sourceTree = "<group>"; };
 		761E61FC2298A2A50091510D /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		763E2957229A99D8001FD1B5 /* NSCustomPersistentContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSCustomPersistentContainer.swift; sourceTree = "<group>"; };
-		763E295B229A9A65001FD1B5 /* WhereIsMyBike.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WhereIsMyBike.entitlements; sourceTree = "<group>"; };
-		763E295C229A9A6A001FD1B5 /* WhereIsMyBikeUI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WhereIsMyBikeUI.entitlements; sourceTree = "<group>"; };
 		763E295F229AAF44001FD1B5 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
 		763E2960229AAF44001FD1B5 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
-		763E2961229AAF45001FD1B5 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		763E2966229ABEDD001FD1B5 /* WIMBWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WIMBWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		763E2967229ABEDD001FD1B5 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		763E296A229ABEDD001FD1B5 /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
@@ -123,16 +82,7 @@
 		7655E15122661B010088DFAA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7655E15422661B010088DFAA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7655E15622661B010088DFAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7659A5D32299F4CF00F9A173 /* WhereIsMyBike.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = WhereIsMyBike.intentdefinition; sourceTree = "<group>"; };
-		7659A5D92299FDC400F9A173 /* WhereIsMyBike.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WhereIsMyBike.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		7659A5DB2299FDC400F9A173 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
-		7659A5DD2299FDC400F9A173 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7659A5E22299FDC400F9A173 /* WhereIsMyBikeUI.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WhereIsMyBikeUI.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		7659A5E32299FDC400F9A173 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
-		7659A5E62299FDC400F9A173 /* IntentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentViewController.swift; sourceTree = "<group>"; };
-		7659A5E92299FDC400F9A173 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
-		7659A5EB2299FDC400F9A173 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7659A5F92299FE6800F9A173 /* WhereIsMyBikeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhereIsMyBikeHandler.swift; sourceTree = "<group>"; };
 		767373E7228D9B0000A6AEC0 /* BikeMarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BikeMarkerView.swift; sourceTree = "<group>"; };
 		76836D1A228D632F00906752 /* BikeAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BikeAnnotation.swift; path = parkit/Views/BikeAnnotation.swift; sourceTree = SOURCE_ROOT; };
 		76BC98B9229E9D520034BB84 /* TestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestVC.swift; sourceTree = "<group>"; };
@@ -167,25 +117,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7659A5D62299FDC400F9A173 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				763E2979229ABF1A001FD1B5 /* MapKit.framework in Frameworks */,
-				B30DCCE713DFA6B28E538CD3 /* Pods_WhereIsMyBike.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7659A5DF2299FDC400F9A173 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				763E297A229ABF24001FD1B5 /* MapKit.framework in Frameworks */,
-				7659A5E42299FDC400F9A173 /* IntentsUI.framework in Frameworks */,
-				7D976DE1ED5AEB984C181808 /* Pods_WhereIsMyBikeUI.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -209,7 +140,6 @@
 				76BC98B9229E9D520034BB84 /* TestVC.swift */,
 				761E61FC2298A2A50091510D /* SettingsVC.swift */,
 				7616473C228D4AC900C1C5D3 /* MapVC.swift */,
-				7659A5F92299FE6800F9A173 /* WhereIsMyBikeHandler.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -218,7 +148,6 @@
 			isa = PBXGroup;
 			children = (
 				76E1692E2299345400CAF5B1 /* WhereIsMyBike.xcdatamodeld */,
-				7659A5D32299F4CF00F9A173 /* WhereIsMyBike.intentdefinition */,
 				763E2957229A99D8001FD1B5 /* NSCustomPersistentContainer.swift */,
 			);
 			path = Models;
@@ -250,8 +179,6 @@
 			isa = PBXGroup;
 			children = (
 				7655E14722661AFF0088DFAA /* parkit */,
-				7659A5DA2299FDC400F9A173 /* WhereIsMyBike */,
-				7659A5E52299FDC400F9A173 /* WhereIsMyBikeUI */,
 				763E2969229ABEDD001FD1B5 /* WIMBWidget */,
 				7655E14622661AFF0088DFAA /* Products */,
 				81E5E477C9A63B8955278D94 /* Pods */,
@@ -263,8 +190,6 @@
 			isa = PBXGroup;
 			children = (
 				7655E14522661AFF0088DFAA /* parkit.app */,
-				7659A5D92299FDC400F9A173 /* WhereIsMyBike.appex */,
-				7659A5E22299FDC400F9A173 /* WhereIsMyBikeUI.appex */,
 				763E2966229ABEDD001FD1B5 /* WIMBWidget.appex */,
 			);
 			name = Products;
@@ -285,27 +210,6 @@
 				7612DEA222661D8700B5EC43 /* GoogleService-Info.plist */,
 			);
 			path = parkit;
-			sourceTree = "<group>";
-		};
-		7659A5DA2299FDC400F9A173 /* WhereIsMyBike */ = {
-			isa = PBXGroup;
-			children = (
-				763E295B229A9A65001FD1B5 /* WhereIsMyBike.entitlements */,
-				7659A5DB2299FDC400F9A173 /* IntentHandler.swift */,
-				7659A5DD2299FDC400F9A173 /* Info.plist */,
-			);
-			path = WhereIsMyBike;
-			sourceTree = "<group>";
-		};
-		7659A5E52299FDC400F9A173 /* WhereIsMyBikeUI */ = {
-			isa = PBXGroup;
-			children = (
-				763E295C229A9A6A001FD1B5 /* WhereIsMyBikeUI.entitlements */,
-				7659A5E62299FDC400F9A173 /* IntentViewController.swift */,
-				7659A5E82299FDC400F9A173 /* MainInterface.storyboard */,
-				7659A5EB2299FDC400F9A173 /* Info.plist */,
-			);
-			path = WhereIsMyBikeUI;
 			sourceTree = "<group>";
 		};
 		81E5E477C9A63B8955278D94 /* Pods */ = {
@@ -359,50 +263,12 @@
 			buildRules = (
 			);
 			dependencies = (
-				7659A5ED2299FDC400F9A173 /* PBXTargetDependency */,
-				7659A5F02299FDC400F9A173 /* PBXTargetDependency */,
 				763E2971229ABEDD001FD1B5 /* PBXTargetDependency */,
 			);
 			name = parkit;
 			productName = parkit;
 			productReference = 7655E14522661AFF0088DFAA /* parkit.app */;
 			productType = "com.apple.product-type.application";
-		};
-		7659A5D82299FDC400F9A173 /* WhereIsMyBike */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 7659A5F52299FDC400F9A173 /* Build configuration list for PBXNativeTarget "WhereIsMyBike" */;
-			buildPhases = (
-				268B780856A3AE9D9862F2C6 /* [CP] Check Pods Manifest.lock */,
-				7659A5D52299FDC400F9A173 /* Sources */,
-				7659A5D62299FDC400F9A173 /* Frameworks */,
-				7659A5D72299FDC400F9A173 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = WhereIsMyBike;
-			productName = WhereIsMyBike;
-			productReference = 7659A5D92299FDC400F9A173 /* WhereIsMyBike.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
-		7659A5E12299FDC400F9A173 /* WhereIsMyBikeUI */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 7659A5F22299FDC400F9A173 /* Build configuration list for PBXNativeTarget "WhereIsMyBikeUI" */;
-			buildPhases = (
-				5B81E86B4164B1F209084C7D /* [CP] Check Pods Manifest.lock */,
-				7659A5DE2299FDC400F9A173 /* Sources */,
-				7659A5DF2299FDC400F9A173 /* Frameworks */,
-				7659A5E02299FDC400F9A173 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = WhereIsMyBikeUI;
-			productName = WhereIsMyBikeUI;
-			productReference = 7659A5E22299FDC400F9A173 /* WhereIsMyBikeUI.appex */;
-			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -435,29 +301,7 @@
 								enabled = 0;
 							};
 							com.apple.Siri = {
-								enabled = 1;
-							};
-						};
-					};
-					7659A5D82299FDC400F9A173 = {
-						CreatedOnToolsVersion = 10.2.1;
-						SystemCapabilities = {
-							com.apple.ApplicationGroups.iOS = {
-								enabled = 1;
-							};
-							com.apple.Maps.iOS = {
-								enabled = 1;
-							};
-						};
-					};
-					7659A5E12299FDC400F9A173 = {
-						CreatedOnToolsVersion = 10.2.1;
-						SystemCapabilities = {
-							com.apple.ApplicationGroups.iOS = {
-								enabled = 1;
-							};
-							com.apple.Maps.iOS = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -478,8 +322,6 @@
 			projectRoot = "";
 			targets = (
 				7655E14422661AFF0088DFAA /* parkit */,
-				7659A5D82299FDC400F9A173 /* WhereIsMyBike */,
-				7659A5E12299FDC400F9A173 /* WhereIsMyBikeUI */,
 				763E2965229ABEDD001FD1B5 /* WIMBWidget */,
 			);
 		};
@@ -505,46 +347,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7659A5D72299FDC400F9A173 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7659A5E02299FDC400F9A173 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				7659A5EA2299FDC400F9A173 /* MainInterface.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		268B780856A3AE9D9862F2C6 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-WhereIsMyBike-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		4AA646BD3B13E72084237684 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -589,28 +394,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-parkit/Pods-parkit-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		5B81E86B4164B1F209084C7D /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-WhereIsMyBikeUI-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		76C2537E22AA9A2500F45536 /* ShellScript */ = {
@@ -693,7 +476,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				767373E8228D9B0000A6AEC0 /* BikeMarkerView.swift in Sources */,
-				7659A5D42299F4CF00F9A173 /* WhereIsMyBike.intentdefinition in Sources */,
 				764199692295B23900801A9A /* BikeClusterAnnotationView.swift in Sources */,
 				76175FE82299DC8600605C4B /* ResultCell.swift in Sources */,
 				76BC98BA229E9D520034BB84 /* TestVC.swift in Sources */,
@@ -703,33 +485,6 @@
 				76E169302299345400CAF5B1 /* WhereIsMyBike.xcdatamodeld in Sources */,
 				761E61FD2298A2A50091510D /* SettingsVC.swift in Sources */,
 				763E2958229A99D8001FD1B5 /* NSCustomPersistentContainer.swift in Sources */,
-				7659A5FA2299FE6800F9A173 /* WhereIsMyBikeHandler.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7659A5D52299FDC400F9A173 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				763E295A229A99E6001FD1B5 /* NSCustomPersistentContainer.swift in Sources */,
-				7659A610229A144400F9A173 /* AppDelegate.swift in Sources */,
-				7659A5DC2299FDC400F9A173 /* IntentHandler.swift in Sources */,
-				763E295D229A9B12001FD1B5 /* WhereIsMyBike.xcdatamodeld in Sources */,
-				7659A5FD229A009600F9A173 /* WhereIsMyBike.intentdefinition in Sources */,
-				7659A5FB2299FE6800F9A173 /* WhereIsMyBikeHandler.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7659A5DE2299FDC400F9A173 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				763E2959229A99E6001FD1B5 /* NSCustomPersistentContainer.swift in Sources */,
-				7659A60F229A13D700F9A173 /* AppDelegate.swift in Sources */,
-				7659A5E72299FDC400F9A173 /* IntentViewController.swift in Sources */,
-				763E295E229A9B12001FD1B5 /* WhereIsMyBike.xcdatamodeld in Sources */,
-				7659A5FE229A009600F9A173 /* WhereIsMyBike.intentdefinition in Sources */,
-				7659A5FC2299FE6800F9A173 /* WhereIsMyBikeHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -740,16 +495,6 @@
 			isa = PBXTargetDependency;
 			target = 763E2965229ABEDD001FD1B5 /* WIMBWidget */;
 			targetProxy = 763E2970229ABEDD001FD1B5 /* PBXContainerItemProxy */;
-		};
-		7659A5ED2299FDC400F9A173 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 7659A5E12299FDC400F9A173 /* WhereIsMyBikeUI */;
-			targetProxy = 7659A5EC2299FDC400F9A173 /* PBXContainerItemProxy */;
-		};
-		7659A5F02299FDC400F9A173 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 7659A5D82299FDC400F9A173 /* WhereIsMyBike */;
-			targetProxy = 7659A5EF2299FDC400F9A173 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -778,15 +523,6 @@
 				763E2960229AAF44001FD1B5 /* fr */,
 			);
 			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-		7659A5E82299FDC400F9A173 /* MainInterface.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				7659A5E92299FDC400F9A173 /* Base */,
-				763E2961229AAF45001FD1B5 /* fr */,
-			);
-			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -996,90 +732,6 @@
 			};
 			name = Release;
 		};
-		7659A5F32299FDC400F9A173 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = CD400AB627880D5D74A63EAB /* Pods-WhereIsMyBikeUI.debug.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = WhereIsMyBikeUI/WhereIsMyBikeUI.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = LKH8T246BV;
-				INFOPLIST_FILE = WhereIsMyBikeUI/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = fr.foxmob.parkit.WhereIsMyBikeUI;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		7659A5F42299FDC400F9A173 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 89264684EF5D271696D8DC24 /* Pods-WhereIsMyBikeUI.release.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = WhereIsMyBikeUI/WhereIsMyBikeUI.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = LKH8T246BV;
-				INFOPLIST_FILE = WhereIsMyBikeUI/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = fr.foxmob.parkit.WhereIsMyBikeUI;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		7659A5F62299FDC400F9A173 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = E7615A0F312689D765C2C22C /* Pods-WhereIsMyBike.debug.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = WhereIsMyBike/WhereIsMyBike.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = LKH8T246BV;
-				INFOPLIST_FILE = WhereIsMyBike/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = fr.foxmob.parkit.WhereIsMyBike;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		7659A5F72299FDC400F9A173 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 222AF1CEE759EB63365E8987 /* Pods-WhereIsMyBike.release.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = WhereIsMyBike/WhereIsMyBike.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = LKH8T246BV;
-				INFOPLIST_FILE = WhereIsMyBike/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = fr.foxmob.parkit.WhereIsMyBike;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1106,24 +758,6 @@
 			buildConfigurations = (
 				7655E15A22661B010088DFAA /* Debug */,
 				7655E15B22661B010088DFAA /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		7659A5F22299FDC400F9A173 /* Build configuration list for PBXNativeTarget "WhereIsMyBikeUI" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				7659A5F32299FDC400F9A173 /* Debug */,
-				7659A5F42299FDC400F9A173 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		7659A5F52299FDC400F9A173 /* Build configuration list for PBXNativeTarget "WhereIsMyBike" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				7659A5F62299FDC400F9A173 /* Debug */,
-				7659A5F72299FDC400F9A173 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
