@@ -161,7 +161,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             item.manager?.displayActivityIndicator()
             UserDefaults.standard.set("bike", forKey: "mode")
             self.mode = UserDefaults.standard.string(forKey: "mode")
-            self.setSpots(self.getSpotsFromCoreData(self.mode!))
+            self.getSpots()
             item.manager?.displayNextItem()
         }
         
@@ -169,8 +169,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             item.manager?.displayActivityIndicator()
             UserDefaults.standard.set("moto", forKey: "mode")
             self.mode = UserDefaults.standard.string(forKey: "mode")
-            print(self.mode)
-            self.setSpots(self.getSpotsFromCoreData(self.mode!))
+            self.getSpots()
             item.manager?.displayNextItem()
         }
         
@@ -178,10 +177,12 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             item.manager?.displayActivityIndicator()
             self.getUserLocation()
             item.manager?.dismissBulletin(animated: true)
+            UserDefaults.standard.set(true, forKey: "onboarded")
         }
         
         loc.alternativeHandler = { (item: BLTNActionItem) in
             item.manager?.dismissBulletin(animated: true)
+            UserDefaults.standard.set(true, forKey: "onboarded")
         }
         
         let rootItem: BLTNItem = modeSelector
@@ -632,10 +633,10 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     
     func calculateSizeOfPark(size: Double) {
         
-        if size <= 10 {
+        if size <= 30 {
             self.tooltipSizeView.backgroundColor = UIColor(named: "sizeSmallColor")!
             self.tooltipSize.text = "Petit"
-        } else if size > 10 && size < 30 {
+        } else if size > 30 && size < 60 {
             self.tooltipSizeView.backgroundColor = UIColor(named: "sizeMediumColor")!
             self.tooltipSize.text = "Moyen"
         } else {
