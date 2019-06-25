@@ -432,6 +432,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             self.setSpots(self.getSpotsFromCoreData(self.mode!))
             self.toogleActivityIndicator(status: "off")
         }
+        
     }
 
     func setSpots(_ spots: [Any]) {
