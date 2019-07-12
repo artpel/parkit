@@ -117,7 +117,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
 
     let locationManager = CLLocationManager()
     var selectedAnnotation: BikeAnnotation?
-    var targetAnnotation: BikeAnnotation?
+    var targetAnnotation: TargetAnnotation?
     
     var clusterManager = ClusterManager()
     
@@ -318,8 +318,6 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         let managedContext = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Spot")
         var predicates: [NSPredicate] = []
-        
-//        predicates.append(NSPredicate(format: "type = %@", mode))
         
         if park {
             predicates.append(NSPredicate(format: "park = %@", NSNumber(value: park)))
@@ -738,6 +736,8 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         
         if let annotation = annotation as? ClusterAnnotation {
             return BikeClusterAnnotationView(annotation: annotation, reuseIdentifier: "cluster")
+        } else if let annotation = annotation as? TargetAnnotation {
+            return TargetMarkerView(annotation: annotation, reuseIdentifier: "bike")
         } else {
             return BikeMarkerView(annotation: annotation, reuseIdentifier: "bike")
         }
@@ -826,7 +826,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             self.carte.setRegion(coordinateRegion, animated: true)
             self.resultView.isHidden = true
             self.view.endEditing(true)
-            let annotation = BikeAnnotation("Target", myLocation.coordinate, 0, "", "", false)
+            let annotation = TargetAnnotation("Target", myLocation.coordinate)
             self.targetAnnotation = annotation
             self.carte.addAnnotation(self.targetAnnotation!)
         }

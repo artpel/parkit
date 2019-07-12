@@ -19,7 +19,6 @@ ParkIt is an open-source Swift application aimed to help bike and motorbike owne
 
 #### Misc 
  
-- Handle Core Data errors
 - Create AlertView class 
-- Don't refresh data when changing mode
 - Adapt app to take advantage of English
+- Don't setCenter when changing mode (change behavior of viewDidAppear)

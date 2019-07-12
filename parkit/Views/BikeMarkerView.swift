@@ -24,7 +24,7 @@ class BikeMarkerView: MKMarkerAnnotationView {
             } else {
                 glyphImage = nil
             }
-
+            
         }
     }
 }
