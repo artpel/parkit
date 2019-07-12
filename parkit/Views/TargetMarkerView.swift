@@ -25,7 +25,13 @@ class TargetMarkerView: MKMarkerAnnotationView {
                 glyphImage = nil
             }
             
-            clusteringIdentifier = nil
         }
     }
+    
+    override func prepareForDisplay() {
+        super.prepareForDisplay()
+        displayPriority = .defaultHigh
+
+    }
+
 }

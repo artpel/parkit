@@ -734,10 +734,10 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             return nil
         }
         
-        if let annotation = annotation as? ClusterAnnotation {
-            return BikeClusterAnnotationView(annotation: annotation, reuseIdentifier: "cluster")
-        } else if let annotation = annotation as? TargetAnnotation {
+        if let annotation = annotation as? TargetAnnotation {
             return TargetMarkerView(annotation: annotation, reuseIdentifier: "bike")
+        } else if let annotation = annotation as? ClusterAnnotation {
+            return BikeClusterAnnotationView(annotation: annotation, reuseIdentifier: "cluster")
         } else {
             return BikeMarkerView(annotation: annotation, reuseIdentifier: "bike")
         }
