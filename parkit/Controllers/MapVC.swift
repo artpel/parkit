@@ -194,9 +194,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Authorizations
-  
+
         // Views
         
         setButtonsIcons()
@@ -233,21 +231,11 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         // Constraintes
         
         setViewsAtBottom(vues: [locationButtonView, legendView, findMyRideView])
-
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         
-        launchOnboarding()
-        
-    }
-    
-    func launchOnboarding() {
-        if UserDefaults.standard.string(forKey: "onboarded") == nil {
-            bulletinManager.backgroundViewStyle = .blurredDark
-            bulletinManager.showBulletin(above: self)
-        } else {
+        if UserDefaults.standard.string(forKey: "onboarded") != nil {
             mode = UserDefaults.standard.string(forKey: "mode")
             setLegend()
             self.setCenter()
@@ -255,6 +243,12 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
                 getSpots()
             } else {
                 setSpots(getSpotsFromCoreData(mode!))
+            }
+        } else {
+            if UserDefaults.standard.string(forKey: "onboarded") == nil {
+                bulletinManager.backgroundViewStyle = .blurredDark
+                bulletinManager.showBulletin(above: self)
+                print("coucou")
             }
         }
     }
@@ -763,15 +757,13 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     func getUserLocation() {
         
             locationManager.delegate = self
-            
             //        if CLLocationManager.locationServicesEnabled() {
-            //
             switch CLLocationManager.authorizationStatus() {
             case .notDetermined, .restricted:
                 locationManager.desiredAccuracy = kCLLocationAccuracyBest
                 locationManager.requestWhenInUseAuthorization()
             case .denied:
-                print("coucou")
+                print("Location services denied")
             case .authorizedAlways, .authorizedWhenInUse:
                 locationManager.startUpdatingLocation()
             @unknown default:
