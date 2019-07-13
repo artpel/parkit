@@ -7,158 +7,102 @@
 //
 
 import UIKit
-import Spring
-import SnapKit
+import SwiftyJSON
+import CoreData
 
 class TestVC: UIViewController {
+    
+    var mode = "bike"
 
-    @IBOutlet weak var vue: SpringView!
-    
-    @IBAction func button1(_ sender: Any) {
-        vue.isHidden = false
-        vue.animation = "squeezeDown"
-        vue.curve = "easeInOut"
-        vue.animate()
-    }
-    
-    @IBAction func button2(_ sender: Any) {
-        
-        vue.isHidden = false
-        vue.animation = "zoomOut"
-        vue.curve = "easeInOut"
-        vue.animate()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        vue.isHidden = true
-        let alert = AlertVC(self.view, "Ceci est un titre", "Ceci un sous-titre", "Cancel", "Ok")
-        
-//        alert.frame = CGRect(x: 100, y: 0, width: 100, height: 200)
-        view.addSubview(alert)
         
         
-        alert.snp.makeConstraints { (make) -> Void in
-                make.center.equalTo(self.view)
+        
+        createGeoJSON(getSpotsFromCoreData(mode))
+
+    }
+    
+    func createGeoJSON(_ spots: [Any]) {
+        
+        var parks = [[String: Any]]()
+        
+        for park in spots as! [NSManagedObject] {
+            
+            let type = park.value(forKeyPath: "type") as? String
+            let address = park.value(forKeyPath: "address") as? String
+            let size = park.value(forKeyPath: "size") as? Double
+            let lat = park.value(forKeyPath: "lat")! as? Double
+            let long = park.value(forKeyPath: "lon") as? Double
+            let objectId = park.value(forKeyPath: "objectId") as? String
+            let park = park.value(forKeyPath: "park") as? Bool
+            
+            let singlePark = [
+                "type": "Feature",
+                "properties": [
+                    "recordid": objectId!,
+                    "size": size!,
+                    "address": address!,
+                    "type": type!,
+                    "coordinates": [
+                        "latitude": lat!,
+                        "longitude": long!
+                    ],
+                    "latitude": lat!,
+                    "longitude": long!,
+                    "park": park!
+                ],
+                "geometry": [
+                    "type": "Point",
+                    "coordinates": [
+                        lat!,
+                        long!
+                    ]
+                ]
+                ] as [String : Any]
+            
+            parks.append(singlePark)
+            
+            
+            if mode == "bike" && type! == "bike" || type! == "mix" {
+                
+            } else if mode == "moto" && type! == "moto" || type! == "mix" {
+                
             }
+        }
         
-       
-    }
-
-
-}
-
-
-class AlertVC: SpringView {
-    var title: String?
-    var subtitle: String?
-    var cancelBtnLabel: String?
-    var acceptBtnLabel: String?
-    var supervue: UIView?
-   
-    // #1
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        var jsonArray: JSON = [
+            "type": "FeatureCollection",
+            "features": parks
+        ]
+        
+        print(jsonArray)
+        
         
     }
     
-    // #2
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-    }
     
-    // #3
-    public convenience init(_ supervue: UIView, _ title: String, _ subtitle: String, _ cancelBtnLabel: String, _ acceptBtnLabel: String) {
+    func getSpotsFromCoreData(_ mode: String, _ park: Bool = false) -> [Any] {
         
-        self.init(frame: .zero)
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return [] }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Spot")
+        var predicates: [NSPredicate] = []
         
-        self.supervue = supervue
-        self.title = title
-        self.subtitle = subtitle
-        self.cancelBtnLabel = cancelBtnLabel
-        self.acceptBtnLabel = acceptBtnLabel
-        
-        setupView()
-    }
-
-    private func setupView() {
-        
-        self.backgroundColor = UIColor.red
-        self.layer.cornerRadius = 8
-
-        let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 20))
-        
-        titleLabel.text = title
-        titleLabel.textAlignment = .center
-        titleLabel.textColor = UIColor.white
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 20)
-        
-        self.addSubview(titleLabel)
-        
-        titleLabel.snp.makeConstraints { (make) -> Void in
-            make.width.equalTo(self)
-            make.top.equalTo(self).offset(20)
-            make.centerX.equalTo(self)
+        if park {
+            predicates.append(NSPredicate(format: "park = %@", NSNumber(value: false)))
         }
         
-        let subtitleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 20))
+        let andPredicate = NSCompoundPredicate(type: .and, subpredicates: predicates)
+        fetchRequest.predicate = andPredicate
         
-        
-        subtitleLabel.text = self.subtitle
-        subtitleLabel.numberOfLines = 0
-        subtitleLabel.textAlignment = .center
-        subtitleLabel.textColor = UIColor.white
-        
-        self.addSubview(subtitleLabel)
-        
-        subtitleLabel.snp.makeConstraints { (make) -> Void in
-            make.width.equalTo(self).offset(-20)
-            make.top.equalTo(titleLabel.snp.bottom).offset(10)
-            make.centerX.equalTo(self)
+        do {
+            let result = try managedContext.fetch(fetchRequest)
+            
+            return result
+        } catch {
+            return []
         }
-        
-        self.snp.makeConstraints { (make) -> Void in
-            let boundaries = UIScreen.main.bounds
-            let width = boundaries.width * 0.7
-            make.width.equalTo(width)
-            make.height.equalTo(subtitleLabel.snp.height).offset(100)
-        }
-        
-        let button1 = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 20))
-        button1.titleLabel?.text = cancelBtnLabel
-        button1.tintColor = UIColor.white
-        
-        self.addSubview(button1)
-
-        
-//        button1.snp.makeConstraints { (make) -> Void in
-//                let boundaries = UIScreen.main.bounds
-//                let width = self.frame.width * 0.5
-//                make.width.equalTo(width)
-//                make.left.equalTo(self.snp.left).offset(0)
-//        }
-        
-        let button2 = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 20))
-        button2.titleLabel?.text = cancelBtnLabel
-        button2.tintColor = UIColor.white
-        
-        
-        button2.snp.makeConstraints { (make) -> Void in
-            let boundaries = UIScreen.main.bounds
-            let width = self.frame.width * 0.5
-            make.width.equalTo(width)
-            make.right.equalTo(self.snp.right).offset(0)
-        }
-        
-        self.addSubview(button2)
-        
-        self.animation = "squeezeRight"
-        self.curve = "easeInOut"
-        self.delay = 1
-        self.animate()
-        
-        
         
     }
 

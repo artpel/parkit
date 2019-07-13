@@ -21,12 +21,14 @@ import FontAwesome_swift
 import Spring
 import GestureRecognizerClosures
 import BLTNBoard
+import Mapbox
 
 class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, MKLocalSearchCompleterDelegate, UITextFieldDelegate {
     
     @IBOutlet weak var addToSiriButton: UIView!
     @IBOutlet weak var resultView: UIVisualEffectView!
     @IBOutlet weak var carte: MKMapView!
+    @IBOutlet weak var mapView: MGLMapView!
     @IBOutlet weak var tooltipItinerary: SpringView!
     @IBOutlet weak var tooltipTitle: UILabel!
     @IBOutlet weak var tooltipAddress: UILabel!
@@ -698,46 +700,50 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     }
     
     // Map View
+//
+//    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+//
+//        if let annot = view.annotation as? BikeAnnotation {
+//            selectedAnnotation = annot
+//            self.showTooltip(annotation: annot)
+//
+//
+//        }
+//
+//
+//    }
+//
+//    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+//        let renderer = MKPolylineRenderer(overlay: overlay)
+//        renderer.strokeColor = UIColor(named: "appMainColor")!
+//        renderer.lineWidth = 4.0
+//        return renderer
+//    }
+//
+//    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+//
+//        clusterManager.reload(mapView: carte)
+//    }
+//
+//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+//
+//        // Don't want to show a custom image if the annotation is the user's location.
+//        guard !(annotation is MKUserLocation) else {
+//            return nil
+//        }
+//
+//        if let annotation = annotation as? TargetAnnotation {
+//            return TargetMarkerView(annotation: annotation, reuseIdentifier: "bike")
+//        } else if let annotation = annotation as? ClusterAnnotation {
+//            return BikeClusterAnnotationView(annotation: annotation, reuseIdentifier: "cluster")
+//        } else {
+//            return BikeMarkerView(annotation: annotation, reuseIdentifier: "bike")
+//        }
+//    }
+//
+    // Mapbox View
     
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        
-        if let annot = view.annotation as? BikeAnnotation {
-            selectedAnnotation = annot
-            self.showTooltip(annotation: annot)
-            
-         
-        }
-        
-        
-    }
     
-    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        let renderer = MKPolylineRenderer(overlay: overlay)
-        renderer.strokeColor = UIColor(named: "appMainColor")!
-        renderer.lineWidth = 4.0
-        return renderer
-    }
-    
-    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-
-        clusterManager.reload(mapView: carte)
-    }
-    
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        
-        // Don't want to show a custom image if the annotation is the user's location.
-        guard !(annotation is MKUserLocation) else {
-            return nil
-        }
-        
-        if let annotation = annotation as? TargetAnnotation {
-            return TargetMarkerView(annotation: annotation, reuseIdentifier: "bike")
-        } else if let annotation = annotation as? ClusterAnnotation {
-            return BikeClusterAnnotationView(annotation: annotation, reuseIdentifier: "cluster")
-        } else {
-            return BikeMarkerView(annotation: annotation, reuseIdentifier: "bike")
-        }
-    }
     
     // Location manager
     
@@ -900,3 +906,17 @@ extension MKMapView {
     }
     
 }
+
+//extension MapVC: UIGestureRecognizerDelegate {
+//    
+//    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+//        // This will only get called for the custom double tap gesture,
+//        // that should always be recognized simultaneously.
+//        return true
+//    }
+//    
+//    public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+//        // This will only get called for the custom double tap gesture.
+//        return firstCluster(with: gestureRecognizer) != nil
+//    }
+//}

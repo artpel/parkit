@@ -8,6 +8,7 @@
 
 import UIKit
 import Mapbox
+import SwiftyJSON
 
 class MapboxTestVC: UIViewController, MGLMapViewDelegate {
     
@@ -28,21 +29,19 @@ class MapboxTestVC: UIViewController, MGLMapViewDelegate {
         mapView = MGLMapView(frame: view.bounds, styleURL: urlMapbox!)
         mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         mapView.delegate = self
+        mapView.setCenter(CLLocationCoordinate2D(latitude: 48.859, longitude: 2.346), zoomLevel: 11, animated: false)
         view.addSubview(mapView)
         
         let doubleTap = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTapCluster(sender:)))
         doubleTap.numberOfTapsRequired = 2
         doubleTap.delegate = self
         
-    
-
         for recognizer in mapView.gestureRecognizers!
         where (recognizer as? UITapGestureRecognizer)?.numberOfTapsRequired == 2 {
             recognizer.require(toFail: doubleTap)
         }
         mapView.addGestureRecognizer(doubleTap)
 
-        
         let singleTap = UITapGestureRecognizer(target: self, action: #selector(handleMapTap(sender:)))
         for recognizer in mapView.gestureRecognizers! where recognizer is UITapGestureRecognizer {
             singleTap.require(toFail: recognizer)
@@ -50,6 +49,7 @@ class MapboxTestVC: UIViewController, MGLMapViewDelegate {
         mapView.addGestureRecognizer(singleTap)
         
         icon = UIImage(named: "bike")
+        
     }
     
     func mapView(_ mapView: MGLMapView, didFinishLoading style: MGLStyle) {
@@ -57,21 +57,20 @@ class MapboxTestVC: UIViewController, MGLMapViewDelegate {
         let url = URL(fileURLWithPath: Bundle.main.path(forResource: "ports", ofType: "geojson")!)
     
         let source = MGLShapeSource(identifier: "clusteredPorts",
-            url: url,
-            options: [.clustered: true, .clusterRadius: icon.size.width])
+                                    url: URL(string: "mapbox://athur.dbberz4s")!,
+            options: [.clustered: true, .clusterRadius: icon.size.width * 2])
         
         style.addSource(source)
         
         // Use a template image so that we can tint it with the `iconColor` runtime styling property.
-        style.setImage(icon.withRenderingMode(.alwaysTemplate), forName: "bike")
+        style.setImage(icon, forName: "bike")
         
         // Show unclustered features as icons. The `cluster` attribute is built into clustering-enabled
         // source features.
         let ports = MGLSymbolStyleLayer(identifier: "ports", source: source)
         
         ports.iconImageName = NSExpression(forConstantValue: "bike")
-        ports.iconColor = NSExpression(forConstantValue: UIColor.darkGray.withAlphaComponent(0.9))
-        ports.predicate = NSPredicate(format: "cluster != YES")
+        ports.predicate = NSPredicate(format: "cluster != YES && type = 'moto'")
         ports.iconAllowsOverlap = NSExpression(forConstantValue: true)
         style.addLayer(ports)
     
@@ -86,7 +85,7 @@ class MapboxTestVC: UIViewController, MGLMapViewDelegate {
         // Show clustered features as circles. The `point_count` attribute is built into
         // clustering-enabled source features.
         let circlesLayer = MGLCircleStyleLayer(identifier: "clusteredPorts", source: source)
-        circlesLayer.circleRadius = NSExpression(forConstantValue: NSNumber(value: Double(icon.size.width) / 4))
+        circlesLayer.circleRadius = NSExpression(forConstantValue: NSNumber(value: Double(icon.size.width) / 2))
         circlesLayer.circleOpacity = NSExpression(forConstantValue: 0.75)
         circlesLayer.circleStrokeColor = NSExpression(forConstantValue: UIColor.white.withAlphaComponent(0.75))
         circlesLayer.circleStrokeWidth = NSExpression(forConstantValue: 2)
@@ -99,7 +98,7 @@ class MapboxTestVC: UIViewController, MGLMapViewDelegate {
         // `MGLSymbolStyleLayer.text` property, cast it as a string.
         let numbersLayer = MGLSymbolStyleLayer(identifier: "clusteredPortsNumbers", source: source)
         numbersLayer.textColor = NSExpression(forConstantValue: UIColor.white)
-        numbersLayer.textFontSize = NSExpression(forConstantValue: NSNumber(value: Double(icon.size.width) / 4))
+        numbersLayer.textFontSize = NSExpression(forConstantValue: NSNumber(value: Double(icon.size.width / 2)))
         numbersLayer.iconAllowsOverlap = NSExpression(forConstantValue: true)
         numbersLayer.text = NSExpression(format: "CAST(point_count, 'NSString')")
         
@@ -130,22 +129,22 @@ class MapboxTestVC: UIViewController, MGLMapViewDelegate {
     
     @objc func handleDoubleTapCluster(sender: UITapGestureRecognizer) {
     
-    guard let source = mapView.style?.source(withIdentifier: "clusteredPorts") as? MGLShapeSource else {
-        return
-    }
-    
-    guard sender.state == .ended else {
-        return
-    }
-    
-    showPopup(false, animated: false)
-    
-    guard let cluster = firstCluster(with: sender) else {
-        return
-    }
+        guard let source = mapView.style?.source(withIdentifier: "clusteredPorts") as? MGLShapeSource else {
+            return
+        }
+        
+        guard sender.state == .ended else {
+            return
+        }
+        
+        showPopup(false, animated: false)
+        
+        guard let cluster = firstCluster(with: sender) else {
+            return
+        }
         
         let zoom = source.zoomLevel(forExpanding: cluster)
-        
+    
         if zoom > 0 {
             mapView.setCenter(cluster.coordinate, zoomLevel: zoom, animated: true)
         }
@@ -153,50 +152,50 @@ class MapboxTestVC: UIViewController, MGLMapViewDelegate {
     
     @objc func handleMapTap(sender: UITapGestureRecognizer) {
     
-    guard let source = mapView.style?.source(withIdentifier: "clusteredPorts") as? MGLShapeSource else {
-    return
-    }
-    
-    guard sender.state == .ended else {
-    return
-    }
-    
-    showPopup(false, animated: false)
-    
-    let point = sender.location(in: sender.view)
-    let width = icon.size.width
-    let rect = CGRect(x: point.x - width / 2, y: point.y - width / 2, width: width, height: width)
-    
-    let features = mapView.visibleFeatures(in: rect, styleLayerIdentifiers: ["clusteredPorts", "ports"])
-    
-    // Pick the first feature (which may be a port or a cluster), ideally selecting
-    // the one nearest nearest one to the touch point.
-    guard let feature = features.first else {
-    return
-    }
-    
-    let description: String
-    let color: UIColor
-    
-    if let cluster = feature as? MGLPointFeatureCluster {
-    // Tapped on a cluster.
-    let children = source.children(of: cluster)
-    description = "Cluster #\(cluster.clusterIdentifier)\n\(children.count) children"
-    color = .blue
-    } else if let featureName = feature.attribute(forKey: "name") as? String?,
-    // Tapped on a port.
-    let portName = featureName {
-    description = portName
-    color = .black
-    } else {
-    // Tapped on a port that is missing a name.
-    description = "No port name"
-    color = .red
-    }
-    
-    popup = popup(at: feature.coordinate, with: description, textColor: color)
-    
-    showPopup(true, animated: true)
+        guard let source = mapView.style?.source(withIdentifier: "clusteredPorts") as? MGLShapeSource else {
+        return
+        }
+        
+        guard sender.state == .ended else {
+        return
+        }
+        
+        showPopup(false, animated: false)
+        
+        let point = sender.location(in: sender.view)
+        let width = icon.size.width
+        let rect = CGRect(x: point.x - width / 2, y: point.y - width / 2, width: width, height: width)
+        
+        let features = mapView.visibleFeatures(in: rect, styleLayerIdentifiers: ["clusteredPorts", "ports"])
+        
+        // Pick the first feature (which may be a port or a cluster), ideally selecting
+        // the one nearest nearest one to the touch point.
+        guard let feature = features.first else {
+        return
+        }
+        
+        let description: String
+        let color: UIColor
+        
+        if let cluster = feature as? MGLPointFeatureCluster {
+        // Tapped on a cluster.
+        let children = source.children(of: cluster)
+        description = "Cluster #\(cluster.clusterIdentifier)\n\(children.count) children"
+        color = .blue
+        } else if let featureName = feature.attribute(forKey: "name") as? String?,
+        // Tapped on a port.
+        let portName = featureName {
+        description = portName
+        color = .black
+        } else {
+        // Tapped on a port that is missing a name.
+        description = "No port name"
+        color = .red
+        }
+        
+        popup = popup(at: feature.coordinate, with: description, textColor: color)
+        
+        showPopup(true, animated: true)
     }
     
     // Convenience method to create a reusable popup view.
