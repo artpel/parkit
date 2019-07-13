@@ -174,12 +174,14 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         loc.actionHandler = { (item: BLTNActionItem) in
             item.manager?.displayActivityIndicator()
             self.getUserLocation()
+            self.setLegend()
             item.manager?.dismissBulletin(animated: true)
             UserDefaults.standard.set(true, forKey: "onboarded")
         }
         
         loc.alternativeHandler = { (item: BLTNActionItem) in
             item.manager?.dismissBulletin(animated: true)
+            self.setLegend()
             UserDefaults.standard.set(true, forKey: "onboarded")
         }
         
@@ -232,12 +234,12 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         
         setViewsAtBottom(vues: [locationButtonView, legendView, findMyRideView])
 
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         
         launchOnboarding()
-        setLegend()
         
     }
     
@@ -247,6 +249,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             bulletinManager.showBulletin(above: self)
         } else {
             mode = UserDefaults.standard.string(forKey: "mode")
+            setLegend()
             self.setCenter()
             if isCoreDataEmpty() {
                 getSpots()
@@ -539,11 +542,11 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             self.tooltipTravelTime.text = "Situé à \(self.formatTime(travelTime)) en \(modeString)"
             self.carte.addOverlay(route.polyline, level: .aboveRoads)
             
-            //setting rect of our mapview to fit the two locations
-            // let rect = route.polyline.boundingMapRect
-            // let recta = rect.insetBy(dx: -1200, dy: -1200)
-            // let rectb = recta.offsetBy(dx: 0, dy: 400)
-            // self.carte.setRegion(MKCoordinateRegion(rectb), animated: true)
+//            setting rect of our mapview to fit the two locations
+//             let rect = route.polyline.boundingMapRect
+//             let recta = rect.insetBy(dx: -1200, dy: -1200)
+//             let rectb = recta.offsetBy(dx: 0, dy: 400)
+//             self.carte.setRegion(MKCoordinateRegion(rectb), animated: true)
         }
     }
     
@@ -707,11 +710,11 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         
         if let annot = view.annotation as? BikeAnnotation {
             selectedAnnotation = annot
-            if annot.type != "Target" {
-                self.showTooltip(annotation: annot)
-            }
+            self.showTooltip(annotation: annot)
+            
          
         }
+        
         
     }
     
@@ -751,7 +754,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if (status == CLAuthorizationStatus.denied) {
-            // The user denied authorization
+            
         } else if (status == CLAuthorizationStatus.authorizedWhenInUse) {
             setCenter()
         }
@@ -759,36 +762,38 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     
     func getUserLocation() {
         
-        locationManager.delegate = self
-        
-        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
             
+            //        if CLLocationManager.locationServicesEnabled() {
+            //
             switch CLLocationManager.authorizationStatus() {
-            case .notDetermined, .restricted, .denied:
+            case .notDetermined, .restricted:
                 locationManager.desiredAccuracy = kCLLocationAccuracyBest
                 locationManager.requestWhenInUseAuthorization()
+            case .denied:
+                print("coucou")
             case .authorizedAlways, .authorizedWhenInUse:
                 locationManager.startUpdatingLocation()
             @unknown default:
                 locationManager.desiredAccuracy = kCLLocationAccuracyBest
                 locationManager.requestWhenInUseAuthorization()
             }
-        } else {
-//            print("Location services are not enabled")
-        }
         
     }
     
     func setCenter() {
         
-        let initialLocation = locationManager.location!
-        let regionRadius: CLLocationDistance = 350
-        let coordinateRegion = MKCoordinateRegion(center: initialLocation.coordinate, latitudinalMeters: regionRadius * 2.0, longitudinalMeters: regionRadius * 2.0)
-        carte.setRegion(coordinateRegion, animated: true)
-        
-        carte.showsUserLocation = true
-        carte.register(BikeMarkerView.self, forAnnotationViewWithReuseIdentifier: "bike")
-        carte.register(BikeClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: "cluster")
+        if let initialLocation = locationManager.location {
+            let regionRadius: CLLocationDistance = 350
+            let coordinateRegion = MKCoordinateRegion(center: initialLocation.coordinate, latitudinalMeters: regionRadius * 2.0, longitudinalMeters: regionRadius * 2.0)
+            carte.setRegion(coordinateRegion, animated: true)
+            
+            carte.showsUserLocation = true
+            carte.register(BikeMarkerView.self, forAnnotationViewWithReuseIdentifier: "bike")
+            carte.register(BikeClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: "cluster")
+        } else {
+            self.getUserLocation()
+        }
         
     }
     
@@ -828,7 +833,8 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             self.view.endEditing(true)
             let annotation = TargetAnnotation("Target", myLocation.coordinate)
             self.targetAnnotation = annotation
-            self.carte.addAnnotation(self.targetAnnotation!)
+            self.carte.addAnnotation(annotation)
+            self.carte.selectAnnotation(annotation, animated: false)
         }
     }
     
