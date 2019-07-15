@@ -32,9 +32,6 @@
 		76836D1B228D632F00906752 /* BikeAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76836D1A228D632F00906752 /* BikeAnnotation.swift */; };
 		76BC98BA229E9D520034BB84 /* TestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BC98B9229E9D520034BB84 /* TestVC.swift */; };
 		76E169302299345400CAF5B1 /* WhereIsMyBike.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 76E1692E2299345400CAF5B1 /* WhereIsMyBike.xcdatamodeld */; };
-		76EC106D22D9DAD30034596B /* MapboxTestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EC106C22D9DAD30034596B /* MapboxTestVC.swift */; };
-		76EC107122D9DB000034596B /* ports.geojson in Resources */ = {isa = PBXBuildFile; fileRef = 76EC106F22D9DB000034596B /* ports.geojson */; };
-		76EC107222D9DB000034596B /* clustering.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 76EC107022D9DB000034596B /* clustering.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,9 +91,6 @@
 		76836D1A228D632F00906752 /* BikeAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BikeAnnotation.swift; path = parkit/Views/BikeAnnotation.swift; sourceTree = SOURCE_ROOT; };
 		76BC98B9229E9D520034BB84 /* TestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestVC.swift; sourceTree = "<group>"; };
 		76E1692F2299345400CAF5B1 /* ParksModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ParksModel.xcdatamodel; sourceTree = "<group>"; };
-		76EC106C22D9DAD30034596B /* MapboxTestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapboxTestVC.swift; sourceTree = "<group>"; };
-		76EC106F22D9DB000034596B /* ports.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ports.geojson; sourceTree = "<group>"; };
-		76EC107022D9DB000034596B /* clustering.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = clustering.xcassets; sourceTree = "<group>"; };
 		7A58761327CBCD06B876AE5D /* Pods_WIMBWidget.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WIMBWidget.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		89264684EF5D271696D8DC24 /* Pods-WhereIsMyBikeUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhereIsMyBikeUI.release.xcconfig"; path = "Pods/Target Support Files/Pods-WhereIsMyBikeUI/Pods-WhereIsMyBikeUI.release.xcconfig"; sourceTree = "<group>"; };
 		8B5400DA02B1CB5F1548ACB3 /* Pods-parkit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-parkit.release.xcconfig"; path = "Pods/Target Support Files/Pods-parkit/Pods-parkit.release.xcconfig"; sourceTree = "<group>"; };
@@ -147,7 +141,6 @@
 		7616473B228D4AC900C1C5D3 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				76EC106C22D9DAD30034596B /* MapboxTestVC.swift */,
 				76BC98B9229E9D520034BB84 /* TestVC.swift */,
 				761E61FC2298A2A50091510D /* SettingsVC.swift */,
 				7616473C228D4AC900C1C5D3 /* MapVC.swift */,
@@ -211,7 +204,6 @@
 		7655E14722661AFF0088DFAA /* parkit */ = {
 			isa = PBXGroup;
 			children = (
-				76EC106E22D9DB000034596B /* clustering */,
 				760A4EC22292D5040045A6BE /* parkit.entitlements */,
 				7655E14822661AFF0088DFAA /* AppDelegate.swift */,
 				7616473B228D4AC900C1C5D3 /* Controllers */,
@@ -224,15 +216,6 @@
 				7612DEA222661D8700B5EC43 /* GoogleService-Info.plist */,
 			);
 			path = parkit;
-			sourceTree = "<group>";
-		};
-		76EC106E22D9DB000034596B /* clustering */ = {
-			isa = PBXGroup;
-			children = (
-				76EC106F22D9DB000034596B /* ports.geojson */,
-				76EC107022D9DB000034596B /* clustering.xcassets */,
-			);
-			path = clustering;
 			sourceTree = "<group>";
 		};
 		81E5E477C9A63B8955278D94 /* Pods */ = {
@@ -366,8 +349,6 @@
 				7655E15522661B010088DFAA /* LaunchScreen.storyboard in Resources */,
 				7612DEA322661D8700B5EC43 /* GoogleService-Info.plist in Resources */,
 				7655E15222661B010088DFAA /* Assets.xcassets in Resources */,
-				76EC107222D9DB000034596B /* clustering.xcassets in Resources */,
-				76EC107122D9DB000034596B /* ports.geojson in Resources */,
 				7655E15022661AFF0088DFAA /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -480,7 +461,6 @@
 				7655E14922661AFF0088DFAA /* AppDelegate.swift in Sources */,
 				76E169302299345400CAF5B1 /* WhereIsMyBike.xcdatamodeld in Sources */,
 				761E61FD2298A2A50091510D /* SettingsVC.swift in Sources */,
-				76EC106D22D9DAD30034596B /* MapboxTestVC.swift in Sources */,
 				7632FF9622D8C68300778AB5 /* TargetMarkerView.swift in Sources */,
 				7632FF9422D8C59600778AB5 /* TargetAnnotation.swift in Sources */,
 				763E2958229A99D8001FD1B5 /* NSCustomPersistentContainer.swift in Sources */,

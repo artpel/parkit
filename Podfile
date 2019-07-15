@@ -19,7 +19,6 @@ target 'parkit' do
     pod 'Spring'
     pod 'GestureRecognizerClosures'
     pod 'BulletinBoard'
-    pod 'Mapbox-iOS-SDK', '~> 5.1'
 
 end
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Qs1-gW-dES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="9pv-A4-QxB">
     <device id="retina6_1" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -669,42 +669,6 @@ ParkIt! ne récolte aucune donnée, et ne sauvegarde l'emplacement de votre deux
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dz6-Iq-jwk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2338" y="-321"/>
-        </scene>
-        <!--Delegate-->
-        <scene sceneID="A0X-e3-4df">
-            <objects>
-                <viewController id="Qs1-gW-dES" customClass="MapboxTestVC" customModule="parkit" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="4oT-ZC-Dpn">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I5b-ih-iGb" customClass="MGLMapView">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="styleURL__" value="mapbox://styles/athur/cjy1akqmo0nqk1cmfdrzjwk9a"/>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <outlet property="delegate" destination="Qs1-gW-dES" id="OE8-xl-xnR"/>
-                                </connections>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="I5b-ih-iGb" firstAttribute="top" secondItem="4oT-ZC-Dpn" secondAttribute="top" id="8Hu-Gx-WwB"/>
-                            <constraint firstItem="I5b-ih-iGb" firstAttribute="leading" secondItem="Zfe-U2-kOE" secondAttribute="leading" id="8cw-TE-Z6J"/>
-                            <constraint firstAttribute="bottom" secondItem="I5b-ih-iGb" secondAttribute="bottom" id="BxZ-lZ-75l"/>
-                            <constraint firstItem="I5b-ih-iGb" firstAttribute="trailing" secondItem="Zfe-U2-kOE" secondAttribute="trailing" id="Q1h-dt-drI"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="Zfe-U2-kOE"/>
-                    </view>
-                    <connections>
-                        <outlet property="mapView" destination="I5b-ih-iGb" id="fOG-oO-0Fv"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="7y7-ol-KLb" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3165.217391304348" y="-357.58928571428572"/>
         </scene>
     </scenes>
     <resources>
