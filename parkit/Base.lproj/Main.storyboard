@@ -280,12 +280,12 @@
                                 </constraints>
                             </view>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="crS-oe-XWs" customClass="SpringView" customModule="Spring">
-                                <rect key="frame" x="146" y="691" width="100" height="29"/>
+                                <rect key="frame" x="146" y="691" width="125" height="29"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WT6-2p-geQ">
-                                        <rect key="frame" x="0.0" y="0.0" width="100" height="29"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="125" height="29"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
-                                        <state key="normal" title="Find my ride">
+                                        <state key="normal" title="Où suis-je garé ?">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
@@ -301,7 +301,7 @@
                                     <constraint firstAttribute="bottom" secondItem="WT6-2p-geQ" secondAttribute="bottom" id="Doq-tA-A0g"/>
                                     <constraint firstItem="WT6-2p-geQ" firstAttribute="leading" secondItem="crS-oe-XWs" secondAttribute="leading" id="I5u-Oz-lOn"/>
                                     <constraint firstAttribute="trailing" secondItem="WT6-2p-geQ" secondAttribute="trailing" id="KgE-X7-J0C"/>
-                                    <constraint firstAttribute="width" constant="100" id="Mu9-h6-cxv"/>
+                                    <constraint firstAttribute="width" constant="125" id="Mu9-h6-cxv"/>
                                     <constraint firstAttribute="trailing" secondItem="WT6-2p-geQ" secondAttribute="trailing" id="ZIz-Wu-7XS"/>
                                     <constraint firstItem="WT6-2p-geQ" firstAttribute="leading" secondItem="crS-oe-XWs" secondAttribute="leading" id="biU-CZ-w3v"/>
                                     <constraint firstItem="WT6-2p-geQ" firstAttribute="top" secondItem="crS-oe-XWs" secondAttribute="top" id="dqy-LH-fcs"/>
@@ -494,6 +494,7 @@
                         <outlet property="addToSiriButton" destination="LWb-e1-gVS" id="s32-Pl-hA5"/>
                         <outlet property="addToSiriView" destination="nKa-4j-YHN" id="mef-e7-Iak"/>
                         <outlet property="carte" destination="0Rb-wT-LEY" id="cBu-ga-vfz"/>
+                        <outlet property="findMyRideButton" destination="WT6-2p-geQ" id="Lyu-8b-MnY"/>
                         <outlet property="findMyRideView" destination="crS-oe-XWs" id="psX-L3-gxx"/>
                         <outlet property="legendDot1View" destination="JFM-0W-jHm" id="Ewy-5j-U1r"/>
                         <outlet property="legendDot2View" destination="eV0-yZ-LRa" id="tkM-Ck-Kjh"/>

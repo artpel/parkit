@@ -47,6 +47,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     @IBOutlet weak var legendLabel2: UILabel!
     @IBOutlet weak var locationButtonView: SpringView!
     @IBOutlet weak var locationButton: UIButton!
+    @IBOutlet weak var findMyRideButton: UIButton!
     @IBOutlet weak var findMyRideView: SpringView!
     @IBOutlet weak var searchIcon: UIButton!
     @IBOutlet weak var searchView: UIView!
@@ -231,6 +232,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         // Constraintes
         
         setViewsAtBottom(vues: [locationButtonView, legendView, findMyRideView])
+                
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -238,6 +240,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         if UserDefaults.standard.string(forKey: "onboarded") != nil {
             mode = UserDefaults.standard.string(forKey: "mode")
             setLegend()
+            updateFindMyRideButtonState()
             self.setCenter()
             if isCoreDataEmpty() {
                 getSpots()
@@ -250,6 +253,19 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
                 bulletinManager.showBulletin(above: self)
                 print("coucou")
             }
+        }
+    }
+    
+    func updateFindMyRideButtonState() {
+        let parkedSpot = getSpotsFromCoreData(mode!, true) as! [NSManagedObject]
+        
+        if parkedSpot == [] {
+            findMyRideButton.isEnabled = false
+            findMyRideView.backgroundColor = UIColor(named: "appDisabledColor")
+            
+        } else {
+            findMyRideButton.isEnabled = true
+            findMyRideView.backgroundColor = UIColor(named: "appMainColor")
         }
     }
     
@@ -487,6 +503,8 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
                 } catch { }
             } catch { }
         }
+        
+        self.updateFindMyRideButtonState()
         
         setSpots(getSpotsFromCoreData(self.mode!))
         
