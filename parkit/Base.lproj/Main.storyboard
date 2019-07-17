@@ -457,6 +457,25 @@
                                     <constraint firstAttribute="height" constant="300" id="ywf-sx-Viq"/>
                                 </constraints>
                             </view>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pYr-fc-ZKA" customClass="SpringView" customModule="Spring">
+                                <rect key="frame" x="10" y="86" width="394" height="30"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Patientez, nous chargeons les emplacements disponibles" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="pLE-Dg-aBK">
+                                        <rect key="frame" x="8" y="0.0" width="378" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                        <color key="textColor" name="appMainColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="pLE-Dg-aBK" secondAttribute="trailing" constant="8" id="0en-eN-Kio"/>
+                                    <constraint firstAttribute="bottom" secondItem="pLE-Dg-aBK" secondAttribute="bottom" id="FX1-iG-LvM"/>
+                                    <constraint firstAttribute="height" constant="30" id="N8w-7a-dkt"/>
+                                    <constraint firstItem="pLE-Dg-aBK" firstAttribute="top" secondItem="pYr-fc-ZKA" secondAttribute="top" id="wFx-Cb-xbZ"/>
+                                    <constraint firstItem="pLE-Dg-aBK" firstAttribute="leading" secondItem="pYr-fc-ZKA" secondAttribute="leading" constant="8" id="za7-SJ-UQF"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -467,11 +486,13 @@
                             <constraint firstItem="LlW-zR-Z8x" firstAttribute="top" secondItem="xgj-7d-BAk" secondAttribute="bottom" constant="8" id="AJG-lZ-lTY"/>
                             <constraint firstItem="ISb-7r-gvK" firstAttribute="width" secondItem="Ozg-lz-OOP" secondAttribute="width" id="Dya-8r-dlm"/>
                             <constraint firstItem="LlW-zR-Z8x" firstAttribute="leading" secondItem="PQr-Ze-W5v" secondAttribute="leading" constant="10" id="GEd-pp-gwr"/>
+                            <constraint firstItem="PQr-Ze-W5v" firstAttribute="trailing" secondItem="pYr-fc-ZKA" secondAttribute="trailing" constant="10" id="HbZ-WJ-QLH"/>
                             <constraint firstItem="xgj-7d-BAk" firstAttribute="leading" secondItem="PQr-Ze-W5v" secondAttribute="leading" constant="10" id="MAI-qT-1iT"/>
                             <constraint firstItem="PQr-Ze-W5v" firstAttribute="trailing" secondItem="LlW-zR-Z8x" secondAttribute="trailing" constant="10" id="Oow-xT-gp1"/>
                             <constraint firstItem="ISb-7r-gvK" firstAttribute="top" secondItem="Ozg-lz-OOP" secondAttribute="bottom" constant="8" id="P8X-mn-tZx"/>
                             <constraint firstItem="PQr-Ze-W5v" firstAttribute="trailing" secondItem="EgH-uw-bDg" secondAttribute="trailing" constant="10" id="Pnt-Xd-Pbq"/>
                             <constraint firstItem="nKa-4j-YHN" firstAttribute="centerY" secondItem="tsR-hK-woN" secondAttribute="centerY" id="Rf0-ns-R3u"/>
+                            <constraint firstItem="pYr-fc-ZKA" firstAttribute="leading" secondItem="PQr-Ze-W5v" secondAttribute="leading" constant="10" id="TPP-hA-9A4"/>
                             <constraint firstItem="PQr-Ze-W5v" firstAttribute="trailing" secondItem="gjJ-gj-1ai" secondAttribute="trailing" constant="10" id="Upc-Gg-QyX"/>
                             <constraint firstItem="nKa-4j-YHN" firstAttribute="centerX" secondItem="tsR-hK-woN" secondAttribute="centerX" id="V06-CX-Fun"/>
                             <constraint firstItem="0Rb-wT-LEY" firstAttribute="trailing" secondItem="PQr-Ze-W5v" secondAttribute="trailing" id="Zsv-uB-MQs"/>
@@ -485,6 +506,7 @@
                             <constraint firstItem="gjJ-gj-1ai" firstAttribute="leading" secondItem="Ozg-lz-OOP" secondAttribute="trailing" constant="8" id="mA4-kY-cCa"/>
                             <constraint firstItem="Ozg-lz-OOP" firstAttribute="leading" secondItem="bP1-eY-Ndf" secondAttribute="trailing" constant="8" id="mCn-PF-Fwh"/>
                             <constraint firstItem="crS-oe-XWs" firstAttribute="leading" secondItem="xgj-7d-BAk" secondAttribute="trailing" constant="8" id="oJi-Bn-n21"/>
+                            <constraint firstItem="pYr-fc-ZKA" firstAttribute="top" secondItem="bP1-eY-Ndf" secondAttribute="bottom" constant="8" id="pW4-XK-Bxi"/>
                             <constraint firstItem="PQr-Ze-W5v" firstAttribute="bottom" secondItem="LlW-zR-Z8x" secondAttribute="bottom" constant="10" id="wzP-kE-Tfs"/>
                             <constraint firstItem="Ozg-lz-OOP" firstAttribute="top" secondItem="PQr-Ze-W5v" secondAttribute="top" constant="5" id="zXC-Mj-neR"/>
                         </constraints>
@@ -502,6 +524,7 @@
                         <outlet property="legendLabel2" destination="kM0-9I-Tp4" id="OJ7-od-8W3"/>
                         <outlet property="legendView" destination="xgj-7d-BAk" id="f58-Pr-Z74"/>
                         <outlet property="loadingIndicator" destination="dXI-yC-Oha" id="97B-hn-mF0"/>
+                        <outlet property="loadingLabelView" destination="pYr-fc-ZKA" id="8x2-9a-Au8"/>
                         <outlet property="loadingView" destination="bP1-eY-Ndf" id="Q7T-fa-sHA"/>
                         <outlet property="locationButton" destination="tkx-kZ-LAi" id="T6a-P5-BlP"/>
                         <outlet property="locationButtonView" destination="EgH-uw-bDg" id="Hfj-ND-g1v"/>
@@ -527,7 +550,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="749.60000000000002" y="-320.68965517241384"/>
+            <point key="canvasLocation" x="749.27536231884062" y="-320.75892857142856"/>
         </scene>
         <!--SettingsVC-->
         <scene sceneID="Muw-1T-3IQ">

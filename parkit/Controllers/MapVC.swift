@@ -38,6 +38,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     @IBOutlet weak var tooltipSizeView: UIView!
     @IBOutlet weak var loadingView: UIView!
     @IBOutlet weak var loadingIndicator: NVActivityIndicatorView!
+    @IBOutlet weak var loadingLabelView: SpringView!
     @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var settingsView: UIView!
     @IBOutlet weak var legendView: SpringView!
@@ -210,8 +211,10 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         settingsView.roundView(8, true)
         findMyRideView.roundView(8, true)
         legendView.roundView(8, true)
+        loadingLabelView.roundView(8, true)
         
         loadingView.isHidden = true
+        loadingLabelView.isHidden = true
         tooltipItinerary.isHidden = true
         resultView.isHidden = true
         addToSiriView.isHidden = true
@@ -232,7 +235,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         // Constraintes
         
         setViewsAtBottom(vues: [locationButtonView, legendView, findMyRideView])
-                
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -308,9 +311,11 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         switch status {
         case "on":
             loadingView.isHidden = false
+            loadingLabelView.isHidden = false
             loadingIndicator.startAnimating()
         case "off":
             loadingView.isHidden = true
+            loadingLabelView.isHidden = true
             loadingIndicator.stopAnimating()
         default:
             break
