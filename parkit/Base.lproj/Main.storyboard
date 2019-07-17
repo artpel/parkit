@@ -288,6 +288,9 @@
                                         <state key="normal" title="Find my ride">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <state key="disabled">
+                                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
                                         <connections>
                                             <action selector="findMyRide:" destination="9pv-A4-QxB" eventType="touchUpInside" id="qiX-di-ayv"/>
                                         </connections>
@@ -494,6 +497,7 @@
                         <outlet property="addToSiriButton" destination="LWb-e1-gVS" id="s32-Pl-hA5"/>
                         <outlet property="addToSiriView" destination="nKa-4j-YHN" id="mef-e7-Iak"/>
                         <outlet property="carte" destination="0Rb-wT-LEY" id="cBu-ga-vfz"/>
+                        <outlet property="findMyRideButton" destination="WT6-2p-geQ" id="Avm-xw-Qxd"/>
                         <outlet property="findMyRideView" destination="crS-oe-XWs" id="psX-L3-gxx"/>
                         <outlet property="legendDot1View" destination="JFM-0W-jHm" id="Ewy-5j-U1r"/>
                         <outlet property="legendDot2View" destination="eV0-yZ-LRa" id="tkM-Ck-Kjh"/>
