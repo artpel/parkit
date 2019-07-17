@@ -10,6 +10,8 @@ import UIKit
 import MapKit
 import CoreLocation
 import CoreData
+//import IntentsUI
+//import Intents
 import Alamofire
 import SwiftyJSON
 import NVActivityIndicatorView
@@ -46,7 +48,6 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     @IBOutlet weak var locationButtonView: SpringView!
     @IBOutlet weak var locationButton: UIButton!
     @IBOutlet weak var findMyRideView: SpringView!
-    @IBOutlet weak var findMyRideButton: UIButton!
     @IBOutlet weak var searchIcon: UIButton!
     @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var searchField: UITextField!
@@ -230,7 +231,6 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         // Constraintes
         
         setViewsAtBottom(vues: [locationButtonView, legendView, findMyRideView])
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -250,21 +250,6 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
                 bulletinManager.showBulletin(above: self)
                 print("coucou")
             }
-        }
-        
-        updateFindMyRideButtonState()
-    }
-    
-    func updateFindMyRideButtonState() {
-        let parkedSpot = getSpotsFromCoreData(mode!, true) as! [NSManagedObject]
-        
-        if parkedSpot == [] {
-            findMyRideView.backgroundColor = UIColor(named: "appColorDisabled")
-            findMyRideButton.isEnabled = false
-            
-        } else {
-            findMyRideView.backgroundColor = UIColor(named: "appMainColor")
-            findMyRideButton.isEnabled = true
         }
     }
     
@@ -502,8 +487,6 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
                 } catch { }
             } catch { }
         }
-        
-        updateFindMyRideButtonState()
         
         setSpots(getSpotsFromCoreData(self.mode!))
         
