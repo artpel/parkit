@@ -19,6 +19,7 @@ target 'parkit' do
     pod 'Spring'
     pod 'GestureRecognizerClosures'
     pod 'BulletinBoard'
+    pod 'Analytics', '~> 3.0'
 
 end
 

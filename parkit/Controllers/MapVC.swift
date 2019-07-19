@@ -21,6 +21,7 @@ import FontAwesome_swift
 import Spring
 import GestureRecognizerClosures
 import BLTNBoard
+import Analytics
 
 class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, MKLocalSearchCompleterDelegate, UITextFieldDelegate {
     
@@ -76,6 +77,10 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             showTooltip(annotation: annotation)
             let myLocation = CLLocation(latitude: lat!, longitude: long!)
             calculateInterary(destination: myLocation.coordinate)
+            
+            SEGAnalytics.shared().track("Find my ride", properties: [
+                "mode": UserDefaults.standard.string(forKey: "mode")
+                ])
         } else {
             
             let alert = UIAlertController(title: "Aucun emplacement enregistré", message: "Vous devez d'abord garer votre deux-roues pour pouvoir le retrouver !", preferredStyle: UIAlertController.Style.alert)
@@ -523,6 +528,11 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         self.deleteRoute(self.carte)
         self.tooltipItinerary.isHidden = true
         self.setViewsAtBottom(vues: [self.locationButtonView, self.legendView, self.findMyRideView])
+        
+        SEGAnalytics.shared().track("Ride parked", properties: [
+            "mode": self.mode!,
+            "isParked": on
+            ])
     }
     
     // Itinerary

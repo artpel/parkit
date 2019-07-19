@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import FontAwesome_swift
+import Analytics
 
 class SettingsVC: UIViewController {
     
@@ -19,10 +20,19 @@ class SettingsVC: UIViewController {
         switch sender.selectedSegmentIndex{
         case 0:
             UserDefaults.standard.set("bike", forKey: "mode")
+            SEGAnalytics.shared().track("Mode changed", properties: [
+                "mode": "bike"
+                ])
         case 1:
             UserDefaults.standard.set("moto", forKey: "mode")
+            SEGAnalytics.shared().track("Mode changed", properties: [
+                "mode": "moto"
+                ])
         default:
             UserDefaults.standard.set("bike", forKey: "mode")
+            SEGAnalytics.shared().track("Mode changed", properties: [
+                "mode": "bike"
+                ])
         }
         
         resetAllRecords(in: "Spot")
@@ -69,6 +79,9 @@ class SettingsVC: UIViewController {
             {
                 try context.execute(deleteRequest)
                 try context.save()
+                SEGAnalytics.shared().track("Core Data reset", properties: [
+                    "mode": UserDefaults.standard.string(forKey: "mode")
+                    ])
             }
         catch
             {

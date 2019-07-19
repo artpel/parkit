@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import Firebase
+import Analytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,6 +19,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         FirebaseApp.configure()
+        
+        
+        let config = SEGAnalyticsConfiguration(writeKey: "qA1M0vzRM4NJDwVeIEsGPffAPb0oAXtc")
+        SEGAnalytics.setup(with: config)
         
         UserDefaults.standard.set(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
         
