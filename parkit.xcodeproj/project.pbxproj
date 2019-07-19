@@ -525,7 +525,7 @@
 			};
 			name = Debug;
 		};
-		763E2975229ABEDD001FD1B5 /* Release */ = {
+		763E2975229ABEDD001FD1B5 /* App Store */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1240624A0176C8C804891B0D /* Pods-WIMBWidget.release.xcconfig */;
 			buildSettings = {
@@ -545,7 +545,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
-			name = Release;
+			name = "App Store";
 		};
 		7655E15722661B010088DFAA /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -609,7 +609,7 @@
 			};
 			name = Debug;
 		};
-		7655E15822661B010088DFAA /* Release */ = {
+		7655E15822661B010088DFAA /* App Store */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -663,7 +663,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
-			name = Release;
+			name = "App Store";
 		};
 		7655E15A22661B010088DFAA /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -686,7 +686,7 @@
 			};
 			name = Debug;
 		};
-		7655E15B22661B010088DFAA /* Release */ = {
+		7655E15B22661B010088DFAA /* App Store */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8B5400DA02B1CB5F1548ACB3 /* Pods-parkit.release.xcconfig */;
 			buildSettings = {
@@ -705,7 +705,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
-			name = Release;
+			name = "App Store";
 		};
 /* End XCBuildConfiguration section */
 
@@ -714,28 +714,28 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				763E2974229ABEDD001FD1B5 /* Debug */,
-				763E2975229ABEDD001FD1B5 /* Release */,
+				763E2975229ABEDD001FD1B5 /* App Store */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = "App Store";
 		};
 		7655E14022661AFF0088DFAA /* Build configuration list for PBXProject "parkit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7655E15722661B010088DFAA /* Debug */,
-				7655E15822661B010088DFAA /* Release */,
+				7655E15822661B010088DFAA /* App Store */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = "App Store";
 		};
 		7655E15922661B010088DFAA /* Build configuration list for PBXNativeTarget "parkit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7655E15A22661B010088DFAA /* Debug */,
-				7655E15B22661B010088DFAA /* Release */,
+				7655E15B22661B010088DFAA /* App Store */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = "App Store";
 		};
 /* End XCConfigurationList section */
 

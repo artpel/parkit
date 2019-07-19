@@ -698,12 +698,20 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         
         func openInGMaps() {
             
+            let travelModeString:String?
+            
+            if mode == "bike" {
+                 travelModeString = "&travelmode=bicycling"
+            } else {
+                travelModeString = "&travelmode=driving"
+            }
+            
             let urlApi = "https://www.google.com/maps/dir/?api=1"
             
             let destination = "&destination="
-            let travelModeString = "&travelmode=bicycling"
             
-            let fullUrl = "\(urlApi)\(destination)\(latlon)\(travelModeString)"
+            
+            let fullUrl = "\(urlApi)\(destination)\(latlon)\(travelModeString!)"
             
             UIApplication.shared.open(URL(string:fullUrl)!)
             
