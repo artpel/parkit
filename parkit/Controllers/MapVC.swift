@@ -443,7 +443,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             "version": versionNumber
         ]
         
-        let url = "https://parkit-server.herokuapp.com/getParks?mode=\(mode!)"
+        let url = "https://parkit-preprod.herokuapp.com/getParks?mode=\(mode!)"
         
         self.toogleActivityIndicator(status: "on")
         
