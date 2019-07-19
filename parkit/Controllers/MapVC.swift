@@ -254,9 +254,10 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             if UserDefaults.standard.string(forKey: "onboarded") == nil {
                 bulletinManager.backgroundViewStyle = .blurredDark
                 bulletinManager.showBulletin(above: self)
-                print("coucou")
+                print("already onboarded")
             }
         }
+        
     }
     
     func updateFindMyRideButtonState() {
@@ -390,8 +391,8 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             let type = subJson["type"].string!
             let address = subJson["address"].string!
             let size = subJson["size"].double!
-            let lat = Double(subJson["coordinates"]["lat"].string!)!
-            let long = Double(subJson["coordinates"]["lon"].string!)!
+            let lat = subJson["coordinates"]["lat"].double!
+            let long = subJson["coordinates"]["lon"].double!
             let recordId = subJson["recordid"].string!
             
             park.setValue(type, forKey: "type")
@@ -436,11 +437,17 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     
     func getSpots() {
         
+        let versionNumber = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+        
+        let headers: HTTPHeaders = [
+            "version": versionNumber
+        ]
+        
         let url = "https://parkit-server.herokuapp.com/getParks?mode=\(mode!)"
         
         self.toogleActivityIndicator(status: "on")
         
-        Alamofire.request(url).responseJSON { (responseData) -> Void in
+        Alamofire.request(url, headers: headers).responseJSON { (responseData) -> Void in
             if let response = responseData.result.value {
                 self.saveInCoreData(data: JSON(response))
             } else { }
