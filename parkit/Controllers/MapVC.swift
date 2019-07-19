@@ -174,6 +174,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             item.manager?.displayActivityIndicator()
             UserDefaults.standard.set("moto", forKey: "mode")
             self.mode = UserDefaults.standard.string(forKey: "mode")
+           
             self.getSpots()
             item.manager?.displayNextItem()
         }
@@ -182,12 +183,20 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             item.manager?.displayActivityIndicator()
             self.getUserLocation()
             self.setLegend()
+            SEGAnalytics.shared().track("Onboarded finished", properties: [
+                "mode": UserDefaults.standard.string(forKey: "mode"),
+                "location": true
+                ])
             item.manager?.dismissBulletin(animated: true)
             UserDefaults.standard.set(true, forKey: "onboarded")
         }
         
         loc.alternativeHandler = { (item: BLTNActionItem) in
             item.manager?.dismissBulletin(animated: true)
+            SEGAnalytics.shared().track("Onboarded finished", properties: [
+                "mode": UserDefaults.standard.string(forKey: "mode"),
+                "location": false
+                ])
             self.setLegend()
             UserDefaults.standard.set(true, forKey: "onboarded")
         }
@@ -711,6 +720,18 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             } else {
                 mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving])
             }
+            
+            SEGAnalytics.shared().track("Opened in Maps", properties: [
+                "mode": UserDefaults.standard.string(forKey: "mode"),
+                "provider": "apple",
+                "place": annotation.address,
+                "type": annotation.type,
+                "size": annotation.size,
+                "park": annotation.park,
+                "latitude": annotation.coordinate.latitude,
+                "longitude": annotation.coordinate.longitude
+                ])
+            
         }
         
         func openInGMaps() {
@@ -732,11 +753,23 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             
             UIApplication.shared.open(URL(string:fullUrl)!)
             
+            SEGAnalytics.shared().track("Opened in Maps", properties: [
+                "mode": UserDefaults.standard.string(forKey: "mode"),
+                "provider": "google",
+                "place": annotation.address,
+                "type": annotation.type,
+                "size": annotation.size,
+                "park": annotation.park,
+                "latitude": annotation.coordinate.latitude,
+                "longitude": annotation.coordinate.longitude
+                ])
+            
         }
         
         if let name = UserDefaults.standard.string(forKey: "mapsProvider") {
             if name == "google" {
                 openInGMaps()
+                
             } else {
                 openInAppMaps()
             }
@@ -754,7 +787,15 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             selectedAnnotation = annot
             self.showTooltip(annotation: annot)
             
-         
+            SEGAnalytics.shared().track("Spot selected", properties: [
+                "mode": UserDefaults.standard.string(forKey: "mode"),
+                "place": annot.address,
+                "type": annot.type,
+                "size": annot.size,
+                "park": annot.park,
+                "latitude": annot.coordinate.latitude,
+                "longitude": annot.coordinate.longitude
+                ])
         }
         
         
@@ -875,6 +916,12 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             self.targetAnnotation = annotation
             self.carte.addAnnotation(annotation)
             self.carte.selectAnnotation(annotation, animated: false)
+            SEGAnalytics.shared().track("Search result selected", properties: [
+                "mode": UserDefaults.standard.string(forKey: "mode"),
+                "place": response?.mapItems[0].name,
+                "latitude": coordinate!.latitude,
+                "longitude": coordinate!.longitude,
+                ])
         }
     }
     
