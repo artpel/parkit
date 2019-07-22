@@ -10,7 +10,6 @@ import UIKit
 import CoreData
 import FontAwesome_swift
 import Analytics
-import Sentry
 
 class SettingsVC: UIViewController {
     
@@ -37,7 +36,6 @@ class SettingsVC: UIViewController {
         }
         
         resetAllRecords(in: "Spot")
-        Client.shared?.crash()
         
     }
     @IBOutlet weak var modeSelector: UISegmentedControl!

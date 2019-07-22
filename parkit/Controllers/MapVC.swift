@@ -10,8 +10,6 @@ import UIKit
 import MapKit
 import CoreLocation
 import CoreData
-//import IntentsUI
-//import Intents
 import Alamofire
 import SwiftyJSON
 import NVActivityIndicatorView
@@ -453,11 +451,13 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         
         let versionNumber = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
         
+        let env = Bundle.main.infoDictionary!["API_ENDPOINT"] as! String
+        
         let headers: HTTPHeaders = [
             "version": versionNumber
         ]
         
-        let url = "https://parkit-server.herokuapp.com/getParks?mode=\(mode!)"
+        let url = "\(env)/getParks?mode=\(mode!)"
         
         self.toogleActivityIndicator(status: "on")
         

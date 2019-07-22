@@ -688,11 +688,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D5A79A1E8221D9176B7F24FD /* Pods-parkit.debug.xcconfig */;
 			buildSettings = {
+				API_ENDPOINT = "https://parkit-preprod.herokuapp.com";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = parkit/parkit.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = LKH8T246BV;
+				ENV = debug;
 				INFOPLIST_FILE = parkit/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -710,10 +712,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8B5400DA02B1CB5F1548ACB3 /* Pods-parkit.release.xcconfig */;
 			buildSettings = {
+				API_ENDPOINT = "https://parkit-server.herokuapp.com";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = parkit/parkit.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LKH8T246BV;
+				ENV = prod;
 				INFOPLIST_FILE = parkit/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = (

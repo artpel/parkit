@@ -17,8 +17,8 @@ target 'parkit' do
     pod 'FontAwesome.swift'
     pod 'DeckTransition'
     pod 'Spring'
-    pod 'GestureRecognizerClosures'
     pod 'BulletinBoard'
+    pod 'GestureRecognizerClosures'
     pod 'Analytics', '~> 3.0'
     pod 'Sentry', :git => 'https://github.com/getsentry/sentry-cocoa.git', :tag => '4.3.1'
 
