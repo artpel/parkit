@@ -405,8 +405,8 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             let type = subJson["type"].string!
             let address = subJson["address"].string!
             let size = subJson["size"].double!
-            let lat = subJson["coordinates"]["lat"].double!
-            let long = subJson["coordinates"]["lon"].double!
+            let lat = subJson["latitude"].double!
+            let long = subJson["longitude"].double!
             let recordId = subJson["recordid"].string!
             
             park.setValue(type, forKey: "type")
@@ -457,7 +457,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             "version": versionNumber
         ]
         
-        let url = "https://parkit-preprod.herokuapp.com/getParks?mode=\(mode!)"
+        let url = "https://parkit-server.herokuapp.com/getParks?mode=\(mode!)"
         
         self.toogleActivityIndicator(status: "on")
         

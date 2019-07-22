@@ -10,6 +10,8 @@ import UIKit
 import CoreData
 import Firebase
 import Analytics
+import Sentry
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,8 +20,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        FirebaseApp.configure()
+        // Create a Sentry client and start crash handler
+        do {
+            Client.shared = try Client(dsn: "https://5c1df09a0cec45f6aed363e4d8077dd4@sentry.io/1468256")
+            try Client.shared?.startCrashHandler()
+        } catch let error {
+            print("\(error)")
+        }
         
+        FirebaseApp.configure()
         
         let config = SEGAnalyticsConfiguration(writeKey: "qA1M0vzRM4NJDwVeIEsGPffAPb0oAXtc")
         SEGAnalytics.setup(with: config)
