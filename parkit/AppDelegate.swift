@@ -12,7 +12,6 @@ import Firebase
 import Analytics
 import Sentry
 
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -22,7 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Create a Sentry client and start crash handler
         do {
-            Client.shared = try Client(dsn: "https://5c1df09a0cec45f6aed363e4d8077dd4@sentry.io/1468256")
+            Client.shared = try Client(options: [
+                "dsn": "https://5c1df09a0cec45f6aed363e4d8077dd4@sentry.io/1468256",
+                "environment": "prod"])
             try Client.shared?.startCrashHandler()
         } catch let error {
             print("\(error)")

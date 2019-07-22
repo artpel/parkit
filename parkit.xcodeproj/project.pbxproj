@@ -261,7 +261,8 @@
 				7655E14322661AFF0088DFAA /* Resources */,
 				4AA646BD3B13E72084237684 /* [CP] Embed Pods Frameworks */,
 				7659A5F82299FDC400F9A173 /* Embed App Extensions */,
-				76C2537E22AA9A2500F45536 /* ShellScript */,
+				76C2537E22AA9A2500F45536 /* Run Script */,
+				767BB8B722E60E3C004D0B5A /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -370,7 +371,24 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-parkit/Pods-parkit-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		76C2537E22AA9A2500F45536 /* ShellScript */ = {
+		767BB8B722E60E3C004D0B5A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which sentry-cli >/dev/null; then\nexport SENTRY_ORG=parkit\nexport SENTRY_PROJECT=parkit\nexport SENTRY_AUTH_TOKEN=77d5aee5b6e84efa9ef9a248cf80c1be033d4a7d614d4c218988474aa62bc85d\nERROR=$(sentry-cli upload-dif \"$DWARF_DSYM_FOLDER_PATH\" 2>&1 >/dev/null)\nif [ ! $? -eq 0 ]; then\necho \"warning: sentry-cli - $ERROR\"\nfi\nelse\necho \"warning: sentry-cli not installed, download from https://github.com/getsentry/sentry-cli/releases\"\nfi\n";
+		};
+		76C2537E22AA9A2500F45536 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -380,6 +398,7 @@
 			inputPaths = (
 				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
 			);
+			name = "Run Script";
 			outputFileListPaths = (
 			);
 			outputPaths = (
@@ -582,7 +601,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -672,6 +691,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = parkit/parkit.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = LKH8T246BV;
 				INFOPLIST_FILE = parkit/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
