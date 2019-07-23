@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		0089DB3D9BEA001EF2B80BA0 /* Pods_WIMBWidget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A58761327CBCD06B876AE5D /* Pods_WIMBWidget.framework */; };
 		03ECA07126DDA87CACB42291 /* Pods_parkit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A90CF55D8A3077B6B10B298 /* Pods_parkit.framework */; };
-		7612DEA322661D8700B5EC43 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7612DEA222661D8700B5EC43 /* GoogleService-Info.plist */; };
 		7616473D228D4AC900C1C5D3 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7616473C228D4AC900C1C5D3 /* MapVC.swift */; };
 		76175FE82299DC8600605C4B /* ResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76175FE72299DC8600605C4B /* ResultCell.swift */; };
 		761E61FD2298A2A50091510D /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761E61FC2298A2A50091510D /* SettingsVC.swift */; };
@@ -30,7 +29,10 @@
 		7655E15522661B010088DFAA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7655E15322661B010088DFAA /* LaunchScreen.storyboard */; };
 		767373E8228D9B0000A6AEC0 /* BikeMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767373E7228D9B0000A6AEC0 /* BikeMarkerView.swift */; };
 		76836D1B228D632F00906752 /* BikeAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76836D1A228D632F00906752 /* BikeAnnotation.swift */; };
+		76CBA89622E78270004E1A2E /* parkitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CBA89522E78270004E1A2E /* parkitTests.swift */; };
 		76E169302299345400CAF5B1 /* WhereIsMyBike.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 76E1692E2299345400CAF5B1 /* WhereIsMyBike.xcdatamodeld */; };
+		76FFBDCE22E7971C00257F0D /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FFBDCD22E7971C00257F0D /* Animations.swift */; };
+		76FFBDD022E79B4400257F0D /* BulletinManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FFBDCF22E79B4400257F0D /* BulletinManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +42,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 763E2965229ABEDD001FD1B5;
 			remoteInfo = WIMBWidget;
+		};
+		76CBA89822E78270004E1A2E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7655E13D22661AFF0088DFAA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7655E14422661AFF0088DFAA;
+			remoteInfo = parkit;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -62,7 +71,6 @@
 		184D8CA71A6FEE9D02B9C0E5 /* Pods-WIMBWidget.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WIMBWidget.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WIMBWidget/Pods-WIMBWidget.debug.xcconfig"; sourceTree = "<group>"; };
 		222AF1CEE759EB63365E8987 /* Pods-WhereIsMyBike.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhereIsMyBike.release.xcconfig"; path = "Pods/Target Support Files/Pods-WhereIsMyBike/Pods-WhereIsMyBike.release.xcconfig"; sourceTree = "<group>"; };
 		760A4EC22292D5040045A6BE /* parkit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = parkit.entitlements; sourceTree = "<group>"; };
-		7612DEA222661D8700B5EC43 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7616473C228D4AC900C1C5D3 /* MapVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
 		76175FE72299DC8600605C4B /* ResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultCell.swift; sourceTree = "<group>"; };
 		761E61FC2298A2A50091510D /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
@@ -88,7 +96,12 @@
 		7659A5E32299FDC400F9A173 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
 		767373E7228D9B0000A6AEC0 /* BikeMarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BikeMarkerView.swift; sourceTree = "<group>"; };
 		76836D1A228D632F00906752 /* BikeAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BikeAnnotation.swift; path = parkit/Views/BikeAnnotation.swift; sourceTree = SOURCE_ROOT; };
+		76CBA89322E78270004E1A2E /* parkitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = parkitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		76CBA89522E78270004E1A2E /* parkitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = parkitTests.swift; sourceTree = "<group>"; };
+		76CBA89722E78270004E1A2E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		76E1692F2299345400CAF5B1 /* ParksModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ParksModel.xcdatamodel; sourceTree = "<group>"; };
+		76FFBDCD22E7971C00257F0D /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
+		76FFBDCF22E79B4400257F0D /* BulletinManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BulletinManager.swift; sourceTree = "<group>"; };
 		7A58761327CBCD06B876AE5D /* Pods_WIMBWidget.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WIMBWidget.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		89264684EF5D271696D8DC24 /* Pods-WhereIsMyBikeUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhereIsMyBikeUI.release.xcconfig"; path = "Pods/Target Support Files/Pods-WhereIsMyBikeUI/Pods-WhereIsMyBikeUI.release.xcconfig"; sourceTree = "<group>"; };
 		8B5400DA02B1CB5F1548ACB3 /* Pods-parkit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-parkit.release.xcconfig"; path = "Pods/Target Support Files/Pods-parkit/Pods-parkit.release.xcconfig"; sourceTree = "<group>"; };
@@ -116,6 +129,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				03ECA07126DDA87CACB42291 /* Pods_parkit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		76CBA89022E78270004E1A2E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -183,6 +203,7 @@
 			children = (
 				7655E14722661AFF0088DFAA /* parkit */,
 				763E2969229ABEDD001FD1B5 /* WIMBWidget */,
+				76CBA89422E78270004E1A2E /* parkitTests */,
 				7655E14622661AFF0088DFAA /* Products */,
 				81E5E477C9A63B8955278D94 /* Pods */,
 				178314D1568A93BDF7E220A5 /* Frameworks */,
@@ -194,6 +215,7 @@
 			children = (
 				7655E14522661AFF0088DFAA /* parkit.app */,
 				763E2966229ABEDD001FD1B5 /* WIMBWidget.appex */,
+				76CBA89322E78270004E1A2E /* parkitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -201,8 +223,10 @@
 		7655E14722661AFF0088DFAA /* parkit */ = {
 			isa = PBXGroup;
 			children = (
+				76FFBDCF22E79B4400257F0D /* BulletinManager.swift */,
 				760A4EC22292D5040045A6BE /* parkit.entitlements */,
 				7655E14822661AFF0088DFAA /* AppDelegate.swift */,
+				76FFBDCD22E7971C00257F0D /* Animations.swift */,
 				7616473B228D4AC900C1C5D3 /* Controllers */,
 				7616473E228D4AD800C1C5D3 /* Models */,
 				7616473F228D4AD800C1C5D3 /* Views */,
@@ -210,9 +234,17 @@
 				7655E14E22661AFF0088DFAA /* Main.storyboard */,
 				7655E15322661B010088DFAA /* LaunchScreen.storyboard */,
 				7655E15622661B010088DFAA /* Info.plist */,
-				7612DEA222661D8700B5EC43 /* GoogleService-Info.plist */,
 			);
 			path = parkit;
+			sourceTree = "<group>";
+		};
+		76CBA89422E78270004E1A2E /* parkitTests */ = {
+			isa = PBXGroup;
+			children = (
+				76CBA89522E78270004E1A2E /* parkitTests.swift */,
+				76CBA89722E78270004E1A2E /* Info.plist */,
+			);
+			path = parkitTests;
 			sourceTree = "<group>";
 		};
 		81E5E477C9A63B8955278D94 /* Pods */ = {
@@ -261,7 +293,6 @@
 				7655E14322661AFF0088DFAA /* Resources */,
 				4AA646BD3B13E72084237684 /* [CP] Embed Pods Frameworks */,
 				7659A5F82299FDC400F9A173 /* Embed App Extensions */,
-				76C2537E22AA9A2500F45536 /* Run Script */,
 				767BB8B722E60E3C004D0B5A /* ShellScript */,
 			);
 			buildRules = (
@@ -274,13 +305,31 @@
 			productReference = 7655E14522661AFF0088DFAA /* parkit.app */;
 			productType = "com.apple.product-type.application";
 		};
+		76CBA89222E78270004E1A2E /* parkitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 76CBA89A22E78270004E1A2E /* Build configuration list for PBXNativeTarget "parkitTests" */;
+			buildPhases = (
+				76CBA88F22E78270004E1A2E /* Sources */,
+				76CBA89022E78270004E1A2E /* Frameworks */,
+				76CBA89122E78270004E1A2E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				76CBA89922E78270004E1A2E /* PBXTargetDependency */,
+			);
+			name = parkitTests;
+			productName = parkitTests;
+			productReference = 76CBA89322E78270004E1A2E /* parkitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		7655E13D22661AFF0088DFAA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1020;
+				LastSwiftUpdateCheck = 1030;
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "Arthur Péligry";
 				TargetAttributes = {
@@ -309,6 +358,10 @@
 							};
 						};
 					};
+					76CBA89222E78270004E1A2E = {
+						CreatedOnToolsVersion = 10.3;
+						TestTargetID = 7655E14422661AFF0088DFAA;
+					};
 				};
 			};
 			buildConfigurationList = 7655E14022661AFF0088DFAA /* Build configuration list for PBXProject "parkit" */;
@@ -327,6 +380,7 @@
 			targets = (
 				7655E14422661AFF0088DFAA /* parkit */,
 				763E2965229ABEDD001FD1B5 /* WIMBWidget */,
+				76CBA89222E78270004E1A2E /* parkitTests */,
 			);
 		};
 /* End PBXProject section */
@@ -345,9 +399,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				7655E15522661B010088DFAA /* LaunchScreen.storyboard in Resources */,
-				7612DEA322661D8700B5EC43 /* GoogleService-Info.plist in Resources */,
 				7655E15222661B010088DFAA /* Assets.xcassets in Resources */,
 				7655E15022661AFF0088DFAA /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		76CBA89122E78270004E1A2E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -387,25 +447,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if which sentry-cli >/dev/null; then\nexport SENTRY_ORG=parkit\nexport SENTRY_PROJECT=parkit\nexport SENTRY_AUTH_TOKEN=77d5aee5b6e84efa9ef9a248cf80c1be033d4a7d614d4c218988474aa62bc85d\nERROR=$(sentry-cli upload-dif \"$DWARF_DSYM_FOLDER_PATH\" 2>&1 >/dev/null)\nif [ ! $? -eq 0 ]; then\necho \"warning: sentry-cli - $ERROR\"\nfi\nelse\necho \"warning: sentry-cli not installed, download from https://github.com/getsentry/sentry-cli/releases\"\nfi\n";
-		};
-		76C2537E22AA9A2500F45536 /* Run Script */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
-			);
-			name = "Run Script";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/run\"\n";
 		};
 		7FDAFB8231C836FD30881B75 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -468,8 +509,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76FFBDD022E79B4400257F0D /* BulletinManager.swift in Sources */,
 				767373E8228D9B0000A6AEC0 /* BikeMarkerView.swift in Sources */,
 				764199692295B23900801A9A /* BikeClusterAnnotationView.swift in Sources */,
+				76FFBDCE22E7971C00257F0D /* Animations.swift in Sources */,
 				76175FE82299DC8600605C4B /* ResultCell.swift in Sources */,
 				76836D1B228D632F00906752 /* BikeAnnotation.swift in Sources */,
 				7616473D228D4AC900C1C5D3 /* MapVC.swift in Sources */,
@@ -482,6 +525,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		76CBA88F22E78270004E1A2E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				76CBA89622E78270004E1A2E /* parkitTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -489,6 +540,11 @@
 			isa = PBXTargetDependency;
 			target = 763E2965229ABEDD001FD1B5 /* WIMBWidget */;
 			targetProxy = 763E2970229ABEDD001FD1B5 /* PBXContainerItemProxy */;
+		};
+		76CBA89922E78270004E1A2E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7655E14422661AFF0088DFAA /* parkit */;
+			targetProxy = 76CBA89822E78270004E1A2E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -731,6 +787,49 @@
 			};
 			name = Release;
 		};
+		76CBA89B22E78270004E1A2E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = LKH8T246BV;
+				INFOPLIST_FILE = parkitTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = Foxmob.parkitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/parkit.app/parkit";
+			};
+			name = Debug;
+		};
+		76CBA89C22E78270004E1A2E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LKH8T246BV;
+				INFOPLIST_FILE = parkitTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = Foxmob.parkitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/parkit.app/parkit";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -757,6 +856,15 @@
 			buildConfigurations = (
 				7655E15A22661B010088DFAA /* Debug */,
 				7655E15B22661B010088DFAA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		76CBA89A22E78270004E1A2E /* Build configuration list for PBXNativeTarget "parkitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				76CBA89B22E78270004E1A2E /* Debug */,
+				76CBA89C22E78270004E1A2E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

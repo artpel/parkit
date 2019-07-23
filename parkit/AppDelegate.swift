@@ -8,7 +8,6 @@
 
 import UIKit
 import CoreData
-import Firebase
 import Analytics
 import Sentry
 
@@ -30,8 +29,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } catch let error {
             print("\(error)")
         }
-        
-        FirebaseApp.configure()
         
         let config = SEGAnalyticsConfiguration(writeKey: "qA1M0vzRM4NJDwVeIEsGPffAPb0oAXtc")
         SEGAnalytics.setup(with: config)

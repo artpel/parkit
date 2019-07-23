@@ -77,7 +77,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             calculateInterary(destination: myLocation.coordinate)
             
             SEGAnalytics.shared().track("Find my ride", properties: [
-                "mode": UserDefaults.standard.string(forKey: "mode")
+                "mode": self.mode!
                 ])
         } else {
             
@@ -115,8 +115,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     }
     
     @IBAction func openInMapsButton(_ sender: Any) {
-        let mode = UserDefaults.standard.string(forKey: "mode") ?? "bike"
-        openInMaps(annotation: selectedAnnotation!, mode: mode)
+        openInMaps(annotation: selectedAnnotation!, mode: self.mode!)
         
     }
 
@@ -136,7 +135,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         modeSelector.appearance.actionButtonColor = UIColor.clear
         modeSelector.appearance.actionButtonTitleColor = UIColor(named: "appMainColor")!
         modeSelector.appearance.actionButtonFontSize = 16
-
+        
         modeSelector.alternativeButtonTitle = "🛵 Un scooter/moto"
         modeSelector.appearance.alternativeButtonTitleColor = UIColor(named: "appMainColor")!
         modeSelector.appearance.alternativeButtonFontSize = 16
@@ -162,46 +161,33 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         
         modeSelector.actionHandler = { (item: BLTNActionItem) in
             item.manager?.displayActivityIndicator()
-            UserDefaults.standard.set("bike", forKey: "mode")
-            self.mode = UserDefaults.standard.string(forKey: "mode")
-            self.getSpots()
+            self.modeSelected("bike")
             item.manager?.displayNextItem()
         }
         
         modeSelector.alternativeHandler = { (item: BLTNActionItem) in
             item.manager?.displayActivityIndicator()
-            UserDefaults.standard.set("moto", forKey: "mode")
-            self.mode = UserDefaults.standard.string(forKey: "mode")
-           
-            self.getSpots()
+            self.modeSelected("moto")
             item.manager?.displayNextItem()
         }
         
         loc.actionHandler = { (item: BLTNActionItem) in
             item.manager?.displayActivityIndicator()
-            self.getUserLocation()
-            self.setLegend()
-            SEGAnalytics.shared().track("Onboarded finished", properties: [
-                "mode": UserDefaults.standard.string(forKey: "mode"),
-                "location": true
-                ])
+            self.locActivated(true)
             item.manager?.dismissBulletin(animated: true)
-            UserDefaults.standard.set(true, forKey: "onboarded")
         }
         
         loc.alternativeHandler = { (item: BLTNActionItem) in
             item.manager?.dismissBulletin(animated: true)
-            SEGAnalytics.shared().track("Onboarded finished", properties: [
-                "mode": UserDefaults.standard.string(forKey: "mode"),
-                "location": false
-                ])
-            self.setLegend()
-            UserDefaults.standard.set(true, forKey: "onboarded")
+            self.locActivated(false)
+            
         }
         
         let rootItem: BLTNItem = modeSelector
+        let bulletinItemManager = BLTNItemManager(rootItem: rootItem)
+        bulletinItemManager.backgroundViewStyle = .blurredDark
         
-        return BLTNItemManager(rootItem: rootItem)
+        return bulletinItemManager
     }()
     
     var mode: String!
@@ -264,12 +250,41 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             }
         } else {
             if UserDefaults.standard.string(forKey: "onboarded") == nil {
-                bulletinManager.backgroundViewStyle = .blurredDark
                 bulletinManager.showBulletin(above: self)
-                print("already onboarded")
             }
         }
         
+    }
+    
+    public func modeSelected(_ mode: String) {
+        if mode == "bike" {
+            UserDefaults.standard.set("bike", forKey: "mode")
+            self.mode = UserDefaults.standard.string(forKey: "mode")
+            self.getSpots()
+        } else {
+            UserDefaults.standard.set("moto", forKey: "mode")
+            self.mode = UserDefaults.standard.string(forKey: "mode")
+            self.getSpots()
+        }
+    }
+    
+    public func locActivated(_ mode: Bool) {
+        if mode {
+            self.getUserLocation()
+            self.setLegend()
+            SEGAnalytics.shared().track("Onboarded finished", properties: [
+                "mode": self.mode!,
+                "location": true
+                ])
+            UserDefaults.standard.set(true, forKey: "onboarded")
+        } else {
+            SEGAnalytics.shared().track("Onboarded finished", properties: [
+                "mode": self.mode!,
+                "location": false
+                ])
+            self.setLegend()
+            UserDefaults.standard.set(true, forKey: "onboarded")
+        }
     }
     
     func updateFindMyRideButtonState() {
@@ -624,10 +639,10 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
                     let superview = self.tooltipItinerary
                     make.bottom.equalTo(superview!.snp.top).offset(-8)
                 }
-                self.squeeze(vue: vue)
+                Animations.squeeze(vue: vue)
             }
         
-            self.squeeze(vue: self.tooltipItinerary)
+            Animations.squeeze(vue: self.tooltipItinerary)
         }
         
         if annotation.park {
@@ -722,7 +737,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             }
             
             SEGAnalytics.shared().track("Opened in Maps", properties: [
-                "mode": UserDefaults.standard.string(forKey: "mode"),
+                "mode": self.mode!,
                 "provider": "apple",
                 "place": annotation.address,
                 "type": annotation.type,
@@ -754,7 +769,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             UIApplication.shared.open(URL(string:fullUrl)!)
             
             SEGAnalytics.shared().track("Opened in Maps", properties: [
-                "mode": UserDefaults.standard.string(forKey: "mode"),
+                "mode": self.mode!,
                 "provider": "google",
                 "place": annotation.address,
                 "type": annotation.type,
@@ -788,7 +803,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             self.showTooltip(annotation: annot)
             
             SEGAnalytics.shared().track("Spot selected", properties: [
-                "mode": UserDefaults.standard.string(forKey: "mode"),
+                "mode": self.mode!,
                 "place": annot.address,
                 "type": annot.type,
                 "size": annot.size,
@@ -889,7 +904,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     }
     
     func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
-        // handle error
+        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -917,7 +932,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             self.carte.addAnnotation(annotation)
             self.carte.selectAnnotation(annotation, animated: false)
             SEGAnalytics.shared().track("Search result selected", properties: [
-                "mode": UserDefaults.standard.string(forKey: "mode"),
+                "mode": self.mode!,
                 "place": response?.mapItems[0].name,
                 "latitude": coordinate!.latitude,
                 "longitude": coordinate!.longitude,
@@ -945,17 +960,6 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         
     }
     
-    // Animations
-    
-    func squeeze(_ mode: String = "in", vue: SpringView) {
-        
-        vue.isHidden = false
-        vue.animation = "squeezeUp"
-        vue.curve = "easeIn"
-        vue.duration = 0.8
-        vue.animate()
- 
-    }
 }
 
 extension Double {
