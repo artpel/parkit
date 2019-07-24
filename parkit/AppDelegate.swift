@@ -20,7 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let env = Bundle.main.infoDictionary!["ENV"] as! String
         
-        // Create a Sentry client and start crash handler
+        // Sentry
+        
         do {
             Client.shared = try Client(options: [
                 "dsn": "https://5c1df09a0cec45f6aed363e4d8077dd4@sentry.io/1468256",
@@ -29,6 +30,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } catch let error {
             print("\(error)")
         }
+        
+        // Segment
         
         var segmentKey: String
         
@@ -43,6 +46,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let config = SEGAnalyticsConfiguration(writeKey: segmentKey)
         SEGAnalytics.setup(with: config)
+        
+        // Removing UIConstraits logs
         
         UserDefaults.standard.set(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
         
