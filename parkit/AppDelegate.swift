@@ -30,7 +30,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("\(error)")
         }
         
-        let config = SEGAnalyticsConfiguration(writeKey: "qA1M0vzRM4NJDwVeIEsGPffAPb0oAXtc")
+        var segmentKey: String
+        
+        switch env {
+        case "prod":
+            segmentKey = "qA1M0vzRM4NJDwVeIEsGPffAPb0oAXtc"
+        case "debug":
+            segmentKey = "VaXs1sh9PkWa4PqLyv11wyiirV2INFgg"
+        default:
+            segmentKey = "qA1M0vzRM4NJDwVeIEsGPffAPb0oAXtc"
+        }
+        
+        let config = SEGAnalyticsConfiguration(writeKey: segmentKey)
         SEGAnalytics.setup(with: config)
         
         UserDefaults.standard.set(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
