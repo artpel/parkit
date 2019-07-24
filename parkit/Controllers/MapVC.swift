@@ -256,7 +256,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         
     }
     
-    public func modeSelected(_ mode: String) {
+    func modeSelected(_ mode: String) {
         if mode == "bike" {
             UserDefaults.standard.set("bike", forKey: "mode")
             self.mode = UserDefaults.standard.string(forKey: "mode")
@@ -268,7 +268,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         }
     }
     
-    public func locActivated(_ mode: Bool) {
+    func locActivated(_ mode: Bool) {
         if mode {
             self.getUserLocation()
             self.setLegend()
