@@ -52,41 +52,43 @@ class SettingsVC: UIViewController {
         super.viewDidLoad()
         
         setButtonsIcons()
+        setVersionNumber()
         
         if let mode = UserDefaults.standard.value(forKey: "mode") as? String {
-            if mode == "bike" {
-                modeSelector.selectedSegmentIndex = 0
-            } else {
-                modeSelector.selectedSegmentIndex = 1
-            }
+            setSegmentedIndexAccordingToMode(mode)
         }
-        
-        
+
+    }
+    
+    func setVersionNumber() {
+        let versionNumber = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+        versionLabel.text = "Version \(versionNumber)"
+    }
+    
+    func setSegmentedIndexAccordingToMode(_ mode: String) {
+        if mode == "bike" {
+            modeSelector.selectedSegmentIndex = 0
+        } else {
+            modeSelector.selectedSegmentIndex = 1
+        }
     }
     
     func setButtonsIcons() {
-        
         closeSettings.titleLabel?.font = UIFont.fontAwesome(ofSize: 20, style: FontAwesomeStyle.regular)
         closeSettings.setTitle(String.fontAwesomeIcon(name: .timesCircle), for: .normal)
     }
     
     func resetAllRecords(in entity : String) {
-        
         let context = ( UIApplication.shared.delegate as! AppDelegate ).persistentContainer.viewContext
         let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)
-        do
-            {
-                try context.execute(deleteRequest)
-                try context.save()
-                SEGAnalytics.shared().track("Core Data reset", properties: [
-                    "mode": UserDefaults.standard.string(forKey: "mode")
-                    ])
-            }
-        catch
-            {
-                print ("There was an error")
-            }
+        do {
+            try context.execute(deleteRequest)
+            try context.save()
+            SEGAnalytics.shared().track("Core Data reset", properties: [
+                "mode": UserDefaults.standard.string(forKey: "mode")
+                ])
+        } catch { }
     }
     
 }
