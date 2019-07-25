@@ -348,6 +348,20 @@
                                     <rect key="frame" x="0.0" y="0.0" width="281" height="200"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iwl-w8-EtU" customClass="NVActivityIndicatorView" customModule="NVActivityIndicatorView">
+                                            <rect key="frame" x="120.5" y="80" width="40" height="40"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="40" id="A99-nH-yQY"/>
+                                                <constraint firstAttribute="height" constant="40" id="DKe-sp-4HJ"/>
+                                            </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="typeName" value="circleStrokeSpin"/>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="color">
+                                                    <color key="value" red="0.96084696049999996" green="0.75389647479999999" blue="0.25864499810000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </view>
                                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="aR0-mX-BYa">
                                             <rect key="frame" x="0.0" y="0.0" width="281" height="200"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -399,8 +413,10 @@
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
+                                        <constraint firstItem="iwl-w8-EtU" firstAttribute="centerY" secondItem="uvg-wf-As1" secondAttribute="centerY" id="66X-36-7e3"/>
                                         <constraint firstItem="aR0-mX-BYa" firstAttribute="leading" secondItem="uvg-wf-As1" secondAttribute="leading" id="EkP-Nr-p4T"/>
                                         <constraint firstItem="aR0-mX-BYa" firstAttribute="top" secondItem="uvg-wf-As1" secondAttribute="top" id="JBF-is-KWc"/>
+                                        <constraint firstItem="iwl-w8-EtU" firstAttribute="centerX" secondItem="uvg-wf-As1" secondAttribute="centerX" id="UPY-ct-umu"/>
                                         <constraint firstAttribute="trailing" secondItem="aR0-mX-BYa" secondAttribute="trailing" id="ld3-WM-KMd"/>
                                         <constraint firstAttribute="bottom" secondItem="aR0-mX-BYa" secondAttribute="bottom" id="lh9-wo-MQY"/>
                                     </constraints>
@@ -530,6 +546,7 @@
                         <outlet property="legendView" destination="xgj-7d-BAk" id="f58-Pr-Z74"/>
                         <outlet property="loadingIndicator" destination="dXI-yC-Oha" id="97B-hn-mF0"/>
                         <outlet property="loadingLabelView" destination="pYr-fc-ZKA" id="8x2-9a-Au8"/>
+                        <outlet property="loadingSearchIndicator" destination="iwl-w8-EtU" id="sBU-pw-W6y"/>
                         <outlet property="loadingView" destination="bP1-eY-Ndf" id="Q7T-fa-sHA"/>
                         <outlet property="locationButton" destination="tkx-kZ-LAi" id="T6a-P5-BlP"/>
                         <outlet property="locationButtonView" destination="EgH-uw-bDg" id="Hfj-ND-g1v"/>

@@ -51,6 +51,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     @IBOutlet weak var findMyRideView: SpringView!
     @IBOutlet weak var searchIcon: UIButton!
     @IBOutlet weak var searchView: UIView!
+    @IBOutlet weak var loadingSearchIndicator: NVActivityIndicatorView!
     @IBOutlet weak var searchField: UITextField!
     @IBOutlet weak var parkedBtn: UIButton!
     @IBOutlet weak var addToSiriView: UIView!
@@ -563,6 +564,8 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     
     func calculateInterary(destination: CLLocationCoordinate2D) {
         
+        self.tooltipTravelTime.text = "Calcul de la distance en cours"
+        
         var modeString = ""
         
         let sourceLocation = locationManager.location!.coordinate
@@ -586,7 +589,8 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         directions.calculate { (response, error) in
             guard let directionResonse = response else {
                 if let error = error {
-                    print("we have error getting directions==\(error.localizedDescription)")
+                    self.tooltipTravelTime.text = "Impossible d'obtenir l'itinéraire vers ce parkit"
+                    self.tooltipTravelTime.textColor = UIColor(named: "parkColor")
                 }
                 return
             }
