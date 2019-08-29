@@ -127,9 +127,13 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     var clusterManager = ClusterManager()
     
     lazy var bulletinManager: BLTNItemManager = {
+        
         let modeSelector = BLTNPageItem(title: "Bienvenue dans ParkIt!")
         modeSelector.descriptionText = "Conduisez-vous un vélo où un scooter/moto ? Vous pourrez modifier ce choix par la suite"
         modeSelector.appearance.titleFontSize = 20
+        
+        
+        
         modeSelector.appearance.descriptionFontSize = 16
         
         modeSelector.actionButtonTitle = "🚲 Un vélo"
@@ -184,6 +188,13 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
             
         }
         
+        if #available(iOS 13.0, *) {
+            modeSelector.appearance.titleTextColor = UIColor.label
+            loc.appearance.titleTextColor = UIColor.label
+            modeSelector.appearance.descriptionTextColor = UIColor.label
+            loc.appearance.descriptionTextColor = UIColor.label
+        }
+        
         let rootItem: BLTNItem = modeSelector
         let bulletinItemManager = BLTNItemManager(rootItem: rootItem)
         bulletinItemManager.backgroundViewStyle = .blurredDark
@@ -235,6 +246,13 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         
         setViewsAtBottom(vues: [locationButtonView, legendView, findMyRideView])
         
+        // MARK Custom iOS 13 color
+        
+        if #available(iOS 13.0, *) {
+            bulletinManager.backgroundColor = UIColor.systemGray5
+            
+        }
+
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -314,10 +332,12 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         for vue in vues {
             vue.snp.remakeConstraints { (make) -> Void in
                 let superview = self.view
-                make.bottom.equalTo(superview!.safeAreaLayoutGuide.snp.bottom).offset(-15)
+                make.bottom.equalTo(superview!.safeAreaLayoutGuide.snp.bottom).offset(-8)
             }
         }
     }
+    
+    
     
     func setLegend() {
         

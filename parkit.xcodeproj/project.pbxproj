@@ -223,9 +223,9 @@
 		7655E14722661AFF0088DFAA /* parkit */ = {
 			isa = PBXGroup;
 			children = (
-				76FFBDCF22E79B4400257F0D /* BulletinManager.swift */,
 				760A4EC22292D5040045A6BE /* parkit.entitlements */,
 				7655E14822661AFF0088DFAA /* AppDelegate.swift */,
+				76FFBDCF22E79B4400257F0D /* BulletinManager.swift */,
 				76FFBDCD22E7971C00257F0D /* Animations.swift */,
 				7616473B228D4AC900C1C5D3 /* Controllers */,
 				7616473E228D4AD800C1C5D3 /* Models */,

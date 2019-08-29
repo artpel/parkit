@@ -38,6 +38,7 @@ class SettingsVC: UIViewController {
         resetAllRecords(in: "Spot")
         
     }
+    
     @IBOutlet weak var modeSelector: UISegmentedControl!
     
     @IBAction func closeSettings(_ sender: Any) {
