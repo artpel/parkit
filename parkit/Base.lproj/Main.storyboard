@@ -42,7 +42,7 @@
                                             <constraint firstAttribute="height" constant="17" id="GCz-We-75U"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D2M-BA-x0R">
@@ -68,7 +68,7 @@
                                             <constraint firstAttribute="height" constant="17" id="xaK-kX-kcZ"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fhJ-Sg-qRJ">
@@ -182,8 +182,10 @@
                                 <rect key="frame" x="336" y="5" width="29" height="29"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ur3-1y-aJN">
-                                        <rect key="frame" x="0.0" y="0.0" width="29" height="29"/>
-                                        <state key="normal" title="l">
+                                        <rect key="frame" x="5" y="5" width="19" height="19"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                        <color key="tintColor" name="appMainColor"/>
+                                        <state key="normal">
                                             <color key="titleColor" name="appMainColor"/>
                                         </state>
                                         <connections>
@@ -193,12 +195,12 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
-                                    <constraint firstItem="ur3-1y-aJN" firstAttribute="top" secondItem="gjJ-gj-1ai" secondAttribute="top" id="NE8-C0-01I"/>
+                                    <constraint firstItem="ur3-1y-aJN" firstAttribute="top" secondItem="gjJ-gj-1ai" secondAttribute="top" constant="5" id="NE8-C0-01I"/>
                                     <constraint firstAttribute="height" constant="29" id="RAS-Pj-Fjx"/>
-                                    <constraint firstItem="ur3-1y-aJN" firstAttribute="leading" secondItem="gjJ-gj-1ai" secondAttribute="leading" id="Sel-Vh-fLK"/>
-                                    <constraint firstAttribute="trailing" secondItem="ur3-1y-aJN" secondAttribute="trailing" id="UQ0-f5-N5i"/>
+                                    <constraint firstItem="ur3-1y-aJN" firstAttribute="leading" secondItem="gjJ-gj-1ai" secondAttribute="leading" constant="5" id="Sel-Vh-fLK"/>
+                                    <constraint firstAttribute="trailing" secondItem="ur3-1y-aJN" secondAttribute="trailing" constant="5" id="UQ0-f5-N5i"/>
                                     <constraint firstAttribute="width" constant="29" id="cJm-Nk-nn8"/>
-                                    <constraint firstAttribute="bottom" secondItem="ur3-1y-aJN" secondAttribute="bottom" id="hnI-oE-8YZ"/>
+                                    <constraint firstAttribute="bottom" secondItem="ur3-1y-aJN" secondAttribute="bottom" constant="5" id="hnI-oE-8YZ"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xgj-7d-BAk" customClass="SpringView" customModule="Spring">
@@ -257,9 +259,11 @@
                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EgH-uw-bDg" customClass="SpringView" customModule="Spring">
                                 <rect key="frame" x="336" y="496" width="29" height="29"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tkx-kZ-LAi">
-                                        <rect key="frame" x="0.0" y="0.0" width="29" height="29"/>
-                                        <state key="normal" title="l">
+                                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tkx-kZ-LAi">
+                                        <rect key="frame" x="5" y="5" width="19" height="19"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                        <color key="tintColor" name="appMainColor"/>
+                                        <state key="normal">
                                             <color key="titleColor" name="appMainColor"/>
                                         </state>
                                         <connections>
@@ -269,12 +273,12 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="tkx-kZ-LAi" secondAttribute="bottom" id="DkJ-Ro-4WH"/>
-                                    <constraint firstItem="tkx-kZ-LAi" firstAttribute="leading" secondItem="EgH-uw-bDg" secondAttribute="leading" id="ORE-zQ-uZM"/>
+                                    <constraint firstAttribute="bottom" secondItem="tkx-kZ-LAi" secondAttribute="bottom" constant="5" id="DkJ-Ro-4WH"/>
+                                    <constraint firstItem="tkx-kZ-LAi" firstAttribute="leading" secondItem="EgH-uw-bDg" secondAttribute="leading" constant="5" id="ORE-zQ-uZM"/>
                                     <constraint firstAttribute="width" constant="29" id="fDj-en-3xI"/>
                                     <constraint firstAttribute="height" constant="29" id="gmH-ND-OgG"/>
-                                    <constraint firstItem="tkx-kZ-LAi" firstAttribute="top" secondItem="EgH-uw-bDg" secondAttribute="top" id="pNP-al-sRZ"/>
-                                    <constraint firstAttribute="trailing" secondItem="tkx-kZ-LAi" secondAttribute="trailing" id="s5g-2u-uVG"/>
+                                    <constraint firstItem="tkx-kZ-LAi" firstAttribute="top" secondItem="EgH-uw-bDg" secondAttribute="top" constant="5" id="pNP-al-sRZ"/>
+                                    <constraint firstAttribute="trailing" secondItem="tkx-kZ-LAi" secondAttribute="trailing" constant="5" id="s5g-2u-uVG"/>
                                 </constraints>
                             </view>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="crS-oe-XWs" customClass="SpringView" customModule="Spring">
@@ -314,8 +318,10 @@
                                             <constraint firstAttribute="width" constant="30" id="NPq-qe-BEr"/>
                                             <constraint firstAttribute="height" constant="29" id="y7w-dE-yuX"/>
                                         </constraints>
-                                        <state key="normal" title="x">
-                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                        <color key="tintColor" systemColor="systemGrayColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal">
+                                            <color key="titleColor" systemColor="systemGrayColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="textFieldEditingDidChange:" destination="9pv-A4-QxB" eventType="touchUpInside" id="lTh-v0-7PY"/>
@@ -634,7 +640,8 @@ ParkIt! ne récolte aucune donnée, et ne sauvegarde l'emplacement de votre deux
                                     <constraint firstAttribute="height" constant="30" id="BBX-WX-80e"/>
                                     <constraint firstAttribute="width" constant="30" id="NkY-FS-s37"/>
                                 </constraints>
-                                <state key="normal" title="x">
+                                <color key="tintColor" name="appMainColor"/>
+                                <state key="normal">
                                     <color key="titleColor" red="0.96084696049999996" green="0.75389647479999999" blue="0.25864499810000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </state>
                                 <connections>

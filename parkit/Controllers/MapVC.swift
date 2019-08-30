@@ -250,7 +250,6 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         
         if #available(iOS 13.0, *) {
             bulletinManager.backgroundColor = UIColor.systemGray5
-            
         }
 
     }
@@ -320,12 +319,20 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
     }
     
     func setButtonsIcons() {
-        locationButton.titleLabel?.font = UIFont.fontAwesome(ofSize: 15, style: FontAwesomeStyle.solid)
-        locationButton.setTitle(String.fontAwesomeIcon(name: .locationArrow), for: .normal)
-        settingsButton.titleLabel?.font = UIFont.fontAwesome(ofSize: 15, style: FontAwesomeStyle.solid)
-        settingsButton.setTitle(String.fontAwesomeIcon(name: .cog), for: .normal)
-        searchIcon.titleLabel?.font = UIFont.fontAwesome(ofSize: 15, style: FontAwesomeStyle.solid)
-        searchIcon.setTitle(String.fontAwesomeIcon(name: .search), for: .normal)
+        
+        if #available(iOS 13.0, *) {
+            locationButton.setImage(UIImage(systemName: "location.fill"), for: .normal)
+            settingsButton.setImage(UIImage(systemName: "gear"), for: .normal)
+            searchIcon.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+        } else {
+            locationButton.titleLabel?.font = UIFont.fontAwesome(ofSize: 15, style: FontAwesomeStyle.solid)
+            locationButton.setTitle(String.fontAwesomeIcon(name: .locationArrow), for: .normal)
+            settingsButton.titleLabel?.font = UIFont.fontAwesome(ofSize: 15, style: FontAwesomeStyle.solid)
+            settingsButton.setTitle(String.fontAwesomeIcon(name: .cog), for: .normal)
+            searchIcon.titleLabel?.font = UIFont.fontAwesome(ofSize: 15, style: FontAwesomeStyle.solid)
+            searchIcon.setTitle(String.fontAwesomeIcon(name: .search), for: .normal)
+        }
+
     }
 
     func setViewsAtBottom(vues: [UIView]) {
@@ -609,7 +616,8 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIT
         directions.calculate { (response, error) in
             guard let directionResonse = response else {
                 if let error = error {
-                    self.tooltipTravelTime.text = "Impossible d'obtenir l'itinéraire vers ce parkit"
+                    print(error)
+                    self.tooltipTravelTime.text = "Impossible d'obtenir l'itinéraire vers ce spot"
                     self.tooltipTravelTime.textColor = UIColor(named: "parkColor")
                 }
                 return

@@ -75,8 +75,17 @@ class SettingsVC: UIViewController {
     }
     
     func setButtonsIcons() {
-        closeSettings.titleLabel?.font = UIFont.fontAwesome(ofSize: 20, style: FontAwesomeStyle.regular)
-        closeSettings.setTitle(String.fontAwesomeIcon(name: .timesCircle), for: .normal)
+        
+        if #available(iOS 13.0, *) {
+            closeSettings.setImage(UIImage(systemName: "multiply.circle.fill"), for: .normal)
+            
+        } else {
+            closeSettings.titleLabel?.font = UIFont.fontAwesome(ofSize: 20, style: FontAwesomeStyle.regular)
+            closeSettings.setTitle(String.fontAwesomeIcon(name: .timesCircle), for: .normal)
+        }
+        
+        
+        
     }
     
     func resetAllRecords(in entity : String) {
